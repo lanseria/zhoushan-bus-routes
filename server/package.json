@@ -1,0 +1,51 @@
+{
+  "name": "app-server",
+  "version": "1.0.0",
+  "description": "template of server use es6",
+  "main": "dist/app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "dev": "babel-node src/app.js",
+    "tasks": "babel-node src/tasks/app.js",
+    "build": "babel src --out-dir dist",
+    "test": "mocha",
+    "lint": "eslint .js src"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "bcrypt": "^1.0.3",
+    "cheerio": "^1.0.0-rc.2",
+    "global": "^4.3.2",
+    "koa": "^2.5.0",
+    "lodash": "^4.17.5",
+    "mongoose": "^5.0.8",
+    "node-gyp": "^3.6.2",
+    "supertest": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.2",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "chai": "^4.1.2",
+    "chalk": "^2.3.2",
+    "eslint": "^4.18.2",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "mocha": "3.4.2",
+    "mochawesome": "^2.3.1"
+  },
+  "keywords": [
+    "server",
+    "template"
+  ],
+  "author": "lanseria",
+  "license": "ISC"
+}
