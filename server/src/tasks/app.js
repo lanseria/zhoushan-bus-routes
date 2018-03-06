@@ -4,7 +4,7 @@ import cheerio from 'cheerio';
 import config from './config';
 import { readLineRoutesFile, writeLineRoutesFile, readStations, writeStations } from './json'
 
-const url = `${config.http}://${config.ip}:${config.port}/${config.inferface}/`
+const url = `${config.http}://${config.ip}:${config.port}/${config.inferface}/`;
 
 const globalParam = {
   searchNumber: {
@@ -45,21 +45,21 @@ async function getStateByLineRouteNumber (param) {
 }
 
 // getLineRoute(globalparam)
-async function getAllLineRoutes () {
+export async function getAllLineRoutes () {
   const template1To100 = [...Array(100).keys()];
   for (const term of template1To100) {
     const { searchNumber } = globalParam;
     searchNumber.term = term;
     const res = await getLineRoute(searchNumber);
     if (res) {
-      console.log(`写入成功通过term:${term}`);
+      console.log(`写入成功通过关键字 ${term}`);
     } else {
       console.log('写入失败');
     }
   }
 }
 // getStateByLineRouteNumber(globalParam.lineName);
-async function getAllStateByLRN () {
+export async function getAllStateByLRN () {
   let lineRoutesData = readLineRoutesFile();
   const allLineRoutes = lineRoutesData.allLineRoutes;
   for (const lineName of allLineRoutes) {
@@ -71,10 +71,9 @@ async function getAllStateByLRN () {
     const writeObj = { ...nowObj, ...writeStation };
     const res = await writeStations(writeObj)
     if (res) {
-      console.log(`写入成功`);
+      console.log(`写入成功 line ${lineName}`);
     } else {
       console.log('写入失败');
     }
   }
 }
-getAllStateByLRN()
