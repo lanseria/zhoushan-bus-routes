@@ -1,14 +1,12 @@
-import Koa from 'koa';
-import bodyParser from 'koa-bodyparser';
-import router from './routes';
-import config from './config';
+const Koa = require('koa')
+const jsonp = require('koa-jsonp')
+const router = require('./router')
+const config = require('./config')
+const { port } = config
+const app = new Koa()
+app.use(jsonp())
+app.use(router.routes()).use(router.allowedMethods())
 
-const app = new Koa();
-
-app.use(bodyParser());
-
-app.use(router.routes());
-
-app.listen(config.port, () => {
-  console.log(`listening on port ${config.port}`)
+module.exports = app.listen(port, function () {
+  console.log(`app is listening at port ${port}\n舟山公交API转发服务已开启`)
 })

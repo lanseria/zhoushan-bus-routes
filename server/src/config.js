@@ -1,5 +1,5 @@
-const CONF = {
-  port: '5757'
+const config = {
+  port: '7993'
 }
 
-export default CONF;
+exports = module.exports = config
