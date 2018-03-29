@@ -9,8 +9,8 @@
           <div class="hot-key">
             <h1 class="title">热门搜索</h1>
             <ul>
-              <li @click="addQuery(item.k)" class="item" v-for="(item, index) in hotKey" :key="index">
-                <span>{{item.k}}</span>
+              <li @click="addQuery(item)" class="item" v-for="(item, index) in hotKey" :key="index">
+                <span>{{item}}</span>
               </li>
             </ul>
           </div>
@@ -64,6 +64,9 @@ export default {
     this._getHotKey()
   },
   methods: {
+    showConfirm () {
+      this.$refs.confirm.show()
+    },
     addQuery (query) {
       this.$refs.searchBox.setQuery(query)
     },

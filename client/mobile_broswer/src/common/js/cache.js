@@ -1,8 +1,8 @@
 import storage from 'good-storage'
 
-const SEARCH_KEY = '__search__'
-const USE_KEY = '__use__'
-const FAVORTIE_KEY = '__favorite__'
+const SEARCH_KEY = '__z_bus_search__'
+const USE_KEY = '__z_bus_use__'
+const FAVORTIE_KEY = '__z_bus_favorite__'
 
 const SEARCH_MAX_LENGTH = 15
 const USE_MAX_LENGTH = 200

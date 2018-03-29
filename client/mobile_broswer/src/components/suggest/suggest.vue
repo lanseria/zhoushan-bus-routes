@@ -1,5 +1,5 @@
 <template>
-  <scroll @beforeScrollHandle="listScroll" :beforeScroll="beforeScroll" @scrollToEnd="searchMore" :pullup="pullup" class="suggest" :data="result" ref="suggest">
+  <scroll @beforeScrollHandle="listScroll" :beforeScroll="beforeScroll" :pullup="pullup" class="suggest" :data="result" ref="suggest">
     <ul class="suggest-list">
       <li @click="selectItem(item)" class="suggest-item" v-for="(item, index) in result" :key="index">
         <div class="icon">
@@ -33,7 +33,6 @@ export default {
   },
   data () {
     return {
-      page: 1,
       result: [],
       pullup: true,
       beforeScroll: true,
@@ -45,41 +44,19 @@ export default {
       this.$refs.suggest.refresh()
     },
     search () {
-      this.page = 1
       this.hasMore = true
       this.$refs.suggest.scrollTo(0, 0)
       search(this.query).then(res => {
         if (res.code === ERR_OK) {
-          this.result = this._genResult(res.data)
-          this._checkMore(res.data)
+          this.result = res.data
         }
       })
-    },
-    searchMore () {
-      if (!this.hasMore) {
-        return
-      }
-      this.page++
-      search(this.query).then(res => {
-        if (res.code === ERR_OK) {
-          this.result = this.result.concat(this._genResult(res.data))
-          this._checkMore(res.data)
-        }
-      })
+      this.hasMore = false
     },
     selectItem (item) {
-      // if (item.type === TYPE_SINGER) {
-      //   const singer = new Singer({
-      //     id: item.singermid,
-      //     name: item.singername
-      //   })
-      //   this.$router.push({
-      //     path: `/search/${singer.id}`
-      //   })
-      //   // this.setSinger(singer)
-      // } else {
-      //   // this.insertSong(item)
-      // }
+      this.$router.push({
+        path: `/search/${item}`
+      })
       this.$emit('select')
     },
     listScroll () {

@@ -15,3 +15,17 @@ export function search (query) {
   })
   return jsonp(url, data, options)
 }
+
+export function getRouteLineDetail (query) {
+  const url = baseUrl + '/detail'
+  const data = Object.assign({}, {
+    rid: query
+  })
+  return jsonp(url, data, options)
+}
+
+export function getThisStationDetail (query) {
+  const url = baseUrl + '/getThisStation'
+  const data = query
+  return jsonp(url, data, options)
+}
