@@ -1,0 +1,26 @@
+language: node_js
+
+node_js:
+- 8.9.4
+
+sudo: required
+
+jobs:
+  include:
+    - stage: install_test
+      script:
+        - cd client/mobile_broswer && yarn lint && yarn build && cd ../..
+        - cd server && yarn && cd ..
+    - stage: deploy
+      addons:
+        ssh_known_hosts: 115.159.27.203
+      script:
+        - openssl aes-256-cbc -K $encrypted_8010cd2da6b2_key -iv $encrypted_8010cd2da6b2_iv -in id_rsa.enc -out ~/.ssh/id_rsa -d
+        - chmod 600 ~/.ssh/id_rsa
+        - echo -e "Host 115.159.27.203\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+        - pwd
+      after_success:
+        - ssh root@115.159.27.203 "cd /var/www/node/zhoushan-bus-routes && git fetch && git pull && cd client/mobile_broswer && yarn && yarn build && cd ../.. && cd server && yarn && pm2 restart src/app.js && cd .. ; exit 0"
+
+notifications:
+  email: false
