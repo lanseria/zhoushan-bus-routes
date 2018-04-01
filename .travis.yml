@@ -9,8 +9,13 @@ jobs:
   include:
     - stage: install_test
       script:
-        - cd client/mobile_broswer && yarn lint && yarn build && cd ../..
-        - cd server && yarn && cd ..
+        - cd client/mobile_broswer
+        - yarn lint
+        - yarn build
+        - cd ../..
+        - cd server
+        - yarn
+        - cd ..
     - stage: deploy
       addons:
         ssh_known_hosts: 115.159.27.203
