@@ -9,6 +9,9 @@
           <i class="icon-random icon"></i>返程</div>
         <div class="start" v-text="`终点站：${nameOfStartAndEnd.end}`"></div>
       </div>
+      <transition name="slide">
+        <div v-show="timeMsg" class="notify" v-html="timeMsg"></div>
+      </transition>
       <scroll v-if="currentRouteStations" :data="currentRouteStations" class="list" ref="list">
         <div class="all-stations">
           <div class="one-stataion" v-for="(item, index) in currentRouteStations" :key="index" @click="handleGetThisStationDetail(index)">
@@ -27,13 +30,19 @@ import Scroll from '@/base/scroll/scroll'
 import Loading from '@/base/loading/loading'
 import { getRouteLineDetail, getThisStationDetail } from '@/api/search'
 import { ERR_OK } from '@/api/config'
-const avatarUrl = `https://dummyimage.com/100x100/666666/FFF.png&text=`
+
+const selectDownOrUp = ['down', 'up']
+function getAvatarUrl (text, color, height = 100, width = 100) {
+  return `https://dummyimage.com/${height}x${width}/${color}/FFF.png&text=${text}`
+}
+
 export default {
   data () {
     return {
       id: this.$route.params.id,
       originRouteData: undefined,
-      downOrUp: 'down'
+      downOrUp: selectDownOrUp[0],
+      timeMsg: ''
     }
   },
   computed: {
@@ -41,12 +50,7 @@ export default {
       if (!this.originRouteData) {
         return undefined
       }
-      return this.originRouteData[this.downOrUp].map(m => {
-        return {
-          avatar: avatarUrl + '无',
-          name: m
-        }
-      })
+      return this.originRouteData[this.downOrUp]
     },
     nameOfStartAndEnd () {
       if (!this.currentRouteStations) {
@@ -63,9 +67,6 @@ export default {
     this._getRouteLineDetail(this.id)
   },
   methods: {
-    handler (component) {
-      console.log('this component is showing')
-    },
     handleGetThisStationDetail (index) {
       const query = {
         lineName: this.id.substr(0, this.id.length - 1),
@@ -73,11 +74,40 @@ export default {
         stationNum: index + 1
       }
       getThisStationDetail(query).then(res => {
-        console.log(res)
+        const buses = res.data.buses
+        const bus = buses[0]
+        this.originRouteData[this.downOrUp][index].msg = res.data.msg
+        this.timeMsg = res.data.msg
+        // setTimeout(() => {
+        //   this.timeMsg = ''
+        // }, 3000)
+        this.originRouteData[this.downOrUp][index].buses = buses
+        let avatarUrl = getAvatarUrl('无', '666666')
+        if (buses.length) {
+          let {lastStation} = bus
+          lastStation = parseInt(lastStation)
+          console.log(lastStation, index, res.data.msg)
+          if (lastStation === index) {
+            avatarUrl = getAvatarUrl('即', '1f940a')
+            let count = index
+            while (++count <= this.currentRouteStations.length) {
+              this.originRouteData[this.downOrUp][count].avatar = getAvatarUrl(count - lastStation + 1, '15b1ca')
+            }
+          }
+          if (lastStation < index) {
+            avatarUrl = getAvatarUrl(index - lastStation + 1, '15b1ca')
+          }
+        } else {
+          avatarUrl = getAvatarUrl('走了', '111111')
+          let count = index
+          while (count--) {
+            this.originRouteData[this.downOrUp][count].avatar = avatarUrl
+          }
+        }
+        this.originRouteData[this.downOrUp][index].avatar = avatarUrl
       })
     },
     handleTransRoute () {
-      const selectDownOrUp = ['down', 'up']
       const idx = selectDownOrUp.findIndex(m => m === this.downOrUp)
       this.downOrUp = selectDownOrUp[1 - idx]
     },
@@ -87,7 +117,22 @@ export default {
     _getRouteLineDetail (query) {
       getRouteLineDetail(query).then((res) => {
         if (res.code === ERR_OK) {
-          this.originRouteData = res.data
+          const data = res.data
+          for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+              let element = data[key]
+              element = element.map(m => {
+                return {
+                  avatar: getAvatarUrl('无', '666666'),
+                  name: m,
+                  buses: [],
+                  msg: ''
+                }
+              })
+              data[key] = element
+            }
+          }
+          this.originRouteData = data
         }
       })
     }
@@ -98,13 +143,14 @@ export default {
   }
 }
 </script>
+
 <style lang="stylus" scoped>
   @import "~@/common/stylus/variable"
   @import "~@/common/stylus/mixin"
   .slide-enter-active,.slide-leave-active
-    transition all 0.3s
+    transition: all 0.3s
   .slide-enter,.slide-leave-to
-    transform translate3d(100%, 0, 0)
+    transform: translate3d(100%, 0, 0)
   .route-line-detail
     position: fixed
     z-index: 100
@@ -114,7 +160,7 @@ export default {
     right: 0
     background: $color-background
     .back
-      position absolute
+      position: absolute
       top: 0
       left: 6px
       z-index: 50
@@ -149,8 +195,8 @@ export default {
         flex: 0 0 80px
         .icon
           font-size: $font-size-large
-          vertical-align: middle;
-          margin-right: 5px;
+          vertical-align: middle
+          margin-right: 5px
     .start-or-end-wrapper > *
       flex: 1
       color: $color-text-ll
@@ -184,4 +230,10 @@ export default {
           margin-left: 20px
           color: $color-theme-d
           font-size: $font-size-medium
+  .notify
+    font-size: $font-size-medium
+    color: $color-theme
+    background-color: $color-theme-d
+    padding: 9px 14px
+    height: 14px
 </style>
