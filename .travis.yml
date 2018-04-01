@@ -10,6 +10,7 @@ jobs:
     - stage: install_test
       script:
         - cd client/mobile_broswer
+        - yarn
         - yarn lint
         - yarn build
         - cd ../..
