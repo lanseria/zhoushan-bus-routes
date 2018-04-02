@@ -75,7 +75,6 @@ export default {
       }
       getThisStationDetail(query).then(res => {
         const buses = res.data.buses
-        const bus = buses[0]
         this.originRouteData[this.downOrUp][index].msg = res.data.msg
         this.timeMsg = res.data.msg
         setTimeout(() => {
