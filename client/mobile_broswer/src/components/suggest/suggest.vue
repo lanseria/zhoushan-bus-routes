@@ -3,7 +3,7 @@
     <ul class="suggest-list">
       <li @click="selectItem(item)" class="suggest-item" v-for="(item, index) in result" :key="index">
         <div class="icon">
-          <i class="icon-mine"></i>
+          <i class="icon-navigation-2"></i>
         </div>
         <div class="name">
           <p class="text" v-html="item"></p>

@@ -18,7 +18,7 @@
             <h1 class="title">
               <span class="text">搜索历史</span>
               <span class="clear" @click="showConfirm">
-                <i class="icon-clear"></i>
+                <i class="icon-trash-2"></i>
               </span>
             </h1>
             <search-list @delete="deleteSearchHistory" @select="addQuery" :searches="searchHistory"></search-list>

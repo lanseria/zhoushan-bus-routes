@@ -1,7 +1,7 @@
 <template>
   <transition name="slide">
     <div class="route-line-detail" ref="routeLineDetail">
-      <div class="back"><i class="icon-back" @click="back"></i></div>
+      <div class="back"><i class="icon-corner-down-left" @click="back"></i></div>
       <h1 class="title" v-text="id"></h1>
       <div class="start-or-end-wrapper" v-if="nameOfStartAndEnd">
         <div class="start" v-text="`起始站：${nameOfStartAndEnd.start}`"></div>
@@ -164,7 +164,7 @@ export default {
       top: 0
       left: 6px
       z-index: 50
-      .icon-back
+      .icon-corner-down-left
         display: block
         padding: 10px
         font-size: $font-size-large-x

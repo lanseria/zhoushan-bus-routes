@@ -4,7 +4,7 @@
       <li class="search-item" @click="selectItem(item)" v-for="(item, index) in searches" :key="index">
         <span class="text">{{item}}</span>
         <span class="icon" @click.stop="deleteOne(item)">
-          <i class="icon-delete"></i>
+          <i class="icon-x"></i>
         </span>
       </li>
     </transition-group>
@@ -50,7 +50,7 @@ export default {
         color: $color-text-l
       .icon
         extend-click()
-        .icon-delete
+        .icon-x
           font-size: $font-size-small
           color: $color-text-d
 </style>
