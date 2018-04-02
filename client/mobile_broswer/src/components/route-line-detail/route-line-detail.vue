@@ -97,7 +97,7 @@ export default {
           this.timeMsg = ''
         }, 3000)
         buses.map(abus => {
-          const lastStation = abus.lastStation - 1
+          const lastStation = abus.lastStation
           const isStation = abus.isStation
           let color = ''
           if (isStation === '1') {
