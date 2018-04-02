@@ -28,6 +28,12 @@
             </div>
           </div>
         </scroll>
+        <div class="legend">
+          <div class="stop"></div>
+          <span>进站</span>
+          <div class="en-route"></div>
+          <span>途中</span>
+        </div>
       </div>
     </div>
   </transition>
@@ -73,6 +79,41 @@ export default {
   },
   created () {
     this._getRouteLineDetail(this.id)
+    const query = {
+      lineName: this.id.substr(0, this.id.length - 1),
+      isUpDown: this.downOrUp === 'down' ? 1 : 0,
+      stationNum: 1
+    }
+    this.$getThisStationDetailInterval = setTimeout(() => {
+      getThisStationDetail(query).then(res => {
+        clearTimeout(this.$timeMsgCount)
+        const buses = res.data.buses
+        if (buses.length === 0) {
+          this.timeMsg = '暂无车次信息'
+          return
+        }
+        this.timeMsg = res.data.msg
+        this.$timeMsgCount = setTimeout(() => {
+          this.timeMsg = ''
+        }, 3000)
+        buses.map(abus => {
+          const lastStation = abus.lastStation - 1
+          const isStation = abus.isStation
+          let color = ''
+          if (isStation === '1') {
+            color = 'ffcd32' // 途中
+          } else {
+            color = '5fe27b' // 进站
+          }
+          this.originRouteData[this.downOrUp][lastStation].avatar = getAvatarUrl(lastStation, color)
+          this.originRouteData[this.downOrUp][lastStation].buses = buses
+        })
+      })
+    }, 1000)
+  },
+  destroyed () {
+    clearTimeout(this.$getThisStationDetailInterval)
+    clearTimeout(this.$timeMsgCount)
   },
   methods: {
     handleGetThisStationDetail (index) {
@@ -82,10 +123,11 @@ export default {
         stationNum: index + 1
       }
       getThisStationDetail(query).then(res => {
+        clearTimeout(this.$timeMsgCount)
         const buses = res.data.buses
         this.originRouteData[this.downOrUp][index].msg = res.data.msg
         this.timeMsg = res.data.msg
-        setTimeout(() => {
+        this.$timeMsgCount = setTimeout(() => {
           this.timeMsg = ''
         }, 3000)
         this.originRouteData[this.downOrUp][index].buses = buses
@@ -193,7 +235,7 @@ export default {
           vertical-align: middle
           margin-right: 5px
       .tag
-        padding: 5px
+        padding: 5px 10px
         border-radius: 5px
       .start
         span.tag
@@ -249,4 +291,23 @@ export default {
       height: 28px
       width: 100%
       z-index 1
+    .legend
+      position: absolute
+      z-index: 10
+      bottom: 0
+      background-color: $color-dialog-background-o
+      padding 5px 10px
+      width: 100%
+      span
+        font-size: $font-size-medium
+      div
+        vertical-align: sub
+        display: inline-block
+        width: 20px
+        height: 20px
+        border-radius: 50%
+      .stop
+        background-color: #5fe27b
+      .en-route
+        background-color: $color-theme
 </style>
