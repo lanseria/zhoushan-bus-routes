@@ -15,7 +15,7 @@
       <scroll v-if="currentRouteStations" :data="currentRouteStations" class="list" ref="list">
         <div class="all-stations">
           <div class="one-stataion" v-for="(item, index) in currentRouteStations" :key="index" @click="handleGetThisStationDetail(index)">
-            <img class="avatar" v-lazy="item.avatar" />
+            <img class="avatar" :src="item.avatar" />
             <span class="name">{{item.name}}</span>
             <div class="detail">此站等候</div>
           </div>
@@ -78,33 +78,10 @@ export default {
         const bus = buses[0]
         this.originRouteData[this.downOrUp][index].msg = res.data.msg
         this.timeMsg = res.data.msg
-        // setTimeout(() => {
-        //   this.timeMsg = ''
-        // }, 3000)
+        setTimeout(() => {
+          this.timeMsg = ''
+        }, 3000)
         this.originRouteData[this.downOrUp][index].buses = buses
-        let avatarUrl = getAvatarUrl('无', '666666')
-        if (buses.length) {
-          let {lastStation} = bus
-          lastStation = parseInt(lastStation)
-          console.log(lastStation, index, res.data.msg)
-          if (lastStation === index) {
-            avatarUrl = getAvatarUrl('即', '1f940a')
-            let count = index
-            while (++count <= this.currentRouteStations.length) {
-              this.originRouteData[this.downOrUp][count].avatar = getAvatarUrl(count - lastStation + 1, '15b1ca')
-            }
-          }
-          if (lastStation < index) {
-            avatarUrl = getAvatarUrl(index - lastStation + 1, '15b1ca')
-          }
-        } else {
-          avatarUrl = getAvatarUrl('走了', '111111')
-          let count = index
-          while (count--) {
-            this.originRouteData[this.downOrUp][count].avatar = avatarUrl
-          }
-        }
-        this.originRouteData[this.downOrUp][index].avatar = avatarUrl
       })
     },
     handleTransRoute () {
@@ -121,9 +98,9 @@ export default {
           for (const key in data) {
             if (data.hasOwnProperty(key)) {
               let element = data[key]
-              element = element.map(m => {
+              element = element.map((m, i) => {
                 return {
-                  avatar: getAvatarUrl('无', '666666'),
+                  avatar: getAvatarUrl(i + 1, '15b1ca'),
                   name: m,
                   buses: [],
                   msg: ''
