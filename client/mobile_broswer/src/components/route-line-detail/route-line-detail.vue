@@ -84,20 +84,12 @@ export default {
       isUpDown: this.downOrUp === 'down' ? 1 : 0,
       stationNum: 1
     }
-    this.$getThisStationDetailInterval = setTimeout(() => {
+    this.$getThisStationDetailInterval = setInterval(() => {
       getThisStationDetail(query).then(res => {
-        clearTimeout(this.$timeMsgCount)
         const buses = res.data.buses
-        if (buses.length === 0) {
-          this.timeMsg = '暂无车次信息'
-          return
-        }
         this.timeMsg = res.data.msg
-        this.$timeMsgCount = setTimeout(() => {
-          this.timeMsg = ''
-        }, 3000)
         buses.map(abus => {
-          const lastStation = abus.lastStation
+          const lastStation = parseInt(abus.lastStation)
           const isStation = abus.isStation
           let color = ''
           if (isStation === '1') {
@@ -105,14 +97,16 @@ export default {
           } else {
             color = '5fe27b' // 进站
           }
-          this.originRouteData[this.downOrUp][lastStation].avatar = getAvatarUrl(lastStation, color)
+          this.originRouteData[this.downOrUp][lastStation].avatar = getAvatarUrl(lastStation + 1, color)
           this.originRouteData[this.downOrUp][lastStation].buses = buses
+          this.originRouteData[this.downOrUp][lastStation - 1].avatar = getAvatarUrl(lastStation, '15b1ca')
+          this.originRouteData[this.downOrUp][lastStation - 1].buses = []
         })
       })
-    }, 1000)
+    }, 5000)
   },
   destroyed () {
-    clearTimeout(this.$getThisStationDetailInterval)
+    clearInterval(this.$getThisStationDetailInterval)
     clearTimeout(this.$timeMsgCount)
   },
   methods: {
