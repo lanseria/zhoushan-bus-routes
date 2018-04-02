@@ -8,6 +8,18 @@
       "script": "dev",
       "path": "client/mobile_broswer/",
       "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "server/",
+      "problemMatcher": []
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "path": "client/mobile_broswer/",
+      "problemMatcher": []
     }
   ]
 }
