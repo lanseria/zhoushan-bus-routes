@@ -3,7 +3,11 @@ const jsonp = require('koa-jsonp')
 const router = require('./router')
 const config = require('./config')
 const { port } = config
+
 const app = new Koa()
+
+app.proxy = true // 支持代理转发 使其信任
+
 app.use(jsonp())
 app.use(router.routes()).use(router.allowedMethods())
 
