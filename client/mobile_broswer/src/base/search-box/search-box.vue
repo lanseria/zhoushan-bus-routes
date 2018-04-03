@@ -64,7 +64,7 @@ export default {
       font-size: $font-size-medium
       &::placeholder
         color: $color-text-d
-    .icon-dismiss
+    .icon-x-circle
       font-size: 16px
       color: $color-background
 </style>
