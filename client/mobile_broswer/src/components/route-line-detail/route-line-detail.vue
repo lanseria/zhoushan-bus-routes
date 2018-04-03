@@ -77,7 +77,7 @@ export default {
       }
     }
   },
-  created () {
+  mounted () {
     this._getRouteLineDetail(this.id)
     const query = {
       lineName: this.id.substr(0, this.id.length - 1),
@@ -92,40 +92,24 @@ export default {
           const lastStation = parseInt(abus.lastStation)
           const isStation = abus.isStation
           let color = ''
+          this._refreshCurrentLine()
           if (isStation === '1') {
             color = 'ffcd32' // 途中
+            this.originRouteData[this.downOrUp][lastStation + 1].avatar = getAvatarUrl(lastStation + 2, color)
           } else {
             color = '5fe27b' // 进站
+            this.originRouteData[this.downOrUp][lastStation].avatar = getAvatarUrl(lastStation + 1, color)
           }
-          this.originRouteData[this.downOrUp][lastStation].avatar = getAvatarUrl(lastStation + 1, color)
-          this.originRouteData[this.downOrUp][lastStation].buses = buses
-          this.originRouteData[this.downOrUp][lastStation - 1].avatar = getAvatarUrl(lastStation, '15b1ca')
-          this.originRouteData[this.downOrUp][lastStation - 1].buses = []
         })
       })
     }, 5000)
   },
-  destroyed () {
+  beforeDestroy () {
     clearInterval(this.$getThisStationDetailInterval)
     clearTimeout(this.$timeMsgCount)
   },
   methods: {
     handleGetThisStationDetail (index) {
-      const query = {
-        lineName: this.id.substr(0, this.id.length - 1),
-        isUpDown: this.downOrUp === 'down' ? 1 : 0,
-        stationNum: index + 1
-      }
-      getThisStationDetail(query).then(res => {
-        clearTimeout(this.$timeMsgCount)
-        const buses = res.data.buses
-        this.originRouteData[this.downOrUp][index].msg = res.data.msg
-        this.timeMsg = res.data.msg
-        this.$timeMsgCount = setTimeout(() => {
-          this.timeMsg = ''
-        }, 3000)
-        this.originRouteData[this.downOrUp][index].buses = buses
-      })
     },
     handleTransRoute () {
       const idx = selectDownOrUp.findIndex(m => m === this.downOrUp)
@@ -134,19 +118,23 @@ export default {
     back () {
       this.$router.back()
     },
+    _refreshCurrentLine () {
+      this.originRouteData[this.downOrUp].forEach((m, i) => {
+        m.avatar = getAvatarUrl(i + 1, '15b1ca')
+      })
+    },
     _getRouteLineDetail (query) {
       getRouteLineDetail(query).then((res) => {
         if (res.code === ERR_OK) {
           const data = res.data
           for (const key in data) {
+            console.log(key)
             if (data.hasOwnProperty(key)) {
               let element = data[key]
               element = element.map((m, i) => {
                 return {
                   avatar: getAvatarUrl(i + 1, '15b1ca'),
-                  name: m,
-                  buses: [],
-                  msg: ''
+                  name: m
                 }
               })
               data[key] = element

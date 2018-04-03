@@ -17,7 +17,7 @@ export default {
     return {
       text: '关于本人可以访问GitHub地址',
       confirmBtnText: '访问',
-      projectNameAndVersion: `${packageData.description} ${packageData.version}`
+      projectNameAndVersion: `${packageData.description} v${packageData.version}`
     }
   },
   methods: {
