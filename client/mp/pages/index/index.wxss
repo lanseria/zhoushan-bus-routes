@@ -1,0 +1,5 @@
+/**index.wxss**/
+.search-box {
+  width: 90%;
+  color: aliceblue;
+}
