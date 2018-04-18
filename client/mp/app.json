@@ -1,0 +1,11 @@
+{
+  "pages": [
+    "pages/search/search",
+    "pages/route-line/route-line"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#222",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "舟山公交路线查询"
+  }
+}

@@ -1,0 +1,31 @@
+<view class='container'>
+  <view class='search-box-wrapper'>
+    <view class='search-box'>
+      <icon type="search" color='#111'/>
+      <input class='box' confirm-type="send" placeholder="搜索路线" bindinput="bindKeyInput" value="{{query}}" auto-focus/>
+      <icon hidden='{{!query}}' type="cancel" color='#111' bindtap='clearQuery'/>
+    </view>
+  </view>
+  <view hidden='{{query}}' class='shortcut-wrapper'>
+    <view class='shortcut'>
+      <scroll-view scroll-y>
+        <view class='hot-key'>
+          <text class='title'>热门搜索</text>
+          <view>
+            <text class='item' wx:key="unique" wx:for="{{hotKey}}" bindtap='addQuery' data-query="{{item}}">{{item}}</text>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+  <view hidden='{{!query}}' class='search-result'>
+    <view class='suggest'>
+      <scroll-view scroll-y>
+        <view class='suggest-list' wx:for="{{result}}" wx:key="unique">
+          <icon type='download' color='#8c8b8b'></icon>
+          <text bindtap='jumpToDetail' data-route-id="{{item}}">{{item}}</text>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>
