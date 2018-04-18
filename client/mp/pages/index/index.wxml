@@ -1,8 +1,0 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="search-box">
-    <icon class="icon-search" type="search" size="20"></icon>
-    <input type="text" :placeholder="placeholder" class="box" auto-focus/>
-    <icon class="icon-x-circle" type="clear" size="20"></icon>
-  </view>
-</view>

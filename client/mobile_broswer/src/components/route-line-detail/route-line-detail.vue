@@ -84,7 +84,17 @@ export default {
       isUpDown: this.downOrUp === 'down' ? 1 : 0,
       stationNum: 1
     }
+    this._getThisStationInfo(query)
     this.$getThisStationDetailInterval = setInterval(() => {
+      this._getThisStationInfo(query)
+    }, 5000)
+  },
+  beforeDestroy () {
+    clearInterval(this.$getThisStationDetailInterval)
+    clearTimeout(this.$timeMsgCount)
+  },
+  methods: {
+    _getThisStationInfo (query) {
       getThisStationDetail(query).then(res => {
         const buses = res.data.buses
         this.timeMsg = res.data.msg
@@ -102,13 +112,7 @@ export default {
           }
         })
       })
-    }, 5000)
-  },
-  beforeDestroy () {
-    clearInterval(this.$getThisStationDetailInterval)
-    clearTimeout(this.$timeMsgCount)
-  },
-  methods: {
+    },
     handleGetThisStationDetail (index) {
     },
     handleTransRoute () {
