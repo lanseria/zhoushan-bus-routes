@@ -1,0 +1,26 @@
+<view>
+  <view class='start-or-end-wrapper'>
+    <view class='start'>{{nameOfStartAndEnd.start}}</view>
+    <view class='btn-translate' bindtap='handleTransRoute'>返程</view>
+    <view class='end'>{{nameOfStartAndEnd.end}}</view>
+  </view>
+  <view class='content-wrapper'>
+    <view class='notify'>
+    {{timeMsg}}
+    </view>
+    <scroll-view scroll-y class='stations'>
+      <view class='station' wx:key="unique" wx:for="{{currentRouteStations}}">
+        <!-- <image class='avatar' src='{{item.avatar}}'></image> -->
+        <view class='circle' style='background-color:#{{item.color}}'>{{index + 1}}</view>
+        <text class='name'>{{item.name}}</text>
+        <view class='detail'>在此等候</view>
+      </view>
+    </scroll-view>
+    <view class='legend'>
+      <view class='stop'></view>
+      <text>进站</text>
+      <view class='en-route'></view>
+      <text>途中</text>
+    </view>
+  </view>
+</view>

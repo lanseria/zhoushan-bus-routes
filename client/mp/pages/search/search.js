@@ -27,7 +27,6 @@ Page({
         "content-type": "json"
       },
       success: function (res) {
-        console.log(res)
         if (res.statusCode === 200) {
           that.setData({
             hotKey: res.data.data
@@ -115,7 +114,6 @@ Page({
         "content-type": "json"
       },
       success: function (res) {
-        console.log(res)
         if (res.statusCode === 200) {
           that.setData({
             result: res.data.data

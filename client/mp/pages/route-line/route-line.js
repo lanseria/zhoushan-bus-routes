@@ -1,20 +1,90 @@
+const selectDownOrUp = ['down', 'up']
+const app = getApp()
+
+function delHtmlTag(str) {
+  return str.replace(/<[^>]+>/g, "");//去掉所有的html标记
+}
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    routeId: ''
+    routeId: '',
+    originRouteData: {},
+    downOrUp: selectDownOrUp[0],
+    currentRouteStations: [],
+    nameOfStartAndEnd: {},
+    timeMsg: ''
   },
-
+  watch: {//需要监听的字段
+    'downOrUp': function (value) {
+      const { downOrUp, originRouteData } = this.data
+      this.setData({
+        currentRouteStations: originRouteData[downOrUp]
+      })
+    },
+    'currentRouteStations': function (value) {
+      setTimeout(() => {
+        const { currentRouteStations } = this.data
+        const cLength = currentRouteStations.length
+        const nameOfStartAndEnd = {
+          start: currentRouteStations[0].name,
+          end: currentRouteStations[cLength - 1].name
+        }
+        this.setData({
+          nameOfStartAndEnd: nameOfStartAndEnd
+        })
+      }, 100)
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    app.initWatch(this)
     var that = this
     this.setData({
       routeId: options.id
     })
+    wx.request({
+      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/detail?rid='+this.data.routeId,
+      header: {
+        "content-type": "json"
+      },
+      success: function (res) {
+        if (res.statusCode === 200) {
+          const data = res.data.data
+          for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+              let element = data[key]
+              element = element.map((m, i) => {
+                return {
+                  color: '15b1ca',
+                  name: m
+                }
+              })
+              data[key] = element
+            }
+          }
+          that.setData({
+            originRouteData: data,
+            currentRouteStations: data[that.data.downOrUp]
+          })
+        }
+      }
+    })
+    const { routeId, downOrUp } = this.data
+    const query = {
+      lineName: routeId.substr(0, routeId.length - 1),
+      isUpDown: downOrUp === 'down' ? 1 : 0,
+      stationNum: 1
+    }
+    this._getThisStationInfo(query)
+    this.$getThisStationDetailInterval = setInterval(() => {
+      this._getThisStationInfo(query)
+    }, 5000)
   },
 
   /**
@@ -42,7 +112,7 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+    clearInterval(this.$getThisStationDetailInterval)
   },
 
   /**
@@ -64,5 +134,61 @@ Page({
    */
   onShareAppMessage: function () {
     
+  },
+  handleTransRoute: function () {
+    this._refreshCurrentLine()
+    const idx = selectDownOrUp.findIndex(m => m === this.data.downOrUp)
+    this.setData({
+      downOrUp: selectDownOrUp[1 - idx]
+    })
+  },
+  _refreshCurrentLine() {
+    const { currentRouteStations } = this.data
+    this.setData({
+      currentRouteStations: currentRouteStations.map((m, i) => {
+        return {
+          color: '15b1ca',
+          name: m.name
+        }
+      })
+    })
+  },
+  _getThisStationInfo (query) {
+    var that = this
+    wx.request({
+      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/getThisStation?',
+      data: query,
+      header: {
+        "content-type": "json"
+      },
+      success: function (res) {
+        if (res.statusCode === 200) {
+          const { buses, msg} = res.data.data
+          that.setData({
+            timeMsg: delHtmlTag(msg)
+          })
+          that._refreshCurrentLine()
+          buses.map(abus => {
+            const lastStation = parseInt(abus.lastStation)
+            const isStation = abus.isStation
+            const { currentRouteStations } = that.data
+            let color = ''
+            if (isStation === '1') {
+              color = 'ffcd32' // 途中
+              currentRouteStations[lastStation].color = color
+              that.setData({
+                currentRouteStations
+              })
+            } else {
+              color = '5fe27b' // 进站
+              currentRouteStations[lastStation - 1].color = color
+              that.setData({
+                currentRouteStations
+              })
+            }
+          })
+        }
+      }
+    })
   }
 })

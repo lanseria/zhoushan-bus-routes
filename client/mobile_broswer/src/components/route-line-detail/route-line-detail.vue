@@ -22,7 +22,7 @@
         <scroll v-if="currentRouteStations" :data="currentRouteStations" class="list" ref="list">
           <div class="all-stations">
             <div class="one-stataion" v-for="(item, index) in currentRouteStations" :key="index" @click="handleGetThisStationDetail(index)">
-              <img class="avatar" :src="item.avatar" />
+              <div class='circle' :style="`background-color:#${item.color}`">{{index + 1}}</div>
               <span class="name">{{item.name}}</span>
               <div class="detail">此站等候</div>
             </div>
@@ -46,8 +46,9 @@ import { getRouteLineDetail, getThisStationDetail } from '@/api/search'
 import { ERR_OK } from '@/api/config'
 
 const selectDownOrUp = ['down', 'up']
-function getAvatarUrl (text, color, height = 100, width = 100) {
-  return `https://dummyimage.com/${height}x${width}/${color}/FFF.png&text=${text}`
+
+function delHtmlTag (str) {
+  return str.replace(/<[^>]+>/g, '') // 去掉所有的html标记
 }
 
 export default {
@@ -96,19 +97,19 @@ export default {
   methods: {
     _getThisStationInfo (query) {
       getThisStationDetail(query).then(res => {
+        this._refreshCurrentLine()
         const buses = res.data.buses
-        this.timeMsg = res.data.msg
+        this.timeMsg = delHtmlTag(res.data.msg)
         buses.map(abus => {
           const lastStation = parseInt(abus.lastStation)
           const isStation = abus.isStation
           let color = ''
-          this._refreshCurrentLine()
           if (isStation === '1') {
             color = 'ffcd32' // 途中
-            this.originRouteData[this.downOrUp][lastStation + 1].avatar = getAvatarUrl(lastStation + 2, color)
+            this.originRouteData[this.downOrUp][lastStation].color = color
           } else {
             color = '5fe27b' // 进站
-            this.originRouteData[this.downOrUp][lastStation].avatar = getAvatarUrl(lastStation + 1, color)
+            this.originRouteData[this.downOrUp][lastStation].color = color
           }
         })
       })
@@ -123,8 +124,11 @@ export default {
       this.$router.back()
     },
     _refreshCurrentLine () {
-      this.originRouteData[this.downOrUp].forEach((m, i) => {
-        m.avatar = getAvatarUrl(i + 1, '15b1ca')
+      this.originRouteData[this.downOrUp] = this.originRouteData[this.downOrUp].map((m, i) => {
+        return {
+          ...m,
+          color: '15b1ca'
+        }
       })
     },
     _getRouteLineDetail (query) {
@@ -137,7 +141,7 @@ export default {
               let element = data[key]
               element = element.map((m, i) => {
                 return {
-                  avatar: getAvatarUrl(i + 1, '15b1ca'),
+                  color: '15b1ca',
                   name: m
                 }
               })
@@ -252,11 +256,17 @@ export default {
           display: flex
           align-items: center
           padding: 20px 0 0 30px
-          .avatar
+          .circle
             flex: 0 0 50px
             width: 50px
             height: 50px
             border-radius: 50%
+            vertical-align:middle
+            line-height: 50px
+            text-align:center
+            color: #fff
+            font-family: '微软雅黑'
+            font-size: 20px
           .name
             flex: 1
             margin-left: 20px
@@ -274,7 +284,6 @@ export default {
       color: $color-theme
       background-color: $color-dialog-background-o
       padding: 9px 14px
-      height: 28px
       width: 100%
       z-index 1
     .legend
