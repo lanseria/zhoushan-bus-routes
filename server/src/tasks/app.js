@@ -1,8 +1,8 @@
-import axios from 'axios';
-import * as _ from 'lodash';
-import cheerio from 'cheerio';
-import config from './config';
-import { readLineRoutesFile, writeLineRoutesFile, readStations, writeStations } from './json'
+const got = require('got');
+const _ = require('lodash');
+const cheerio = require('cheerio');
+const config = require('./config');
+const { readLineRoutesFile, writeLineRoutesFile, readStations, writeStations } = require('./json')
 
 const url = `${config.http}://${config.ip}:${config.port}/${config.inferface}/`;
 
@@ -15,10 +15,11 @@ const globalParam = {
   }
 }
 async function getLineRoute (param) {
-  const res = await axios.get(`${url}searchLine/getAutoCompleteLine.action`, {
-    params: param
+  const res = await got.get(`${url}searchLine/getAutoCompleteLine.action`, {
+    query: param
   })
-  const nowHaveLineRoutes = res.data;
+  const nowHaveLineRoutes = JSON.parse(res.body);
+  console.log(nowHaveLineRoutes)
   let lineRoutesData = readLineRoutesFile();
   const allLineRoutes = lineRoutesData.allLineRoutes;
   const LineRoutes = _.uniq(_.concat(nowHaveLineRoutes, allLineRoutes));
@@ -28,10 +29,10 @@ async function getLineRoute (param) {
 }
 
 async function getStateByLineRouteNumber (param) {
-  const res = await axios.get(`${url}initLinePage.action`, {
-    params: param
+  const res = await got.get(`${url}initLinePage.action`, {
+    query: param
   })
-  const $ = cheerio.load(res.data);
+  const $ = cheerio.load(res.body);
   const jquery = '.info_box .info_2 .info_2a a'
   const updown = [$(`#line-0>${jquery}`), $(`#line-1>${jquery}`)];
   const StateName = {up: [], down: []};
@@ -45,7 +46,7 @@ async function getStateByLineRouteNumber (param) {
 }
 
 // getLineRoute(globalparam)
-export async function getAllLineRoutes () {
+async function getAllLineRoutes () {
   const template1To100 = [...Array(100).keys()];
   for (const term of template1To100) {
     const { searchNumber } = globalParam;
@@ -59,7 +60,7 @@ export async function getAllLineRoutes () {
   }
 }
 // getStateByLineRouteNumber(globalParam.lineName);
-export async function getAllStateByLRN () {
+async function getAllStateByLRN () {
   let lineRoutesData = readLineRoutesFile();
   const allLineRoutes = lineRoutesData.allLineRoutes;
   for (const lineName of allLineRoutes) {
@@ -77,3 +78,6 @@ export async function getAllStateByLRN () {
     }
   }
 }
+
+// getAllLineRoutes()
+getAllStateByLRN()

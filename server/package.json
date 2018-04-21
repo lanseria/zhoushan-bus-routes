@@ -5,11 +5,15 @@
   "main": "app.js",
   "scripts": {
     "dev": "node ./src/app.js",
-    "test": "mocha"
+    "test": "mocha",
+    "task1": "babel-node ./src/tasks/app.mjs",
+    "exTask1": "node --experimental-modules ./src/tasks/app.mjs",
+    "build": "babel src --out-dir lib"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cheerio": "^1.0.0-rc.2",
     "got": "^8.3.0",
     "koa": "^2.5.0",
     "koa-jsonp": "^2.0.2",
@@ -17,8 +21,12 @@
     "supertest": "^3.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "chai": "^4.1.2",
     "mocha": "3.4.2",
     "mochawesome": "^2.3.1"

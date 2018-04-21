@@ -4,4 +4,4 @@ const config = {
   port: '10251',
   inferface: 'buswechat/weixin'
 }
-export default config;
+module.exports = config;

@@ -1,28 +1,28 @@
-import fs from 'fs';
-import path from 'path';
-import util from 'util';
+const fs = require('fs');
+const path = require('path');
+const util = require('util');
 
 const writeFile = util.promisify(fs.writeFile);
 
 const lineRoutefile = path.resolve(__dirname, './line_routes.json');
 const stationfile = path.resolve(__dirname, './stations.json');
 
-export function readLineRoutesFile () {
+exports.readLineRoutesFile = function () {
   return JSON.parse(fs.readFileSync(lineRoutefile));
 }
-export async function writeLineRoutesFile (jsonOfData) {
-  const err = await writeFile(lineRoutefile, JSON.stringify(jsonOfData));
+exports.writeLineRoutesFile = async function (jsonOfData) {
+  const err = await writeFile(lineRoutefile, JSON., null, 2(jsonOfData, null, 2));
   if (err) {
     return new Error('写文件失败');
   } else {
     return true;
   }
 }
-export function readStations () {
+exports.readStations = function () {
   return JSON.parse(fs.readFileSync(stationfile));
 }
-export async function writeStations (jsonOfData) {
-  const err = await writeFile(stationfile, JSON.stringify(jsonOfData));
+exports.writeStations = async function (jsonOfData) {
+  const err = await writeFile(stationfile, JSON.stringify(jsonOfData, null, 2));
   if (err) {
     return new Error('写文件失败');
   } else {
