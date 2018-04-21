@@ -11,7 +11,7 @@ exports.readLineRoutesFile = function () {
   return JSON.parse(fs.readFileSync(lineRoutefile));
 }
 exports.writeLineRoutesFile = async function (jsonOfData) {
-  const err = await writeFile(lineRoutefile, JSON., null, 2(jsonOfData, null, 2));
+  const err = await writeFile(lineRoutefile, JSON.stringify(jsonOfData, null, 2));
   if (err) {
     return new Error('写文件失败');
   } else {
