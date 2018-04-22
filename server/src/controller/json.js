@@ -11,7 +11,7 @@ exports.readIpRecordFile = function () {
 }
 
 exports.writeIpRecordFile = async function (jsonOfData) {
-  const err = await writeFile(ipRecord, JSON.stringify(jsonOfData));
+  const err = await writeFile(ipRecord, JSON.stringify(jsonOfData, null, 2));
   if (err) {
     return new Error('写文件失败');
   } else {
@@ -24,7 +24,7 @@ exports.readHotRoutesFile = function () {
 }
 
 exports.writeHotRoutesFile = async function (jsonOfData) {
-  const err = await writeFile(hotRoutes, JSON.stringify(jsonOfData));
+  const err = await writeFile(hotRoutes, JSON.stringify(jsonOfData, null, 2));
   if (err) {
     return new Error('写文件失败');
   } else {

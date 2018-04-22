@@ -1,1 +1,48 @@
-{"hotRoutes":[{"name":"A56路","count":"1"},{"name":"38路","count":1},{"name":"A38路","count":1}]}
+{
+  "hotRoutes": [
+    {
+      "name": "A56路",
+      "count": "1"
+    },
+    {
+      "name": "38路",
+      "count": 4
+    },
+    {
+      "name": "A38路",
+      "count": 7
+    },
+    {
+      "name": "C56路",
+      "count": 2
+    },
+    {
+      "name": "35路",
+      "count": 4
+    },
+    {
+      "name": "59路",
+      "count": 1
+    },
+    {
+      "name": "52路",
+      "count": 1
+    },
+    {
+      "name": "11路",
+      "count": 1
+    },
+    {
+      "name": "106路",
+      "count": 1
+    },
+    {
+      "name": "Z3路",
+      "count": 1
+    },
+    {
+      "name": "57路",
+      "count": 1
+    }
+  ]
+}
