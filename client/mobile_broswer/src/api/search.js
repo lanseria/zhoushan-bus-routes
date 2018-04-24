@@ -19,7 +19,7 @@ export function search (query) {
 export function getRouteLineDetail (query) {
   const url = baseUrl + '/detail'
   const data = Object.assign({}, {
-    rid: query
+    rid: encodeURIComponent(query)
   })
   return jsonp(url, data, options)
 }

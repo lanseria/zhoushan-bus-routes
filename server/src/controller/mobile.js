@@ -17,23 +17,39 @@ exports.detail = async function (ctx) {
   const { query, ip } = request
   // 记录路线热度，并排序 这里只有新的ip地址才可以新增热度路线
   const { ipRecord } = readIpRecordFile()
+  // 校验
+  let rid = ''
+  const idx = allLineRoutes.findIndex(m => m === query.rid)
+  if (idx < 0) {
+    const decodeRid = decodeURIComponent(query.rid)
+    const idx1 = allLineRoutes.findIndex(m => m === decodeRid)
+    if (idx1 < 0) {
+      console.log("使用 ascii编码")
+    } else {
+      console.log("使用 新编码", decodeRid)
+      rid = decodeRid
+    }
+  } else {
+    console.log("使用 旧编码")
+    rid = query.rid
+  }
   const ipIndex = ipRecord.findIndex(m => m.ip === ip)
   if (ipIndex >= 0) {
     ipRecord[ipIndex].count++
   } else {
     ipRecord.push({ ip, count: 1 })
     const { hotRoutes } = readHotRoutesFile()
-    const index = hotRoutes.findIndex(m => m.name === query.rid)
+    const index = hotRoutes.findIndex(m => m.name === rid)
     if (index >= 0) {
       hotRoutes[index].count ++
     } else {
-      hotRoutes.push({ name: query.rid, count: 1})
+      hotRoutes.push({ name: rid, count: 1})
     }
     writeHotRoutesFile({hotRoutes})
   }
   writeIpRecordFile({ipRecord})
 
-  ctx.body = PackagingData(stations[query.rid])
+  ctx.body = PackagingData(stations[rid])
 }
 
 exports.getHotKey = async function (ctx) {
