@@ -26,7 +26,7 @@ jobs:
         - echo -e "Host 115.159.27.203\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
         - pwd
       after_success:
-        - ssh root@115.159.27.203 "cd /var/www/node/zhoushan-bus-routes && git fetch && git pull && cd client/mobile_broswer && yarn && yarn build && cd ../.. && cd server && yarn && pm2 restart src/app.js && cd .. ; exit 0"
+        - ssh root@115.159.27.203 'bash -s' < deploy.sh
 
 notifications:
   email: false
