@@ -12,7 +12,6 @@ Page({
   watch: {//需要监听的字段
     'query': function (value) {
       this._debounce(this._getResult, 200)(this.data.query)
-      this._debounce()
     }
   },
   /**
@@ -20,20 +19,7 @@ Page({
    */
   onLoad: function (options) {
     app.initWatch(this)
-    var that = this;
-    wx.request({
-      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/getHotKey',
-      header: {
-        "content-type": "json"
-      },
-      success: function (res) {
-        if (res.statusCode === 200) {
-          that.setData({
-            hotKey: res.data.data
-          })
-        }
-      }
-    })
+    this._getHotKey()
   },
 
   /**
@@ -90,7 +76,7 @@ Page({
     })
   },
   addQuery: function (e) {
-    var query = e.currentTarget.dataset.query
+    const query = e.currentTarget.dataset.query
     this.setData({
       query: query
     })
@@ -101,21 +87,35 @@ Page({
     })
   },
   jumpToDetail: function (e) {
-    var id = e.currentTarget.dataset.routeId
+    const id = e.currentTarget.dataset.routeId
     wx.navigateTo({
-      url: '/pages/route-line/route-line?id=' + id
+      url: `/pages/route-line/route-line?id=${encodeURIComponent(id)}&downOrUp=down`
     })
   },
-  _getResult: function (q) {
-    var that = this
+  _getHotKey: function () {
     wx.request({
-      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/search?w='+q,
+      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/getHotKey',
       header: {
         "content-type": "json"
       },
-      success: function (res) {
+      success: (res) => {
         if (res.statusCode === 200) {
-          that.setData({
+          this.setData({
+            hotKey: res.data.data
+          })
+        }
+      }
+    })
+  },
+  _getResult: function (q) {
+    wx.request({
+      url: `https://api.limonplayer.cn/jsonp/zhoushanbus/search?w=${q}`,
+      header: {
+        "content-type": "json"
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          this.setData({
             result: res.data.data
           })
         }
