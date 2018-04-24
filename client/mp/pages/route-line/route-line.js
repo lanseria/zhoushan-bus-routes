@@ -46,35 +46,11 @@ Page({
     app.initWatch(this)
     var that = this
     this.setData({
-      routeId: options.id
+      routeId: decodeURIComponent(options.id),
+      downOrUp: decodeURIComponent(options.downOrUp)
     })
-    wx.request({
-      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/detail?rid=' + encodeURIComponent(this.data.routeId),
-      header: {
-        "content-type": "json"
-      },
-      success: function (res) {
-        if (res.statusCode === 200) {
-          const data = res.data.data
-          for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-              let element = data[key]
-              element = element.map((m, i) => {
-                return {
-                  color: '15b1ca',
-                  name: m
-                }
-              })
-              data[key] = element
-            }
-          }
-          that.setData({
-            originRouteData: data,
-            currentRouteStations: data[that.data.downOrUp]
-          })
-        }
-      }
-    })
+    this._getDetail()
+    wx.showNavigationBarLoading()
     const { routeId, downOrUp } = this.data
     const query = {
       lineName: routeId.substr(0, routeId.length - 1),
@@ -133,7 +109,17 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-    
+    return {
+      title: `公交等候状态：${this.data.routeId}: ${this.data.nameOfStartAndEnd.start}开往${this.data.nameOfStartAndEnd.end}`,
+      path: `/pages/route-line/route-line?id=${encodeURIComponent(this.data.routeId)}&downOrUp=${this.data.downOrUp}`,
+      success: () => {
+        wx.showToast({
+          title: '成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }
+    }
   },
   handleTransRoute: function () {
     this._refreshCurrentLine()
@@ -151,6 +137,39 @@ Page({
           name: m.name
         }
       })
+    })
+  },
+  _getDetail () {
+    wx.request({
+      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/detail?rid=' + encodeURIComponent(this.data.routeId),
+      header: {
+        "content-type": "json"
+      },
+      success: (res) => {
+        if (res.statusCode === 200) {
+          const data = res.data.data
+          for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+              let element = data[key]
+              element = element.map((m, i) => {
+                return {
+                  color: '15b1ca',
+                  name: m
+                }
+              })
+              data[key] = element
+            }
+          }
+          this.setData({
+            originRouteData: data,
+            currentRouteStations: data[this.data.downOrUp]
+          })
+          wx.setNavigationBarTitle({
+            title: this.data.routeId,
+          })
+          wx.hideNavigationBarLoading()
+        }
+      }
     })
   },
   _getThisStationInfo (query) {
