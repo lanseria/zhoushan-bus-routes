@@ -49,7 +49,7 @@ Page({
       routeId: options.id
     })
     wx.request({
-      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/detail?rid='+this.data.routeId,
+      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/detail?rid=' + encodeURIComponent(this.data.routeId),
       header: {
         "content-type": "json"
       },
