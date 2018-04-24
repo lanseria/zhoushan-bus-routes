@@ -24,7 +24,8 @@ exports.detail = async function (ctx) {
     const decodeRid = decodeURIComponent(query.rid)
     const idx1 = allLineRoutes.findIndex(m => m === decodeRid)
     if (idx1 < 0) {
-      console.log("使用 ascii编码")
+      console.log("使用 ascii编码", query.rid)
+      rid = query.rid.replace("è·¯", "路")
     } else {
       console.log("使用 新编码", decodeRid)
       rid = decodeRid
@@ -54,8 +55,7 @@ exports.detail = async function (ctx) {
 
 exports.getHotKey = async function (ctx) {
   let { hotRoutes } = readHotRoutesFile()
-  hotRoutes = _(hotRoutes).sortBy(['count']).reverse().map('name').value()
-  // hotRoutes = _.map(_.reverse(_.sortBy(hotRoutes, ['count'])), 'name')
+  hotRoutes = _(hotRoutes).sortBy(['count']).reverse().map('name').slice(0, 10).value()
   ctx.body = PackagingData(hotRoutes)
 }
 
