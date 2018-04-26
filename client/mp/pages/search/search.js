@@ -1,4 +1,5 @@
 const app = getApp()
+const { saveSearch, loadSearch, clearSearch, deleteSearch } = require('../../lib/util/cache.js')
 Page({
 
   /**
@@ -7,7 +8,8 @@ Page({
   data: {
     query: '',
     hotKey: [],
-    result: []
+    result: [],
+    searchHistory: []
   },
   watch: {//需要监听的字段
     'query': function (value) {
@@ -33,7 +35,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    
+    this.setData({
+      searchHistory: loadSearch()
+    })
+    console.log(this.data.searchHistory)
   },
 
   /**
@@ -86,8 +91,28 @@ Page({
       query: ''
     })
   },
+  deleteThisSearchHistory: function (e) {
+    const query = e.currentTarget.dataset.query
+    deleteSearch(query)
+    this.onShow()
+  },
+  showConfirm: function () {
+    wx.showModal({
+      title: '慢着！',
+      content: '是否清空清空所有搜索历史',
+      confirmText: '清空',
+      confirmColor: '#ffcd32',
+      success: (res) => {
+        if (res.confirm) {
+          clearSearch()
+          this.onShow()
+        }
+      }
+    })
+  },
   jumpToDetail: function (e) {
     const id = e.currentTarget.dataset.routeId
+    saveSearch(id)
     wx.navigateTo({
       url: `/pages/route-line/route-line?id=${encodeURIComponent(id)}&downOrUp=down`
     })
