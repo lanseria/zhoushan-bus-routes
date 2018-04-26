@@ -13,9 +13,6 @@ export function saveSearch (query) {
         key: SEARCH_KEY,
         data: searches
       });
-    },
-    fail: (e) => {
-      console.log(e)
     }
   })
 }
@@ -24,7 +21,6 @@ export function loadSearch() {
   try {
     const data = wx.getStorageSync(SEARCH_KEY)
     if (data) {
-      console.log(data)
       return data
     }
     wx.setStorage({
@@ -33,7 +29,6 @@ export function loadSearch() {
     });
     return []
   } catch (e) {
-    console.log(e)
     wx.setStorage({
       key: SEARCH_KEY,
       data: []

@@ -38,7 +38,6 @@ Page({
     this.setData({
       searchHistory: loadSearch()
     })
-    console.log(this.data.searchHistory)
   },
 
   /**

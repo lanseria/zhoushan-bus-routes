@@ -18,12 +18,12 @@
         <view class='search-history'>
           <view class='title'>
             <text class='text'>搜索历史</text>
-            <icon hidden='{{searchHistory.length===0}}' type='clear' bindtap='showConfirm' size='14' color='rgba(255,255,255,0.3)'></icon>
+            <icon hidden='{{searchHistory.length===0}}' type='clear' bindtap='showConfirm' size='18' color='rgba(255,255,255,0.3)'></icon>
           </view>
           <view class='search-list'>
             <view class='search-item' wx:key="unique" wx:for="{{searchHistory}}" bindtap='addQuery' data-query="{{item}}">
               <text class='text'>{{item}}</text>
-              <icon type='clear' catchtap='deleteThisSearchHistory' data-query="{{item}}" size='14' color='rgba(255,255,255,0.5)'></icon>
+              <icon type='clear' catchtap='deleteThisSearchHistory' data-query="{{item}}" size='18' color='rgba(255,255,255,0.5)'></icon>
             </view>
           </view>
         </view>
