@@ -1,0 +1,21 @@
+<view class="lab https" bindtap="enterIn">
+    <view class="status">
+      <icon wx:if="{{status != 'success'}}" type="{{status}}" size="70" />
+      <image wx:if="{{status == 'success'}}" src="{{avatarUrl}}" mode="aspectFill" />
+    </view>
+    <view class="hint">
+      <view class="line">{{hintLine1}}</view>
+      <view class="line">{{hintLine2}}</view>
+    </view>
+    <view class="intro">
+      <view class="name">{{name}}</view>
+      <view class="version">{{version}}</view>
+      <view class='detail' >更新内容：</view>
+      <view class='detail' wx:for="{{updateDetail}}" wx:key="unique">{{index+1}}、{{item}}</view>
+    </view>
+    <view class="command">
+      <view class='moto-container'>
+        <text class='moto'>开启小程序之旅</text>
+      </view>
+    </view>
+</view>

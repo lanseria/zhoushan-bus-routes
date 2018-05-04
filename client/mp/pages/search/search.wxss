@@ -52,6 +52,9 @@
   align-items: center;
   height: 80rpx;
   overflow: hidden;
+  border-radius:20rpx;
+  padding:0 20rpx;
+  margin-bottom: 15rpx;
 }
 .search-list .search-item .text {
   flex: 1;
@@ -79,12 +82,14 @@
 }
 .suggest scroll-view {
   height: 100%;
-  padding: 0 30px;
+  padding: 0 20px;
 }
 .suggest .suggest-list {
   display: flex;
   align-items: center;
-  padding-bottom: 40rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1px #eee solid;
+  margin-bottom: 20rpx;
 }
 .suggest .suggest-list icon {
   width: 60rpx;
