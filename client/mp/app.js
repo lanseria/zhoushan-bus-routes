@@ -1,4 +1,8 @@
 App({
+  config: {
+    host: 'sp.limonplayer.cn',
+    theme: 'light'
+  },
   initWatch(_page) {
     if (!_page) {
       console.error('未检测到Page对象,请将当前page传入该函数');

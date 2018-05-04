@@ -1,8 +1,8 @@
-<view class='container'>
+<view class='container' style='{{themeBackgroundColor}}'>
   <view class='search-box-wrapper'>
-    <view class='search-box'>
+    <view class='search-box' style='{{themeBackgroundColorL}}'>
       <icon type="search" color='#111'/>
-      <input class='box' confirm-type="send" placeholder="搜索路线" bindinput="bindKeyInput" value="{{query}}" auto-focus/>
+      <input class='box' style='{{themeColor}}' confirm-type="send" placeholder="搜索路线" bindinput="bindKeyInput" value="{{query}}" auto-focus/>
       <icon hidden='{{!query}}' type="cancel" color='#111' bindtap='clearQuery'/>
     </view>
   </view>
@@ -10,20 +10,20 @@
     <view class='shortcut'>
       <scroll-view scroll-y>
         <view class='hot-key'>
-          <text class='title'>热门搜索</text>
+          <text class='title' style='{{themeColor}}'>热门搜索</text>
           <view>
-            <text class='item' wx:key="unique" wx:for="{{hotKey}}" bindtap='addQuery' data-query="{{item}}">{{item}}</text>
+            <text class='item' style='{{themeBackgroundColorLWithColorL}}' wx:key="unique" wx:for="{{hotKey}}" bindtap='addQuery' data-query="{{item}}">{{item}}</text>
           </view>
         </view>
         <view class='search-history'>
           <view class='title'>
-            <text class='text'>搜索历史</text>
-            <icon hidden='{{searchHistory.length===0}}' type='clear' bindtap='showConfirm' size='18' color='rgba(255,255,255,0.3)'></icon>
+            <text class='text' style='{{themeColor}}'>搜索历史</text>
+            <text hidden='{{searchHistory.length===0}}' style='{{themeColor}}' bindtap='showConfirm'>清空</text>
           </view>
           <view class='search-list'>
-            <view class='search-item' wx:key="unique" wx:for="{{searchHistory}}" bindtap='addQuery' data-query="{{item}}">
-              <text class='text'>{{item}}</text>
-              <icon type='clear' catchtap='deleteThisSearchHistory' data-query="{{item}}" size='18' color='rgba(255,255,255,0.5)'></icon>
+            <view class='search-item' style='{{themeBackgroundColorL}}' wx:key="unique" wx:for="{{searchHistory}}" bindtap='addQuery' data-query="{{item}}">
+              <text class='text' style='{{themeColor}}'>{{item}}</text>
+              <icon type='clear' catchtap='deleteThisSearchHistory' data-query="{{item}}" size='18' color='{{iconColor}}'></icon>
             </view>
           </view>
         </view>
@@ -34,8 +34,8 @@
     <view class='suggest'>
       <scroll-view scroll-y>
         <view class='suggest-list' wx:for="{{result}}" wx:key="unique">
-          <icon type='download' color='#8c8b8b'></icon>
-          <text bindtap='jumpToDetail' data-route-id="{{item}}">{{item}}</text>
+          <icon type='download' color='{{iconColor}}'></icon>
+          <text bindtap='jumpToDetail' style='{{themeColor}}' data-route-id="{{item}}">{{item}}</text>
         </view>
       </scroll-view>
     </view>

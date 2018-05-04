@@ -1,5 +1,6 @@
 const selectDownOrUp = ['down', 'up']
 const app = getApp()
+const config = app.config
 
 function delHtmlTag(str) {
   return str.replace(/<[^>]+>/g, "");//去掉所有的html标记
@@ -11,6 +12,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    theme: config.theme,
+    themeBackgroundColor: '',
+    themeBackgroundColorL: '',
+    themeColor: '',
+    themeBackgroundColorLWithColorL: '',
+    iconColor: 'rgba(255,255,255,0.5)',
+
     routeId: '',
     originRouteData: {},
     downOrUp: selectDownOrUp[0],
@@ -43,6 +51,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.initTheme()
+
     app.initWatch(this)
     var that = this
     this.setData({
@@ -61,6 +72,22 @@ Page({
     this.$getThisStationDetailInterval = setInterval(() => {
       this._getThisStationInfo(query)
     }, 5000)
+  },
+
+  initTheme: function () {
+    if (this.data.theme === 'light') {
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#405f80',
+      })
+      this.setData({
+        themeBackgroundColor: 'background-color: #b3d4db',
+        themeBackgroundColorL: 'background-color: rgba(255, 255, 255, 0.5);',
+        themeColor: 'color: rgba(0, 0, 0, 0.5)',
+        themeBackgroundColorLWithColorL: 'color: rgba(0, 0, 0, 0.5);background-color:  rgba(255, 255, 255, 0.5);',
+        iconColor: 'rgba(0,0,0,0.5)'
+      })
+    }
   },
 
   /**
@@ -121,6 +148,15 @@ Page({
       }
     }
   },
+
+  jumpToDetail: function (e) {
+    const rid = e.currentTarget.dataset.routeId
+    const sid = e.currentTarget.dataset.stationId
+    wx.navigateTo({
+      url: `/pages/detail/detail?sid=${encodeURIComponent(sid)}&rid=${encodeURIComponent(rid)}&downOrUp=down`
+    })
+  },
+
   handleTransRoute: function () {
     this._refreshCurrentLine()
     const idx = selectDownOrUp.findIndex(m => m === this.data.downOrUp)

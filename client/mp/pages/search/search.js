@@ -1,4 +1,5 @@
 const app = getApp()
+const config = app.config
 const { saveSearch, loadSearch, clearSearch, deleteSearch } = require('../../lib/util/cache.js')
 Page({
 
@@ -6,6 +7,13 @@ Page({
    * 页面的初始数据
    */
   data: {
+    theme: config.theme,
+    themeBackgroundColor: '',
+    themeBackgroundColorL: '',
+    themeColor: '',
+    themeBackgroundColorLWithColorL: '',
+    iconColor: 'rgba(255,255,255,0.5)',
+
     query: '',
     hotKey: [],
     result: [],
@@ -20,8 +28,27 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    this.initTheme()
+
     app.initWatch(this)
     this._getHotKey()
+  },
+
+  initTheme: function () {
+    if (this.data.theme === 'light') {
+      wx.setNavigationBarColor({
+        frontColor: '#ffffff',
+        backgroundColor: '#405f80',
+      })
+      this.setData({
+        themeBackgroundColor: 'background-color: #b3d4db',
+        themeBackgroundColorL: 'background-color: rgba(255, 255, 255, 0.5);',
+        themeColor: 'color: rgba(0, 0, 0, 0.5)',
+        themeBackgroundColorLWithColorL: 'color: rgba(0, 0, 0, 0.5);background-color:  rgba(255, 255, 255, 0.5);',
+        iconColor: 'rgba(0,0,0,0.5)'
+      })
+    }
   },
 
   /**
