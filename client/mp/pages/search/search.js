@@ -42,7 +42,7 @@ Page({
         backgroundColor: '#405f80',
       })
       this.setData({
-        themeBackgroundColor: 'background-color: #b3d4db',
+        themeBackgroundColor: 'background-color: #eee',
         themeBackgroundColorL: 'background-color: rgba(255, 255, 255, 0.5);',
         themeColor: 'color: rgba(0, 0, 0, 0.5)',
         themeBackgroundColorLWithColorL: 'color: rgba(0, 0, 0, 0.5);background-color:  rgba(255, 255, 255, 0.5);',
