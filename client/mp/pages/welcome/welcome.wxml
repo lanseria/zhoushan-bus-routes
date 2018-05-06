@@ -1,7 +1,7 @@
 <view class="lab https" bindtap="enterIn">
     <view class="status">
-      <icon wx:if="{{status != 'success'}}" type="{{status}}" size="70" />
-      <image wx:if="{{status == 'success'}}" src="{{avatarUrl}}" mode="aspectFill" />
+      <image src="/images/logo.png" mode="aspectFill" />
+      <image class='avatar' wx:if="{{status == 'success'}}" src="{{avatarUrl}}" mode="aspectFill" />
     </view>
     <view class="hint">
       <view class="line">{{hintLine1}}</view>

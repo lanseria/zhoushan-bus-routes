@@ -88,7 +88,7 @@
   display: flex;
   align-items: center;
   padding-bottom: 20rpx;
-  border-bottom: 1px #eee solid;
+  border-bottom: 1px rgba(255,255,255,0.5) solid;
   margin-bottom: 20rpx;
 }
 .suggest .suggest-list icon {

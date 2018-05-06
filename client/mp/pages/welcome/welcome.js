@@ -16,7 +16,9 @@ Page({
     updateDetail: [
       "新增亮蓝色主题!!",
       "新增欢迎页（一次会话只会出现一次）",
-      "修复一些界面显示问题"
+      "修复一些界面显示问题",
+      "如有问题与建议可访问如下地址",
+      "https://github.com/Lanseria"
     ],
     version: "v1.9 Beta",
     url: 'https://' + config.host + '/me',
@@ -68,7 +70,7 @@ Page({
           if (res.data.openId) {
             this.setData({
               status: 'success',
-              hintLine1: 'Hello，',
+              hintLine1: 'Hello',
               hintLine2: res.data.nickName,
               avatarUrl: res.data.avatarUrl
             });
