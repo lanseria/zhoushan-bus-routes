@@ -47,7 +47,7 @@ async function getStateByLineRouteNumber (param) {
 
 // getLineRoute(globalparam)
 async function getAllLineRoutes () {
-  const template1To100 = [...Array(100).keys()];
+  const template1To100 = [...Array(120).keys()];
   for (const term of template1To100) {
     const { searchNumber } = globalParam;
     searchNumber.term = term;
