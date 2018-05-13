@@ -1,7 +1,20 @@
+const now = new Date();
+const hour = now.getHours();
+let helloWords = '';
+let isDark = true;
+if (hour < 6) { helloWords = '凌晨好！' }
+else if (hour < 9) { helloWords = '早上好！'; isDark = false }
+else if (hour < 12) { helloWords = '上午好！'; isDark = false }
+else if (hour < 14) { helloWords = '中午好！'; isDark = false }
+else if (hour < 17) { helloWords = '下午好！'; isDark = false }
+else if (hour < 19) { helloWords = '傍晚好！' }
+else if (hour < 22) { helloWords = '晚上好！' }
+else { helloWords = '夜里好！' } 
 App({
   config: {
     host: 'sp.limonplayer.cn',
-    theme: 'light'
+    theme: isDark ? 'dark' : 'light',
+    helloWords
   },
   initWatch(_page) {
     if (!_page) {

@@ -23,7 +23,7 @@ Page({
     version: "v1.9 Beta",
     url: 'https://' + config.host + '/me',
     requesting: false,
-    hintLine1: '完成服务器开发，',
+    hintLine1: config.helloWords,
     hintLine2: '让服务器可以识别小程序会话'
   },
 
@@ -58,7 +58,6 @@ Page({
     this.setData({
       requesting: true,
       status: 'waiting',
-      hintLine1: '正在发送',
       hintLine2: '...'
     });
     wafer.request({
@@ -70,7 +69,7 @@ Page({
           if (res.data.openId) {
             this.setData({
               status: 'success',
-              hintLine1: 'Hello',
+              // hintLine1: 'Hello',
               hintLine2: res.data.nickName,
               avatarUrl: res.data.avatarUrl
             });
@@ -78,7 +77,6 @@ Page({
           } else {
             this.setData({
               status: 'warn',
-              hintLine1: '会话获取失败',
               hintLine2: '未获取到 openId'
             });
             console.error('会话获取失败', res.data);
@@ -86,7 +84,6 @@ Page({
         } else {
           this.setData({
             status: 'warn',
-            hintLine1: '响应错误',
             hintLine2: '响应码：' + res.statusCode
           });
         }
