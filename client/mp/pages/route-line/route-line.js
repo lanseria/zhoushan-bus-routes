@@ -71,7 +71,7 @@ Page({
     this._getThisStationInfo(query)
     this.$getThisStationDetailInterval = setInterval(() => {
       this._getThisStationInfo(query)
-    }, 5000)
+    }, 10000)
   },
 
   initTheme: function () {
@@ -241,6 +241,12 @@ Page({
                 currentRouteStations
               })
             }
+          })
+        } else if (res.statusCode === 500) {
+          wx.showToast({
+            title: '获取失败，服务未响应',
+            icon: 'none',
+            duration: 2000
           })
         }
       }
