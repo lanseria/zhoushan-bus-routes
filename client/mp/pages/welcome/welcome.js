@@ -18,7 +18,8 @@ Page({
       "新增欢迎页（一次会话只会出现一次）",
       "修复一些界面显示问题",
       "如有问题与建议可访问如下地址",
-      "https://github.com/Lanseria"
+      "https://github.com/Lanseria",
+      "本小程序是官方服务的转发，如果官方服务出错，小程序也无法正确获取数据"
     ],
     version: "v1.9 Beta",
     url: 'https://' + config.host + '/me',
