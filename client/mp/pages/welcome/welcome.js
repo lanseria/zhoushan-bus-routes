@@ -25,14 +25,14 @@ Page({
     url: 'https://' + config.host + '/me',
     requesting: false,
     hintLine1: config.helloWords,
-    hintLine2: '让服务器可以识别小程序会话'
+    hintLine2: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.request()
+    // this.request()
   },
 
   /**
