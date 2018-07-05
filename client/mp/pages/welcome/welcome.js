@@ -14,15 +14,13 @@ Page({
     status: 'waiting',
     name: '舟山公交实时状态查询小程序',
     updateDetail: [
-      "新增亮蓝色主题!!",
-      "新增欢迎页（一次会话只会出现一次）",
-      "修复一些界面显示问题",
+      "更换为iOS API",
       "如有问题与建议可访问如下地址",
       "https://github.com/Lanseria",
       "本小程序是官方服务的转发，如果官方服务出错，小程序也无法正确获取数据"
     ],
-    version: "v1.9 Beta",
-    url: 'https://' + config.host + '/me',
+    version: "v1.9.9 Beta",
+    // url: 'https://' + config.host + '/me',
     requesting: false,
     hintLine1: config.helloWords,
     hintLine2: ''
@@ -39,14 +37,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-    
+
   },
 
   enterIn () {
@@ -55,7 +53,7 @@ Page({
     })
   },
 
-  request() {
+  request () {
     this.setData({
       requesting: true,
       status: 'waiting',
