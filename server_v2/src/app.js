@@ -9,7 +9,7 @@ const app = new Koa();
 app.proxy = true;
 
 app.use(jsonp());
-app.use();
+app.use(router.routes()).use(router.allowedMethods());
 
 module.exports = app.listen(port, () => {
   console.log(`app is listening at port ${port}\n舟山公交API服务Version_2`)
