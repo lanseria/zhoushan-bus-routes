@@ -1,7 +1,9 @@
 const got = require('got');
 const config = require('./config');
 
-const { gotHostPrefix } = config;
+const {
+  gotHostPrefix
+} = config;
 
 exports.getFromServer = async function (interface, query) {
   const url = gotHostPrefix + interface;
@@ -12,6 +14,6 @@ exports.getFromServer = async function (interface, query) {
     },
     query: query
   })
-  console.log(response.body);
+  // console.log(response.body);
   return response.body;
 }

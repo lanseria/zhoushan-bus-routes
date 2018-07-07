@@ -28,7 +28,7 @@
 ```js
 const allLineSchema = new Schema({
   <object_id>,
-  content: Schema.Types.Mixed,
+  content: String, //格式化的JSON
   created_time: { type: Date, default: Date.now },
   updated_time: { type: Date, default: Date.now },
   area_id: Number
