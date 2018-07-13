@@ -134,3 +134,29 @@ const lineSchema = new Schema({
 **其他API**
 
 **4. 获取公交新闻信息**
+
+**设计API**
+
+**1. 所有线路**
+
+- API Name: `/all_line`
+
+- Methods: `GET`
+
+**2. 缓存热点路线**
+
+- API Name: `/hot_key`
+
+- Methods: `GET`
+
+**3. 某线路查询**
+
+- API Name: `/line`
+
+- Methods: `GET`
+
+**4. 获取公交状态**
+
+- API Name: `/bus_waiting`
+
+- Methods: `GET`
