@@ -8,6 +8,11 @@ const {
   getAllLineToWrite
 } = require('./action');
 
+const {
+  DataProcess,
+  DataProcessByDB
+} = require('./data_process');
+
 exports.getAllLine = async function (ctx) {
   const {
     request
@@ -15,15 +20,9 @@ exports.getAllLine = async function (ctx) {
   const {
     query
   } = request;
-  let content = await getAllLineToRead();
-  // console.log(content);
-  if (!content) {
-    content = await getAllLineToWrite(query);
-    console.log('from web');
-  } else {
-    console.log('from local');
-  }
-  ctx.body = content;
+  const content = await getAllLineToRead();
+  const body = await DataProcessByDB(content, getAllLineToWrite, query);
+  ctx.body = body;
 }
 
 exports.getHotKey = async function (ctx) {

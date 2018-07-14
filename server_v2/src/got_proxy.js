@@ -20,35 +20,13 @@ const gotConfig = {
   }
 }
 
-const nullResponseCallData = (message) => {
-  return {
-    httpcode: 0,
-    code: -1,
-    message,
-    data: {}
-  }
-}
-
-const fillResponseCallData = (message, data) => {
-  return {
-    httpcode: 0,
-    code: -1,
-    message,
-    data
-  }
-}
-
 exports.getFromServer = async function (apiUrl, query) {
   const url = gotHostPrefix + apiUrl;
   const response = await got.get(url, {
     ...gotConfig,
     query: query
   })
-  if (response.body) {
-    return fillResponseCallData('OK', response.body);
-  } else {
-    return nullResponseCallData('NOT OK')
-  }
+  return response;
 }
 
 exports.postFromServer = async function (apiUrl, querystring) {
@@ -60,9 +38,5 @@ exports.postFromServer = async function (apiUrl, querystring) {
     },
     body: querystring,
   })
-  if (response.body) {
-    return fillResponseCallData('OK', response.body);
-  } else {
-    return nullResponseCallData('NOT OK')
-  }
+  return response;
 }
