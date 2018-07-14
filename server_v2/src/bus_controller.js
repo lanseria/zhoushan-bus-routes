@@ -1,6 +1,7 @@
 // const _ = require('lodash');
 const {
-  getFromServer
+  getFromServer,
+  postFromServer
 } = require('./got_proxy');
 const {
   getAllLineToRead,
@@ -40,9 +41,9 @@ exports.getLine = async function (ctx) {
     request
   } = ctx;
   const {
-    query
+    querystring
   } = request;
-  ctx.body = await getFromServer('/line!getAllLines.action', query);
+  ctx.body = await postFromServer('/line!getLine.action', querystring);
 }
 
 exports.getBusWaiting = async function (ctx) {
