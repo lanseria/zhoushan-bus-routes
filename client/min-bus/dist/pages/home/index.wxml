@@ -1,0 +1,28 @@
+<view>
+    <layout-head _pid="{{_pid}}"></layout-head>
+
+    <!-- wxp template -->
+    <view>
+        <view class="index-hd">
+            <view class="container">
+                <view class="button-small-wrap">
+                    <wxc-button btnStyle="{{style}}" _pid="{{_pid}}">舟山
+                        <wxc-icon color="#000" type="arrow-down" _pid="{{_pid}}"></wxc-icon>
+                    </wxc-button>
+                </view>
+            </view>
+        </view>
+
+        <view class="index-bd">
+            <view class="search-wrap">
+                <wxc-search class="search" radius="30" mode="static" placeholder="搜索公交线路、车站、地点" _pid="{{_pid}}"></wxc-search>
+            </view>
+        </view>
+
+        <view class="index-ft">
+            <view class="provider">Created by Min</view>
+        </view>
+    </view>
+
+    <layout-foot _pid="{{_pid}}"></layout-foot>
+</view>

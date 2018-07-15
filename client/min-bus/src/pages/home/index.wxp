@@ -1,0 +1,115 @@
+<template>
+  <view>
+    <view class="index-hd">
+      <view class="container">
+        <view class="button-small-wrap">
+          <wxc-button btnStyle="{{style}}">舟山<wxc-icon color="#000" type="arrow-down"></wxc-icon></wxc-button>
+        </view>
+      </view>
+    </view>
+
+    <view class="index-bd">
+      <view class="search-wrap">
+        <wxc-search class="search" radius="30" mode="static" placeholder="搜索公交线路、车站、地点"></wxc-search>
+      </view>
+    </view>
+
+    <view class="index-ft">
+      <view class="provider">Created by Min</view>
+    </view>
+  </view>
+
+</template>
+
+<script>
+export default {
+  config: {
+    usingComponents: {
+      'wxc-button': '@minui/wxc-button',
+      'wxc-icon': '@minui/wxc-icon',
+      'wxc-search': '@minui/wxc-search'
+    }
+  },
+  data: {
+    style: 'background: #fff;border-radius: 66rpx;color: #000;'
+  },
+  /** note: 在 wxp 文件或者页面文件中请去掉 methods 包装 */
+  methods: {
+    onSubmit(e) {
+      console.log(e.detail.formId)
+    }
+  }
+}
+</script>
+
+<style>
+.index-hd {
+  /* padding: 70rpx; */
+  text-align: center;
+}
+.index-bd {
+  color: #fff;
+}
+.index-ft {
+  padding-bottom: 20rpx;
+  text-align: center;
+}
+.container {
+  width: 100%;
+  padding-top: 10rpx;
+  background: #fff;
+  text-align: center;
+}
+.container:after {
+  display: block;
+  content: " ";
+  clear:both;
+  visibility:hidden;
+  height:0;
+}
+.title {
+  line-height: 50rpx;
+  margin-left:35rpx;
+  margin-bottom:10rpx;
+  text-align:left;
+  font-weight: bold;
+  font-size: 30rpx;
+  color: #333;
+}
+.button-small-wrap {
+  margin:0 0 10rpx 0;
+  float: left;
+}
+.search-wrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 90rpx;
+  color: #fff;
+  background: #fff;
+}
+.search-location {
+  height: 90rpx;
+  line-height: 90rpx;
+  margin-left: 22rpx;
+  font-size: 26rpx;
+  overflow: hidden;
+}
+.search {
+  flex-grow: 1;
+  margin: 15rpx 24rpx;
+}
+.search-icon {
+  width: 44rpx;
+  height: 90rpx;
+  line-height: 90rpx;
+  margin-right: 22rpx;
+}
+.provider {
+  position: fixed;
+  width: 100%;
+  bottom: 120rpx;
+  color: #a9a9a9;
+  text-align: center;
+}
+</style>

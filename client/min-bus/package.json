@@ -1,0 +1,28 @@
+{
+  "name": "min-bus",
+  "description": "公交状态查询-小程序",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Lanseria/zhoushan-bus-routes.git"
+  },
+  "author": "Lanseria",
+  "license": "MIT",
+  "dependencies": {
+    "@minui/wxc-button": "^1.0.2",
+    "@minui/wxc-flex": "^1.0.6",
+    "@minui/wxc-icon": "^1.0.9",
+    "@minui/wxc-notice": "^1.0.1",
+    "@minui/wxc-search": "^1.0.1"
+  },
+  "devDependencies": {
+    "babel-plugin-syntax-export-extensions": "^6.13.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-export-extensions": "^6.22.0",
+    "babel-preset-env": "^1.6.1"
+  },
+  "minConfig": {
+    "projectType": "application"
+  }
+}

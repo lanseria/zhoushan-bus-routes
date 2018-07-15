@@ -1,0 +1,57 @@
+<template>
+  <view class="foot">
+    <view class="item">
+      <wxc-icon size="50" type="home"></wxc-icon>
+      <text class="icon_type">首页</text>
+    </view>
+    <view class="item">
+      <wxc-icon size="50" type="location"></wxc-icon>
+      <text class="icon_type">位置</text>
+    </view>
+    <view class="item">
+      <wxc-icon size="50" type="share"></wxc-icon>
+      <text class="icon_type">分享</text>
+    </view>
+    <view class="item">
+      <wxc-icon size="50" type="group"></wxc-icon>
+      <text class="icon_type">用户</text>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  config: {
+    usingComponents: {
+      'wxc-flex': '@minui/wxc-flex',
+      'wxc-icon': '@minui/wxc-icon'
+    }
+  },
+  data: {},
+  methods: {}
+}
+</script>
+
+<style>
+.foot {
+  height: 100rpx;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+}
+.item {
+  flex: 1;
+  width: 100%;
+  margin-bottom: 10rpx;
+  overflow: hidden;
+  text-align: center;
+}
+.icon_type {
+  display: block;
+  font-size: 22rpx;
+}
+</style>
