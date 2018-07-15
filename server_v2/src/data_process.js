@@ -26,10 +26,10 @@ exports.DataProcess = function (data, message) {
   }
 }
 
-exports.DataProcessByDB = async function (content, func, query) {
+exports.DataProcessByDB = async function (content, query, func1, func2) {
   if (!content) {
-    const res =  await func(query);
-    return fillResponseCallData(content, 'OK AND FROM WEB')
+    const res =  await func1(query, func2);
+    return fillResponseCallData(res, 'OK AND FROM WEB')
   } else {
     return fillResponseCallData(content, 'OK AND FROM LOCAL')
   }

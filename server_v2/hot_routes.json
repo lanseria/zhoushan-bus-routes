@@ -1,0 +1,356 @@
+{
+  "hotRoutes": [
+    {
+      "name": "A56路",
+      "count": 3
+    },
+    {
+      "name": "38路",
+      "count": 37
+    },
+    {
+      "name": "A38路",
+      "count": 20
+    },
+    {
+      "name": "C56路",
+      "count": 9
+    },
+    {
+      "name": "35路",
+      "count": 51
+    },
+    {
+      "name": "59路",
+      "count": 18
+    },
+    {
+      "name": "52路",
+      "count": 23
+    },
+    {
+      "name": "11路",
+      "count": 29
+    },
+    {
+      "name": "106路",
+      "count": 97
+    },
+    {
+      "name": "Z3路",
+      "count": 9
+    },
+    {
+      "name": "57路",
+      "count": 20
+    },
+    {
+      "name": "34路",
+      "count": 54
+    },
+    {
+      "name": "25路",
+      "count": 66
+    },
+    {
+      "name": "89路",
+      "count": 39
+    },
+    {
+      "name": "29路",
+      "count": 63
+    },
+    {
+      "name": "28路",
+      "count": 156
+    },
+    {
+      "name": "3路",
+      "count": 19
+    },
+    {
+      "name": "37路",
+      "count": 68
+    },
+    {
+      "name": "Y2路",
+      "count": 13
+    },
+    {
+      "name": "21路",
+      "count": 76
+    },
+    {
+      "name": "58路",
+      "count": 11
+    },
+    {
+      "name": "A52路",
+      "count": 5
+    },
+    {
+      "name": "Y3路",
+      "count": 23
+    },
+    {
+      "name": "43路",
+      "count": 19
+    },
+    {
+      "name": "81路",
+      "count": 20
+    },
+    {
+      "name": "51路",
+      "count": 48
+    },
+    {
+      "name": "53路",
+      "count": 34
+    },
+    {
+      "name": "15路",
+      "count": 21
+    },
+    {
+      "name": "31路",
+      "count": 59
+    },
+    {
+      "name": "22路",
+      "count": 49
+    },
+    {
+      "name": "101路",
+      "count": 7
+    },
+    {
+      "name": "Z1路",
+      "count": 9
+    },
+    {
+      "name": "16路",
+      "count": 45
+    },
+    {
+      "name": "55路",
+      "count": 7
+    },
+    {
+      "name": "7路",
+      "count": 20
+    },
+    {
+      "name": "56路",
+      "count": 16
+    },
+    {
+      "name": "87路",
+      "count": 8
+    },
+    {
+      "name": "330路",
+      "count": 5
+    },
+    {
+      "name": "27路",
+      "count": 79
+    },
+    {
+      "name": "9路",
+      "count": 18
+    },
+    {
+      "name": "61路",
+      "count": 25
+    },
+    {
+      "name": "64路",
+      "count": 24
+    },
+    {
+      "name": "88路",
+      "count": 20
+    },
+    {
+      "name": "322路",
+      "count": 19
+    },
+    {
+      "name": "39路",
+      "count": 10
+    },
+    {
+      "name": "33路",
+      "count": 93
+    },
+    {
+      "name": "62路",
+      "count": 14
+    },
+    {
+      "name": "50路",
+      "count": 40
+    },
+    {
+      "name": "60路",
+      "count": 4
+    },
+    {
+      "name": "36路",
+      "count": 5
+    },
+    {
+      "name": "Y1路",
+      "count": 26
+    },
+    {
+      "name": "2路",
+      "count": 32
+    },
+    {
+      "name": "A57路",
+      "count": 1
+    },
+    {
+      "name": "B1路",
+      "count": 11
+    },
+    {
+      "name": "32路",
+      "count": 29
+    },
+    {
+      "name": "17路",
+      "count": 16
+    },
+    {
+      "name": "1路",
+      "count": 16
+    },
+    {
+      "name": "12路",
+      "count": 14
+    },
+    {
+      "name": "A25路",
+      "count": 11
+    },
+    {
+      "name": "6路",
+      "count": 8
+    },
+    {
+      "name": "310路",
+      "count": 6
+    },
+    {
+      "name": "69路",
+      "count": 7
+    },
+    {
+      "name": "103路",
+      "count": 5
+    },
+    {
+      "name": "506路",
+      "count": 2
+    },
+    {
+      "name": "18路",
+      "count": 1
+    },
+    {
+      "name": "315路",
+      "count": 1
+    },
+    {
+      "name": "A35路",
+      "count": 3
+    },
+    {
+      "name": "68路",
+      "count": 5
+    },
+    {
+      "name": "66路",
+      "count": 4
+    },
+    {
+      "name": "319路",
+      "count": 7
+    },
+    {
+      "name": "505路",
+      "count": 2
+    },
+    {
+      "name": "30路",
+      "count": 2
+    },
+    {
+      "name": "8路",
+      "count": 3
+    },
+    {
+      "name": "563路",
+      "count": 6
+    },
+    {
+      "name": "72路",
+      "count": 1
+    },
+    {
+      "name": "Z2路",
+      "count": 3
+    },
+    {
+      "name": "102路",
+      "count": 2
+    },
+    {
+      "name": "X1路",
+      "count": 1
+    },
+    {
+      "name": "565路",
+      "count": 5
+    },
+    {
+      "name": "42路",
+      "count": 2
+    },
+    {
+      "name": "115路",
+      "count": 3
+    },
+    {
+      "name": "G1路",
+      "count": 1
+    },
+    {
+      "name": "317路",
+      "count": 1
+    },
+    {
+      "name": "502路",
+      "count": 2
+    },
+    {
+      "name": "M1路",
+      "count": 1
+    },
+    {
+      "name": "503路",
+      "count": 1
+    },
+    {
+      "name": "71路",
+      "count": 1
+    },
+    {
+      "name": "C60路",
+      "count": 1
+    }
+  ]
+}

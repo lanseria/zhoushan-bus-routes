@@ -1,4 +1,6 @@
-// const _ = require('lodash');
+const fs = require('fs');
+const path = require('path');
+const _ = require('lodash');
 const {
   getFromServer,
   postFromServer
@@ -20,9 +22,10 @@ exports.getAllLine = async function (ctx) {
   const {
     query
   } = request;
-  const content = await getAllLineToRead();
-  const body = await DataProcessByDB(content, getAllLineToWrite, query);
-  ctx.body = body;
+  // const content = await getAllLineToRead();
+  // const body = await DataProcessByDB(content, query, getAllLineToWrite, getFromServer);
+  const response = await getFromServer('/line!getAllLines.action', query);
+  ctx.body = DataProcess(response.body, 'OK - getAllLine');
 }
 
 exports.getHotKey = async function (ctx) {
@@ -32,7 +35,11 @@ exports.getHotKey = async function (ctx) {
   const {
     query
   } = request;
-  ctx.body = await getFromServer('/line!getAllLines.action', query);
+  let {
+    hotRoutes
+  } = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../hot_routes.json')));
+  hotRoutes = _(hotRoutes).sortBy(['count']).reverse().map('name').slice(0, 10).value();
+  ctx.body = DataProcess(hotRoutes, 'OK - getHotKey');
 }
 
 exports.getLine = async function (ctx) {
@@ -42,7 +49,8 @@ exports.getLine = async function (ctx) {
   const {
     querystring
   } = request;
-  ctx.body = await postFromServer('/line!getLine.action', querystring);
+  const response = await postFromServer('/line!getLine.action', querystring);
+  ctx.body = DataProcess(response.body, 'OK - getLine');
 }
 
 exports.getBusWaiting = async function (ctx) {
@@ -50,7 +58,8 @@ exports.getBusWaiting = async function (ctx) {
     request
   } = ctx;
   const {
-    query
+    querystring
   } = request;
-  ctx.body = await getFromServer('/line!getAllLines.action', query);
+  const response = await postFromServer('/bus!getBusWaiting.action', querystring);
+  ctx.body = DataProcess(response.body, 'OK - getBusWaiting');
 }

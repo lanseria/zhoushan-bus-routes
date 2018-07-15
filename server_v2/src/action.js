@@ -17,7 +17,7 @@ exports.getAllLineToRead = async function () {
   return allLine.content
 }
 
-exports.getAllLineToWrite = async function (query) {
+exports.getAllLineToWrite = async function (query, getFromServer) {
   const content = await getFromServer('/line!getAllLines.action', query);
   // const contentParse = JSON.parse(content);
   // const contentLength = contentParse.length;
