@@ -37,14 +37,14 @@
   background: #222;
 }
 .notify {
+  display:block;
   position: fixed;
   z-index: 10000;
   font-size: 28rpx;
   color: #ffcd32;
   background-color: hsla(0, 0%, 40%, .78);
   padding: 9px 14px;
-  height: 40rpx;
-  width: 100vw;
+  overflow-wrap: normal;
 }
 .stations {
   position: fixed;

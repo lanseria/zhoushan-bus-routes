@@ -17,11 +17,12 @@ Page({
     query: '',
     hotKey: [],
     result: [],
+    allResult: [],
     searchHistory: []
   },
   watch: {//需要监听的字段
     'query': function (value) {
-      this._debounce(this._getResult, 200)(this.data.query)
+      this._debounce(this._getRes, 200)(this.data.query)
     }
   },
   /**
@@ -32,6 +33,7 @@ Page({
     this.initTheme()
 
     app.initWatch(this)
+    this._getResult()
     this._getHotKey()
   },
 
@@ -65,41 +67,6 @@ Page({
     this.setData({
       searchHistory: loadSearch()
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-    
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-    
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-    
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-    
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-    
   },
   bindKeyInput: function (e) {
     this.setData({
@@ -140,12 +107,12 @@ Page({
     const id = e.currentTarget.dataset.routeId
     saveSearch(id)
     wx.navigateTo({
-      url: `/pages/route-line/route-line?id=${encodeURIComponent(id)}&downOrUp=down`
+      url: `/pages/route-line/route-line?id=${encodeURIComponent(id)}&isUpDown=0`
     })
   },
   _getHotKey: function () {
     wx.request({
-      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/getHotKey',
+      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/hot_key',
       header: {
         "content-type": "json"
       },
@@ -158,16 +125,25 @@ Page({
       }
     })
   },
-  _getResult: function (q) {
+  _getRes: function () {
+    const r = this.data.allResult.filter(m => {
+      return m.line_name.indexOf(this.data.query) >= 0
+    })
+    console.log(r)
+    this.setData({
+      result: r
+    })
+  },
+  _getResult: function () {
     wx.request({
-      url: `https://api.limonplayer.cn/jsonp/zhoushanbus/search?w=${q}`,
+      url: `https://api.limonplayer.cn/jsonp/zhoushanbus/all_line`,
       header: {
         "content-type": "json"
       },
       success: (res) => {
         if (res.statusCode === 200) {
           this.setData({
-            result: res.data.data
+            allResult: JSON.parse(res.data.data)
           })
         }
       }

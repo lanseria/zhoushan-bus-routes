@@ -1,10 +1,6 @@
-const selectDownOrUp = ['down', 'up']
+// const selectDownOrUp = ['down', 'up']
 const app = getApp()
 const config = app.config
-
-function delHtmlTag(str) {
-  return str.replace(/<[^>]+>/g, "");//去掉所有的html标记
-}
 
 Page({
 
@@ -21,18 +17,13 @@ Page({
 
     routeId: '',
     originRouteData: {},
-    downOrUp: selectDownOrUp[0],
+    isUpDown: 0,
     currentRouteStations: [],
     nameOfStartAndEnd: {},
+    templateMsg: '',
     timeMsg: ''
   },
   watch: {//需要监听的字段
-    'downOrUp': function (value) {
-      const { downOrUp, originRouteData } = this.data
-      this.setData({
-        currentRouteStations: originRouteData[downOrUp]
-      })
-    },
     'currentRouteStations': function (value) {
       setTimeout(() => {
         const { currentRouteStations } = this.data
@@ -58,14 +49,14 @@ Page({
     var that = this
     this.setData({
       routeId: decodeURIComponent(options.id),
-      downOrUp: decodeURIComponent(options.downOrUp)
+      isUpDown: decodeURIComponent(options.isUpDown)
     })
     this._getDetail()
     wx.showNavigationBarLoading()
-    const { routeId, downOrUp } = this.data
+    const { routeId, isUpDown } = this.data
     const query = {
-      lineName: routeId.substr(0, routeId.length - 1),
-      isUpDown: downOrUp === 'down' ? 1 : 0,
+      lineName: encodeURIComponent(this.data.routeId),
+      isUpDown: this.data.isUpDown,
       stationNum: 1
     }
     this._getThisStationInfo(query)
@@ -138,7 +129,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: `公交等候状态：${this.data.routeId}: ${this.data.nameOfStartAndEnd.start}开往${this.data.nameOfStartAndEnd.end}`,
-      path: `/pages/route-line/route-line?id=${encodeURIComponent(this.data.routeId)}&downOrUp=${this.data.downOrUp}`,
+      path: `/pages/route-line/route-line?id=${encodeURIComponent(this.data.routeId)}&isUpDown=${this.data.isUpDown}`,
       success: () => {
         wx.showToast({
           title: '成功',
@@ -153,16 +144,16 @@ Page({
     const rid = e.currentTarget.dataset.routeId
     const sid = e.currentTarget.dataset.stationId
     wx.navigateTo({
-      url: `/pages/detail/detail?sid=${encodeURIComponent(sid)}&rid=${encodeURIComponent(rid)}&downOrUp=down`
+      url: `/pages/detail/detail?sid=${encodeURIComponent(sid)}&rid=${encodeURIComponent(rid)}&isUpDown=${this.data.isUpDown}`
     })
   },
 
   handleTransRoute: function () {
     this._refreshCurrentLine()
-    const idx = selectDownOrUp.findIndex(m => m === this.data.downOrUp)
     this.setData({
-      downOrUp: selectDownOrUp[1 - idx]
+      isUpDown: 1 - this.data.isUpDown < 0 ? 0 : 1 - this.data.isUpDown
     })
+    this._getDetail()
   },
   _refreshCurrentLine() {
     const { currentRouteStations } = this.data
@@ -177,29 +168,44 @@ Page({
   },
   _getDetail () {
     wx.request({
-      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/detail?rid=' + encodeURIComponent(this.data.routeId),
+      url: `https://api.limonplayer.cn/jsonp/zhoushanbus/line?lineName=${encodeURIComponent(this.data.routeId)}&isUpDown=${this.data.isUpDown}`,
       header: {
         "content-type": "json"
       },
       success: (res) => {
         if (res.statusCode === 200) {
-          const data = res.data.data
-          for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-              let element = data[key]
-              element = element.map((m, i) => {
-                return {
-                  color: '15b1ca',
-                  name: m
-                }
-              })
-              data[key] = element
-            }
+          const data = JSON.parse(res.data.data);
+          const { stations } = data;
+          // console.log(data)
+          // console.log(stations);
+          const ele = [];
+          for( const i of stations) {
+            // console.log(i);
+            ele.push({
+              ...i,
+              color: '15b1ca'
+            })
           }
           this.setData({
-            originRouteData: data,
-            currentRouteStations: data[this.data.downOrUp]
+            templateMsg: data.lineInfo,
+            currentRouteStations: ele
           })
+          // for (const key in stations) {
+          //   if (data.hasOwnProperty(key)) {
+          //     let element = data[key]
+          //     element = element.map((m, i) => {
+          //       return {
+          //         color: '15b1ca',
+          //         name: m
+          //       }
+          //     })
+          //     data[key] = element
+          //   }
+          // }
+          // this.setData({
+          //   originRouteData: data,
+          //   currentRouteStations: data[this.data.downOrUp]
+          // })
           wx.setNavigationBarTitle({
             title: this.data.routeId,
           })
@@ -211,19 +217,20 @@ Page({
   _getThisStationInfo (query) {
     var that = this
     wx.request({
-      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/getThisStation?',
+      url: 'https://api.limonplayer.cn/jsonp/zhoushanbus/bus_waiting?',
       data: query,
       header: {
         "content-type": "json"
       },
       success: function (res) {
         if (res.statusCode === 200) {
-          const { buses, msg} = res.data.data
+          const { message, bus } = JSON.parse(res.data.data)
+          console.log(res.data.data)
           that.setData({
-            timeMsg: delHtmlTag(msg)
+            timeMsg: message ? message : '运营已结束，末班车已发出'
           })
           that._refreshCurrentLine()
-          buses.map(abus => {
+          bus.map(abus => {
             const lastStation = parseInt(abus.lastStation)
             const isStation = abus.isStation
             const { currentRouteStations } = that.data

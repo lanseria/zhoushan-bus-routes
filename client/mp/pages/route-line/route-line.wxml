@@ -6,13 +6,13 @@
   </view>
   <view class='content-wrapper' style='{{themeBackgroundColor}}'>
     <view class='notify' style='{{themeBackgroundColorLWithColorL}}'>
-    {{timeMsg}}
+    {{templateMsg + timeMsg}}
     </view>
     <scroll-view scroll-y class='stations'>
       <view class='station' wx:key="unique" wx:for="{{currentRouteStations}}">
         <!-- <image class='avatar' src='{{item.avatar}}'></image> -->
         <view class='circle' style='background-color:#{{item.color}}'>{{index + 1}}</view>
-        <text class='name' style='{{themeColor}}'>{{item.name}}</text>
+        <text class='name' style='{{themeColor}}'>{{item.stationName}}</text>
         <view hidden='true' class='detail' bindtap='jumpToDetail' data-station-id="{{index}}" data-route-id="{{routeId}}">在此等候</view>
       </view>
     </scroll-view>
