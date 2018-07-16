@@ -34,11 +34,6 @@ export default {
     style: 'background: #fff;border-radius: 66rpx;color: #000;'
   },
   /** note: 在 wxp 文件或者页面文件中请去掉 methods 包装 */
-  methods: {
-    onSubmit(e) {
-      console.log(e.detail.formId)
-    }
-  }
 }
 </script>
 
