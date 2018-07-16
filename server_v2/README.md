@@ -135,6 +135,29 @@ const lineSchema = new Schema({
 
 **4. 获取公交新闻信息**
 
+**5. 获取周边公交**
+
+- API Name: `/line!getNearLine.action`
+
+- Methods: `POST`
+
+- Content-Type: `application/x-www-form-urlencoded` 
+
+- Need Params: `lat=30.02070876326697&length=800&lng=122.1147075284693`(form 格式)
+
+- Response Body:
+
+```js
+[{
+	"lineName": "B1路",
+	"toStation": "东门站",
+	"timeInfo": "06:30",
+	"stationName": "东门站",
+	"stationNum": "12",
+	"isUpDown": "0"
+}]
+```
+
 **设计API**
 
 **1. 所有线路**

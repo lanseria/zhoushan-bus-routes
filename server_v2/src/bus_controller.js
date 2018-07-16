@@ -63,3 +63,10 @@ exports.getBusWaiting = async function (ctx) {
   const response = await postFromServer('/bus!getBusWaiting.action', querystring);
   ctx.body = DataProcess(response.body, 'OK - getBusWaiting');
 }
+
+exports.getNearLine = async function (ctx) {
+  const { request } = ctx;
+  const { querystring } = request;
+  const response = await postFromServer('/line!getNearLine.action', querystring);
+  ctx.body = DataProcess(response.body, 'OK - getNearLine');
+}
