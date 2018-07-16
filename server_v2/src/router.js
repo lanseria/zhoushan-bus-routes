@@ -33,4 +33,13 @@ router.get('/line', busController.getLine)
 
 router.get('/bus_waiting', busController.getBusWaiting)
 
+/**
+ * 获取附近线路信息
+ * 
+ * 参数：lineNumber（encode）
+ * 上下行
+ */
+
+router.get('/near_line', busController.getNearLine)
+
 exports = module.exports = router
