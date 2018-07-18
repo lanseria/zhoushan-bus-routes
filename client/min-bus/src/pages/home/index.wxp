@@ -22,6 +22,9 @@
 </template>
 
 <script>
+import {HOST} from '../../common/config'
+import {getData} from '../../common/api/common'
+
 export default {
   config: {
     usingComponents: {
@@ -31,9 +34,34 @@ export default {
     }
   },
   data: {
-    style: 'background: #fff;border-radius: 66rpx;color: #000;'
+    style: 'background: #fff;border-radius: 66rpx;color: #000;',
+    locationInfo: {},
+    nearLineInfo: []
   },
   /** note: 在 wxp 文件或者页面文件中请去掉 methods 包装 */
+
+  onLoad () {
+    this.getNearLine()
+  },
+
+  getNearLine () {
+    wx.getLocation({
+      type: 'wgs84',
+      success: (res) => {
+        let data = {}
+        getData(HOST + '/near_line', {
+          lat: res.latitude,
+          lng: res.longitude,
+          length: 800
+        }).then((data) => {
+          this.setData({
+            locationInfo: res,
+            nearLineInfo: JSON.parse(data.data)
+          })
+        })
+      }
+    })
+  }
 }
 </script>
 
