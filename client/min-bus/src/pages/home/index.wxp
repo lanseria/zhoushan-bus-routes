@@ -12,6 +12,11 @@
       <view class="search-wrap">
         <wxc-search class="search" radius="30" mode="static" placeholder="搜索公交线路、车站、地点"></wxc-search>
       </view>
+      <view wx-for="{{nearLineInfo}}" wx:key="index">
+        <view>{{item.lineName}}</view>
+        <view>{{item.stationName}}</view>
+        <view>{{item.timeInfo}}</view>
+      </view>
     </view>
 
     <view class="index-ft">
