@@ -47,7 +47,8 @@
 
 <script>
 import { HOST } from "../../common/config";
-import { getData } from "../../common/api/common";
+import { getData } from "../../common/api/common"; //老接口
+import Bus from "../../models/api";
 
 export default {
   config: {
@@ -101,13 +102,13 @@ export default {
       type: "wgs84",
       success: res => {
         let data = {};
-        getData(HOST + "/near_line", {
+        Bus.getNearLine({
           lat: res.latitude,
           lng: res.longitude,
           length: 800
-        }).then(data => {
+        }).then(res => {
           const { tabs } = this.data;
-          const nearLineInfo = JSON.parse(data.data);
+          const nearLineInfo = JSON.parse(res.data.data);
           tabs[0].content = nearLineInfo.slice(0, 6);
           this.setData({
             locationInfo: res,
@@ -117,7 +118,27 @@ export default {
               isShow: false
             }
           });
-        });
+        })
+        /**
+         * 老接口
+         */
+        // getData(HOST + "/near_line", {
+        //   lat: res.latitude,
+        //   lng: res.longitude,
+        //   length: 800
+        // }).then(data => {
+        //   const { tabs } = this.data;
+        //   const nearLineInfo = JSON.parse(data.data);
+        //   tabs[0].content = nearLineInfo.slice(0, 6);
+        //   this.setData({
+        //     locationInfo: res,
+        //     nearLineInfo,
+        //     tabs,
+        //     $loading: {
+        //       isShow: false
+        //     }
+        //   });
+        // });
       }
     });
   }
