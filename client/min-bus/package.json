@@ -13,8 +13,12 @@
     "@minui/wxc-button": "^1.0.2",
     "@minui/wxc-flex": "^1.0.6",
     "@minui/wxc-icon": "^1.0.9",
+    "@minui/wxc-loading": "^1.0.8",
+    "@minui/wxc-loadmore": "^1.0.5",
     "@minui/wxc-notice": "^1.0.1",
-    "@minui/wxc-search": "^1.0.1"
+    "@minui/wxc-panel": "^1.0.1",
+    "@minui/wxc-search": "^1.0.1",
+    "@minui/wxc-tab": "^1.0.8"
   },
   "devDependencies": {
     "babel-plugin-syntax-export-extensions": "^6.13.0",

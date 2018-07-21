@@ -1,3 +1,10 @@
+.content-wrapper {
+  height: 100vh;
+  width: 100vw;
+}
+.bottom {
+  height: 180rpx;
+}
 .index-hd {
   /* padding: 70rpx; */
   text-align: center;
@@ -9,6 +16,19 @@
   padding-bottom: 20rpx;
   text-align: center;
 }
+/* .tab-box {
+  bottom: 116rpx;
+  top: 240rpx;
+  position: fixed;
+  width: 100vw;
+}
+.tab-panel {
+  width: 100vw;
+  bottom: 116rpx;
+  top: 326rpx;
+  position: fixed;
+  overflow: scroll;
+} */
 .container {
   width: 100%;
   padding-top: 10rpx;
@@ -18,21 +38,21 @@
 .container:after {
   display: block;
   content: " ";
-  clear:both;
-  visibility:hidden;
-  height:0;
+  clear: both;
+  visibility: hidden;
+  height: 0;
 }
 .title {
   line-height: 50rpx;
-  margin-left:35rpx;
-  margin-bottom:10rpx;
-  text-align:left;
+  margin-left: 35rpx;
+  margin-bottom: 10rpx;
+  text-align: left;
   font-weight: bold;
   font-size: 30rpx;
   color: #333;
 }
 .button-small-wrap {
-  margin:0 0 10rpx 0;
+  margin: 0 0 10rpx 0;
   float: left;
 }
 .search-wrap {
