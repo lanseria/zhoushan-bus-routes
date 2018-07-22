@@ -30,8 +30,10 @@ export default {
   },
   globalData: {
   },
-  onLaunch() {},
-  onShow() {},
+  onLaunch() {
+  },
+  onShow() {
+  },
   onHide() {}
 };
 </script>

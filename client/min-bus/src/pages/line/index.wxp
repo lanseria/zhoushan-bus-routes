@@ -1,0 +1,182 @@
+<template>
+  <view>
+    <view>
+      <map id="map" longitude="{{location.lng}}" latitude="{{location.lat}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 300px;">
+        <cover-view class="controls">
+          <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png" />
+        </cover-view>
+      </map>
+    </view>
+    <scroll-view scroll-y style="height: 500rpx;">
+      <view class="list-wrap">
+        <view class="list-item">
+          <wxc-list
+            wx:for="{{busWaiting.bus}}"
+            wx:key="index"
+            class="item"
+            title="{{item.busNo}}"
+            desc="{{item.slot? '' : item.isStation}}"
+            mode="{{index == data.length-1 ? 'none': ''}}"
+            data-line-name="{{item.busNo}}"
+            src="https://api.limonplayer.cn/route_32px.png">
+            <view wx:if="{{item.slot && item.isStation}}" class="desc-highlight">{{item.isStation}}</view>
+          </wxc-list>
+          <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
+        </view>
+      </view>
+    </scroll-view>
+  </view>
+</template>
+
+<script>
+import Bus from "../../models/api";
+import Global from "../../models/global";
+
+export default {
+  config: {
+    navigationBarTitleText: "路线",
+    usingComponents: {
+      "wxc-list": "@minui/wxc-list",
+      "wxc-icon": "@minui/wxc-icon"
+    }
+  },
+  data: {
+    location: {},
+    scale: 17,
+    lineName: "",
+    isUpDown: 0,
+    line: {},
+    busWaiting: {},
+    markers: [],
+    polyline: [
+      {
+        points: [],
+        color: "#FF0000DD",
+        width: 2,
+        dottedLine: true
+      }
+    ]
+  },
+  onLoad(options) {
+    const lineName = decodeURIComponent(options.lineName);
+    const isUpDown = decodeURIComponent(options.isUpDown);
+    this.setData({ lineName, isUpDown });
+    const params = { lineName, isUpDown };
+    Bus.getLine(params).then(res => {
+      // console.log(res.data)
+      const line = JSON.parse(res.data.data);
+      const markers = [];
+      const points = line.stations.map((p, i) => {
+        const locationArray = Global.wgs84togcj02(p.lng, p.lat);
+        markers.push({
+          iconPath: Global.getVal("location-png"),
+          id: p.stationId,
+          title: p.stationName,
+          latitude: locationArray[1],
+          longitude: locationArray[0],
+          width: 25,
+          height: 25,
+          alpha: 0.8,
+          label: {
+            content: p.stationName
+          }
+        });
+        return {
+          longitude: locationArray[0],
+          latitude: locationArray[1]
+        };
+      });
+      const polyline = this.data.polyline;
+      polyline[0].points = points;
+      this.setData({
+        line,
+        polyline,
+        markers,
+        location: Global.getVal("location-data")
+      });
+    });
+  },
+  onShow() {
+    const { lineName, isUpDown } = this.data;
+    const params = { lineName, isUpDown, stationNum: 1 };
+    Bus.getBusWaiting(params).then(res => {
+      const busWaiting = JSON.parse(res.data.data);
+      const { bus } = busWaiting;
+      const markers = this.data.markers;
+      console.log(bus)
+      const filterBus = bus.map(b => {
+        const locationArray = Global.wgs84togcj02(b.lng, b.lat);
+        markers.push({
+          iconPath: Global.getVal("bus-icon-png"),
+          id: b.busNo,
+          title: b.busNo,
+          latitude: locationArray[1],
+          longitude: locationArray[0],
+          width: 25,
+          height: 25,
+          alpha: 1,
+          label: {
+            content: b.busNo
+          }
+        })
+        return {
+          longitude: locationArray[0],
+          latitude: locationArray[1],
+          busNo: b.busNo,
+          away: b.away,
+          factor: b.factor,
+          isStation: b.isStation,
+          lastStation: b.lastStation
+        }
+      })
+      busWaiting.bus = filterBus
+      this.setData({busWaiting, markers});
+    });
+  },
+  regionchange(e) {
+    console.log(e.type);
+  },
+  markertap(e) {
+    console.log(e.markerId);
+  },
+  controltap(e) {
+    console.log(e.controlId);
+  }
+};
+</script>
+
+<style>
+.controls {
+  width: 200rpx;
+  height: 100rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 80%;
+}
+.list-wrap {
+  width: 100%;
+  background: #efefef;
+  padding-bottom: 30rpx;
+  padding-top: 20rpx;
+}
+.list-item {
+  background: #fff;
+  margin-bottom: 30rpx;
+}
+.list-item:last-child {
+  margin: 0;
+}
+.item {
+  flex: 1;
+}
+.desc-highlight {
+  font-size: 24rpx;
+  height: 38rpx;
+  padding: 0 22rpx;
+  border: 1px solid #f5342f;
+  border-radius: 20rpx;
+  color: #f5342f;
+  line-height: 38rpx;
+}
+</style>

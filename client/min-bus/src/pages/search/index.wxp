@@ -5,10 +5,16 @@
       class="search"
       bg-color="#fff"
       radius="30"
+      showClear="{{false}}"
       bind:input="onInput"
     ></wxc-search>
   </view>
   <road-list data="{{filterLine}}"></road-list>
+  <wxc-loading
+    is-show="{{$loading.isShow}}"
+    image="https://api.limonplayer.cn/loading-image.png"
+    slip="https://api.limonplayer.cn/loading-slip.png"
+  ></wxc-loading>
 </view>
 </template>
 
@@ -20,10 +26,15 @@ export default {
     usingComponents: {
       'wxc-icon': '@minui/wxc-icon',
       'wxc-search': '@minui/wxc-search',
-      'road-list': '../components/road-list'
+      'road-list': '../components/road-list',
+      "wxc-loading": "@minui/wxc-loading",
+      "wxc-loadmore": "@minui/wxc-loadmore",
     }
   },
-  data: { 
+  data: {
+    $loading: {
+      isShow: false
+    },
     allLine: [],
     filterLine: []
   },
@@ -31,11 +42,19 @@ export default {
     this.getAllLine();
   },
   getAllLine () {
+    this.setData({
+      $loading: {
+        isShow: true
+      }
+    });
     Bus.getAllLine().then(res => {
       const allLine = JSON.parse(res.data.data)
       this.setData({
         allLine,
-        filterLine: allLine
+        filterLine: allLine,
+        $loading: {
+          isShow: false
+        }
       })
     })
   },
@@ -64,5 +83,6 @@ export default {
   .search {
     flex: 1;
     margin-left: 24rpx;
+    margin-right: 24rpx;
   }
 </style>

@@ -15,6 +15,16 @@ class Bus extends Base {
     const URL = `/all_line`
     return this.get(URL, data, allowCache)
   }
+
+  getLine (params = '', data = {}, allowCache = true) {
+    const URL = `/line?${objectToParams(params)}`
+    return this.get(URL, data, allowCache)
+  }
+
+  getBusWaiting (params = '', data = {}, allowCache = true) {
+    const URL = `/bus_waiting?${objectToParams(params)}`
+    return this.get(URL, data, allowCache)
+  }
 }
 
 function objectToParams (obj) {

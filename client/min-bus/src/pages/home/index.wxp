@@ -49,6 +49,7 @@
 import { HOST } from "../../common/config";
 import { getData } from "../../common/api/common"; //老接口
 import Bus from "../../models/api";
+import Global from "../../models/global";
 
 export default {
   config: {
@@ -78,8 +79,11 @@ export default {
     ]
   },
   /** note: 在 wxp 文件或者页面文件中请去掉 methods 包装 */
-
-  onLoad() {
+  onLoad () {
+    this.saveData();
+    this.getNearLine();
+  },
+  onShow() {
     this.getNearLine();
   },
   onClick: function(e) {
@@ -98,49 +102,47 @@ export default {
         isShow: true
       }
     });
-    wx.getLocation({
-      type: "wgs84",
-      success: res => {
-        let data = {};
-        Bus.getNearLine({
-          lat: res.latitude,
-          lng: res.longitude,
-          length: 800
-        }).then(res => {
-          const { tabs } = this.data;
-          const nearLineInfo = JSON.parse(res.data.data);
-          tabs[0].content = nearLineInfo.slice(0, 6);
-          this.setData({
-            locationInfo: res,
-            nearLineInfo,
-            tabs,
-            $loading: {
-              isShow: false
-            }
-          });
-        })
-        /**
-         * 老接口
-         */
-        // getData(HOST + "/near_line", {
-        //   lat: res.latitude,
-        //   lng: res.longitude,
-        //   length: 800
-        // }).then(data => {
-        //   const { tabs } = this.data;
-        //   const nearLineInfo = JSON.parse(data.data);
-        //   tabs[0].content = nearLineInfo.slice(0, 6);
-        //   this.setData({
-        //     locationInfo: res,
-        //     nearLineInfo,
-        //     tabs,
-        //     $loading: {
-        //       isShow: false
-        //     }
-        //   });
-        // });
+    Global.setLocation().then(location => {
+      Bus.getNearLine(location).then(res => {
+        const { tabs } = this.data;
+        const nearLineInfo = JSON.parse(res.data.data);
+        tabs[0].content = nearLineInfo.slice(0, 10);
+        this.setData({
+          locationInfo: res,
+          nearLineInfo,
+          tabs,
+          $loading: {
+            isShow: false
+          }
+        });
+      })
+    })
+  },
+  saveData () {
+    wx.downloadFile({
+      url: 'https://api.limonplayer.cn/location_72px.png',
+      success: function(res) {
+        if (res.statusCode === 200) {
+          Global.setVal('location-png', res.tempFilePath)
+        }
       }
-    });
+    })
+    wx.downloadFile({
+      url: 'https://api.limonplayer.cn/location_control_72px.png',
+      success: function(res) {
+        if (res.statusCode === 200) {
+          Global.setVal('location-control-png', res.tempFilePath)
+        }
+      }
+    })
+    wx.downloadFile({
+      url: 'https://api.limonplayer.cn/bus_icon.png',
+      success: function(res) {
+        if (res.statusCode === 200) {
+          Global.setVal('bus-icon-png', res.tempFilePath)
+        }
+      }
+    })
   }
 };
 </script>

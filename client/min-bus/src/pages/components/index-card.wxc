@@ -1,5 +1,9 @@
 <template>
-  <view class="card">
+  <view 
+    class="card"         
+    bindtap='gotoLine'
+    data-line-name="{{data.lineName}}"
+  >
     <view class="box">
       <view>
         <text class="label">最近车站：</text>
@@ -31,6 +35,15 @@ export default {
   data: {
       
   },
+  methods: {
+    gotoLine (e) {
+      const lineName = e.currentTarget.dataset.lineName
+      // this.saveHistory(lineName)
+      wx.navigateTo({
+        url: `/pages/line/index?isUpDown=0&lineName=${encodeURIComponent(lineName)}`
+      })
+    }
+  }
 }
 </script>
 

@@ -1,16 +1,20 @@
 <template>
+<scroll-view scroll-y style="height: 990rpx;">
   <view class="list-wrap">
     <view class="list-item">
       <wxc-list
-              wx:for="{{data}}"
-              wx:key="index"
-              class="item"
-              title="{{item.line_name}}"
-              desc="{{item.slot? '' : item.desc}}"
-              mode="{{index == data.length-1 ? 'none': ''}}"
-              src="https://api.limonplayer.cn/route_32px.png">
+        wx:for="{{data}}"
+        wx:key="index"
+        class="item"
+        title="{{item.line_name}}"
+        desc="{{item.slot? '' : item.desc}}"
+        mode="{{index == data.length-1 ? 'none': ''}}"
+        bindtap='gotoLine'
+        data-line-name="{{item.line_name}}"
+        src="https://api.limonplayer.cn/route_32px.png">
         <view wx:if="{{item.slot && item.desc}}" class="desc-highlight">{{item.desc}}</view>
       </wxc-list>
+      <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
       <view hidden="{{hideview}}">
         <wxc-abnor
           type="DATA"
@@ -20,6 +24,7 @@
       </view>
     </view>
   </view>
+</scroll-view>
 </template>
 <script>
 export default {
@@ -27,7 +32,8 @@ export default {
     usingComponents: {
       'wxc-list': '@minui/wxc-list',
       'wxc-icon': '@minui/wxc-icon',
-      'wxc-abnor': '@minui/wxc-abnor'
+      'wxc-abnor': '@minui/wxc-abnor',
+      "wxc-loadmore": "@minui/wxc-loadmore",
     }
   },
   properties: {
@@ -52,7 +58,18 @@ export default {
     tip: '空空如也',
     hideview: true
   },
-  methods: { }
+  methods: { 
+    gotoLine (e) {
+      const lineName = e.currentTarget.dataset.lineName
+      this.saveHistory(lineName)
+      wx.navigateTo({
+        url: `/pages/line/index?isUpDown=0&lineName=${encodeURIComponent(lineName)}`
+      })
+    },
+    saveHistory () {
+
+    }
+  }
 }
 </script>
 
