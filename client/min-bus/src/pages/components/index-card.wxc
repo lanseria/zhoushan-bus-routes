@@ -20,7 +20,6 @@
 export default {
   config: {
     usingComponets: {
-      card: "components/card",
     }
   },
   properties: {

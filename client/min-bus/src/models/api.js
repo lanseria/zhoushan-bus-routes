@@ -10,6 +10,11 @@ class Bus extends Base {
     const URL = `/near_line?${objectToParams(PARAMS)}`
     return this.get(URL, data, allowCache)
   }
+
+  getAllLine (params = '', data = {}, allowCache = true) {
+    const URL = `/all_line`
+    return this.get(URL, data, allowCache)
+  }
 }
 
 function objectToParams (obj) {

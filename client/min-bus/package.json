@@ -10,9 +10,11 @@
   "license": "MIT",
   "dependencies": {
     "@mindev/min-async-function": "^1.0.0",
+    "@minui/wxc-abnor": "^1.0.7",
     "@minui/wxc-button": "^1.0.2",
     "@minui/wxc-flex": "^1.0.6",
     "@minui/wxc-icon": "^1.0.9",
+    "@minui/wxc-list": "^1.0.1",
     "@minui/wxc-loading": "^1.0.8",
     "@minui/wxc-loadmore": "^1.0.5",
     "@minui/wxc-notice": "^1.0.1",

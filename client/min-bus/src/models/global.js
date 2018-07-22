@@ -1,12 +1,21 @@
 import Base from './base'
 
 class Global extends Base {
-  getHead () {
-    return this.getHeadNoticeStatus()
+  getHeadNoticeStatus () {
+    const status = wx.getStorageSync('HEADNOTICESTATUS')
+    if (status === '') {
+      this.setHeadNoticeStatus(this.isHeadNoticeShow)
+      return true
+    } else {
+      return status
+    }
   }
 
-  setHead (val) {
-    this.setHeadNoticeStatus(val)
+  setHeadNoticeStatus (val) {
+    wx.setStorage({
+      key: 'HEADNOTICESTATUS',
+      data: val
+    })
   }
 }
 

@@ -10,24 +10,6 @@ class Base {
     this.isHeadNoticeShow = true
   }
 
-  getHeadNoticeStatus () {
-    const status = wx.getStorageSync('HEADNOTICESTATUS')
-    console.log(status)
-    if (status==='') {
-      this.setHeadNoticeStatus(true)
-      return true
-    } else {
-      return status
-    }
-  }
-
-  setHeadNoticeStatus (val) {
-    wx.setStorage({
-      key: 'HEADNOTICESTATUS',
-      data: val
-    })
-  }
-
   url (path) {
     return this.host + path
   }

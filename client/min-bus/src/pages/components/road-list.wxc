@@ -1,0 +1,87 @@
+<template>
+  <view class="list-wrap">
+    <view class="list-item">
+      <wxc-list
+              wx:for="{{data}}"
+              wx:key="index"
+              class="item"
+              title="{{item.line_name}}"
+              desc="{{item.slot? '' : item.desc}}"
+              mode="{{index == data.length-1 ? 'none': ''}}"
+              src="https://api.limonplayer.cn/route_32px.png">
+        <view wx:if="{{item.slot && item.desc}}" class="desc-highlight">{{item.desc}}</view>
+      </wxc-list>
+      <view hidden="{{hideview}}">
+        <wxc-abnor
+          type="DATA"
+          title="{{title}}"
+          tip="{{tip}}"
+        ></wxc-abnor>
+      </view>
+    </view>
+  </view>
+</template>
+<script>
+export default {
+  config: {
+    usingComponents: {
+      'wxc-list': '@minui/wxc-list',
+      'wxc-icon': '@minui/wxc-icon',
+      'wxc-abnor': '@minui/wxc-abnor'
+    }
+  },
+  properties: {
+    data: {
+      type: Array,
+      value: [],
+      observer: function(newVal, oldVal, changedPath) {
+         if (newVal.length === 0) {
+           this.setData({
+             hideview: false
+           })
+         } else {
+          this.setData({
+             hideview: true
+           })
+         }
+      }
+    }
+  },
+  data: {
+    title: '空空线路',
+    tip: '空空如也',
+    hideview: true
+  },
+  methods: { }
+}
+</script>
+
+<style lang="less">
+  .list-wrap {
+    width: 100%;
+    background: #efefef;
+    padding-bottom: 30rpx;
+    padding-top: 30rpx;
+  }
+  .list-item {
+    background: #fff;
+    margin-bottom: 30rpx;
+  }
+  .list-item:last-child {
+    margin: 0;
+  }
+  .item {
+    flex: 1;
+  }
+  .desc-highlight {
+    font-size: 24rpx;
+    height: 38rpx;
+    padding: 0 22rpx;
+    border: 1px solid #f5342f;
+    border-radius: 20rpx;
+    color: #f5342f;
+    line-height: 38rpx;
+  }
+</style>
+
+

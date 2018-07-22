@@ -1,10 +1,9 @@
 <template>
-  <wxc-notice scroll="{{true}}" bg-color="#ff9300" bg-rgba="rgba(255, 147, 0, 0)" close="{{true}}" show-icon="{{true}}" notice="{{notice}}" bind:close="onClose"></wxc-notice>
+  <wxc-notice isShow="{{isShow}}" scroll="{{true}}" bg-color="#ff9300" bg-rgba="rgba(255, 147, 0, 0)" close="{{true}}" show-icon="{{true}}" notice="{{notice}}" bind:close="onClose"></wxc-notice>
 </template>
 
 <script>
-// import Global from "../../models/global";
-
+import Global from "../../models/global";
 export default {
   config: {
     usingComponents: {
@@ -12,10 +11,12 @@ export default {
     }
   },
   data: {
-    notice: '公交平台将在每日0点－6点进行系统升级，升级期间将暂停服务，敬请谅解。'
+    notice: '公交平台将在每日0点－6点进行系统升级，升级期间将暂停服务，敬请谅解。',
+    isShow: Global.getHeadNoticeStatus()
   },
   methods: {
     onClose() {
+      Global.setHeadNoticeStatus(false)
       wx.showToast({title: 'closed'});
     }
   }
