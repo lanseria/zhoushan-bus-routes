@@ -22,6 +22,7 @@
 import Bus from "../../models/api";
 export default {
   config: {
+    disableScroll: true,
     navigationBarTitleText: '搜索',
     usingComponents: {
       'wxc-icon': '@minui/wxc-icon',

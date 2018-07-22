@@ -34,6 +34,7 @@ import Global from "../../models/global";
 
 export default {
   config: {
+    disableScroll: true,
     navigationBarTitleText: "路线",
     usingComponents: {
       "wxc-list": "@minui/wxc-list",
@@ -99,7 +100,7 @@ export default {
   onShow() {
     const { lineName, isUpDown } = this.data;
     const params = { lineName, isUpDown, stationNum: 1 };
-    Bus.getBusWaiting(params).then(res => {
+    Bus.getBusWaiting(params, {}, false).then(res => {
       const busWaiting = JSON.parse(res.data.data);
       const { bus } = busWaiting;
       const markers = this.data.markers;
