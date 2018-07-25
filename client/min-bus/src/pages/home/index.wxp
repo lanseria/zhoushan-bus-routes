@@ -1,6 +1,6 @@
 <template>
 <view>
-  <layout-head></layout-head>
+  <layout-head isShow="{{isShow}}"></layout-head>
   <view class="content-wrapper">
     <view class="index-hd">
       <view class="container">
@@ -75,6 +75,7 @@ export default {
     $loading: {
       isShow: false
     },
+    isShow: Global.getHeadNoticeStatus(),
     style: "background: #fff;border-radius: 66rpx;color: #000;",
     locationInfo: {},
     nearLineInfo: [],

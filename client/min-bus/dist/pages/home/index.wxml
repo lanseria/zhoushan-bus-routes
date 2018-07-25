@@ -1,6 +1,6 @@
 <!-- wxp template -->
 <view>
-    <layout-head _pid="{{_pid}}"></layout-head>
+    <layout-head isShow="{{isShow}}" _pid="{{_pid}}"></layout-head>
     <view class="content-wrapper">
         <view class="index-hd">
             <view class="container">

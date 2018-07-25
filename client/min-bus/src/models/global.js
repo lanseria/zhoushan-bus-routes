@@ -12,8 +12,8 @@ class Global extends Base {
         type: "gcj02",
         success: res => {
           this.setVal('location-data', {
-            lat: res.latitude,
-            lng: res.longitude,
+            latitude: res.latitude,
+            longitude: res.longitude,
             length: 800
           })
           return resolve({
