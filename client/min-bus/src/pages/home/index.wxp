@@ -1,4 +1,6 @@
 <template>
+<view>
+  <layout-head></layout-head>
   <view class="content-wrapper">
     <view class="index-hd">
       <view class="container">
@@ -42,7 +44,9 @@
       image="https://api.limonplayer.cn/loading-image.png"
     slip="https://api.limonplayer.cn/loading-slip.png"
     ></wxc-loading>
+    <layout-foot></layout-foot>
   </view>
+</view>
 </template>
 
 <script>
@@ -55,6 +59,8 @@ export default {
   config: {
     disableScroll: true,
     usingComponents: {
+      "layout-head": "layout/head",
+      "layout-foot": "layout/foot",
       "wxc-button": "@minui/wxc-button",
       "wxc-icon": "@minui/wxc-icon",
       "wxc-search": "@minui/wxc-search",

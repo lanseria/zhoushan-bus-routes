@@ -1,5 +1,5 @@
 <template>
-<scroll-view scroll-y style="height: 990rpx;">
+<scroll-view scroll-y style="height: 100%;">
   <view class="list-wrap">
     <view class="list-item">
       <wxc-list

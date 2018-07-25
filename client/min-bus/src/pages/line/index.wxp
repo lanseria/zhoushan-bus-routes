@@ -1,13 +1,20 @@
 <template>
-  <view>
-    <view>
-      <map id="map" longitude="{{location.lng}}" latitude="{{location.lat}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 300px;">
-        <cover-view class="controls">
-          <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png" />
-        </cover-view>
-      </map>
-    </view>
-    <scroll-view scroll-y style="height: 500rpx;">
+<view>
+  <layout-head notice="{{notice}}"></layout-head>
+  <view id="max-wrapper" class="line-wrapper">
+    <map class="map-wrapper" id="map" longitude="{{location.lng}}" latitude="{{location.lat}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="{{mapStyle}}">
+      <cover-view class="controls">
+        <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png" />
+      </cover-view>
+      <cover-view class="zoom-controls">
+        <cover-image class="img" bindtap="handleZoom" src="https://api.limonplayer.cn/search_24px.png" />
+      </cover-view>
+      <cover-view class="conversion-controls">
+        <cover-image class="img" bindtap="handleConversion" src="https://api.limonplayer.cn/refresh_24px.png" />
+      </cover-view>
+    </map>
+    
+    <scroll-view class="scroll-wrapper" scroll-y>
       <view class="list-wrap">
         <view class="list-item">
           <wxc-list
@@ -26,6 +33,7 @@
       </view>
     </scroll-view>
   </view>
+</view>
 </template>
 
 <script>
@@ -37,6 +45,7 @@ export default {
     disableScroll: true,
     navigationBarTitleText: "路线",
     usingComponents: {
+      "layout-head": "layout/head",
       "wxc-list": "@minui/wxc-list",
       "wxc-icon": "@minui/wxc-icon"
     }
@@ -44,11 +53,21 @@ export default {
   data: {
     location: {},
     scale: 17,
+    notice: '',
     lineName: "",
     isUpDown: 0,
     line: {},
+    stationsLength: 0,
+    lineDetail: {},
+    isUpDownName: '',
     busWaiting: {},
     markers: [],
+    mapStyle: '',
+    viewHeight: 0.5,
+    reHeight: {
+      min: 0.5,
+      max: 0
+    },
     polyline: [
       {
         points: [],
@@ -62,49 +81,31 @@ export default {
     const lineName = decodeURIComponent(options.lineName);
     const isUpDown = decodeURIComponent(options.isUpDown);
     this.setData({ lineName, isUpDown });
-    const params = { lineName, isUpDown };
-    Bus.getLine(params).then(res => {
-      // console.log(res.data)
-      const line = JSON.parse(res.data.data);
-      const markers = [];
-      const points = line.stations.map((p, i) => {
-        const locationArray = Global.wgs84togcj02(p.lng, p.lat);
-        markers.push({
-          iconPath: Global.getVal("location-png"),
-          id: p.stationId,
-          title: p.stationName,
-          latitude: locationArray[1],
-          longitude: locationArray[0],
-          width: 25,
-          height: 25,
-          alpha: 0.8,
-          label: {
-            content: p.stationName
-          }
-        });
-        return {
-          longitude: locationArray[0],
-          latitude: locationArray[1]
-        };
-      });
-      const polyline = this.data.polyline;
-      polyline[0].points = points;
-      this.setData({
-        line,
-        polyline,
-        markers,
-        location: Global.getVal("location-data")
-      });
-    });
+    wx.showLoading({
+      title: '加载中',
+    })
+    this.updateLine(lineName, isUpDown)
+    this.updateBusWaiting(lineName, isUpDown)
   },
   onShow() {
-    const { lineName, isUpDown } = this.data;
+    // const query = wx.createSelectorQuery();
+    // query.select('#max-wrapper').boundingClientRect()
+    // query.exec((res) => {
+    //   const reHeight = {
+    //     min: 300,
+    //     max: res[0].height
+    //   }
+    //   this.setData({ reHeight })
+    // })
+    const { lineDetail, lineName, isUpDownName, isUpDown } = this.data;
+    this.updateBusWaiting(lineName, isUpDown)
+  },
+  updateBusWaiting (lineName, isUpDown) {
     const params = { lineName, isUpDown, stationNum: 1 };
     Bus.getBusWaiting(params, {}, false).then(res => {
       const busWaiting = JSON.parse(res.data.data);
       const { bus } = busWaiting;
       const markers = this.data.markers;
-      console.log(bus)
       const filterBus = bus.map(b => {
         const locationArray = Global.wgs84togcj02(b.lng, b.lat);
         markers.push({
@@ -132,7 +133,74 @@ export default {
       })
       busWaiting.bus = filterBus
       this.setData({busWaiting, markers});
+      wx.hideLoading()
     });
+  },
+  updateLine (lineName, isUpDown) {
+    const params = { lineName, isUpDown };
+    Bus.getLine(params).then(res => {
+      const line = JSON.parse(res.data.data);
+      const markers = [];
+      const points = line.stations.map((p, i) => {
+        const locationArray = Global.wgs84togcj02(p.lng, p.lat);
+        markers.push({
+          iconPath: Global.getVal("location-png"),
+          id: p.stationId,
+          title: p.stationName,
+          latitude: locationArray[1],
+          longitude: locationArray[0],
+          width: 25,
+          height: 25,
+          alpha: 0.8,
+          label: {
+            content: p.stationName
+          }
+        });
+        return {
+          longitude: locationArray[0],
+          latitude: locationArray[1]
+        };
+      });
+      const polyline = this.data.polyline;
+      polyline[0].points = points;
+      const isUpDownName = isUpDown == 0 ? '上行' : '下行';
+      const stationsLength = line.stations.length;
+      const lineDetail = {
+        startStation: line.stations[0].stationName,
+        endStation: line.stations[stationsLength - 1].stationName,
+      }
+      const notice = `${lineName}:${isUpDownName}.起始站:${lineDetail.startStation},终点站:${lineDetail.endStation}.${line.lineInfo}`
+      this.setData({
+        isUpDownName,
+        lineDetail,
+        stationsLength,
+        line,
+        notice,
+        polyline,
+        markers,
+        location: Global.getVal("location-data")
+      });
+      wx.hideLoading()
+    });
+  },
+  handleZoom () {
+    if (this.data.viewHeight === 0.5) {
+      this.setData({
+        mapStyle: `height: 100vh;`,
+        viewHeight: 1
+      }) 
+    } else {
+      this.setData({
+        mapStyle: ``,
+        viewHeight: 0.5
+      })  
+    }
+  },
+  handleConversion () {
+    const isUpDown = 1 - this.data.isUpDown;
+    const { lineName } = this.data;
+    this.updateLine(lineName, isUpDown);
+    this.updateBusWaiting(lineName, isUpDown);
   },
   regionchange(e) {
     console.log(e.type);
@@ -147,12 +215,44 @@ export default {
 </script>
 
 <style>
+.line-wrapper {
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+.map-wrapper {
+  flex: 0.5;
+  width: 100vw;
+}
+.scroll-wrapper {
+  flex: 0.5;
+  width: 100vw;
+}
 .controls {
   width: 200rpx;
   height: 100rpx;
   position: absolute;
   top: 0;
   right: 0;
+  opacity: 80%;
+}
+.zoom-controls {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 10rpx;
+  left: 10rpx;
+  opacity: 80%;
+}
+.conversion-controls {
+  width: 50rpx;
+  height: 50rpx;
+  position: absolute;
+  top: 10rpx;
+  left: 70rpx;
   opacity: 80%;
 }
 .list-wrap {

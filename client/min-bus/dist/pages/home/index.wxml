@@ -1,7 +1,6 @@
+<!-- wxp template -->
 <view>
     <layout-head _pid="{{_pid}}"></layout-head>
-
-    <!-- wxp template -->
     <view class="content-wrapper">
         <view class="index-hd">
             <view class="container">
@@ -30,7 +29,6 @@
             </scroll-view>
         </wxc-tab>
         <wxc-loading is-show="{{$loading.isShow}}" image="https://api.limonplayer.cn/loading-image.png" slip="https://api.limonplayer.cn/loading-slip.png" _pid="{{_pid}}"></wxc-loading>
+        <layout-foot _pid="{{_pid}}"></layout-foot>
     </view>
-
-    <layout-foot _pid="{{_pid}}"></layout-foot>
 </view>

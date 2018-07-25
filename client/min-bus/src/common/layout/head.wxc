@@ -10,8 +10,13 @@ export default {
       'wxc-notice': '@minui/wxc-notice'
     }
   },
+  properties: {
+    notice: {
+      type: String,
+      value: '公交平台将在每日0点－6点进行系统升级，升级期间将暂停服务，敬请谅解。'
+    }
+  },
   data: {
-    notice: '公交平台将在每日0点－6点进行系统升级，升级期间将暂停服务，敬请谅解。',
     isShow: Global.getHeadNoticeStatus()
   },
   methods: {
