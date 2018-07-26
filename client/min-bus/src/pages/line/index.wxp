@@ -209,12 +209,12 @@ export default {
     }
   },
   handleConversion () {
-    wx.showLoading({
-      title: '换上下行中',
-    })
     const isUpDown = 1 - this.data.isUpDown;
     const { lineName } = this.data;
     const isUpDownName = isUpDown == 0 ? '上行' : '下行';
+    wx.showLoading({
+      title: `换为${isUpDownName}`,
+    })
     this.updateLine(lineName, isUpDown);
     this.updateBusWaiting(lineName, isUpDown);
     this.setData({
