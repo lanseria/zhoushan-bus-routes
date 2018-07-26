@@ -222,6 +222,11 @@ export default {
     })
   },
   handleRefresh () {
+    const { markers } = this.data;
+    // console.log(markers)
+    const m = markers.filter(f => f.alpha < 1)
+    this.setData({markers: m})
+    // console.log(m)
     wx.showLoading({
       title: '刷新中',
     })
