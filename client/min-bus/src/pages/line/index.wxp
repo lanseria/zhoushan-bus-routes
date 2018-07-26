@@ -142,7 +142,7 @@ export default {
             latitude: locationArray[1]
           }
         }
-      })
+      }).reverse()
       busWaiting.bus = filterBus
       this.setData({busWaiting, markers, hideview});
       wx.hideLoading()
