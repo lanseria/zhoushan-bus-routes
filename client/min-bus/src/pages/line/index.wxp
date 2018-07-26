@@ -265,11 +265,12 @@ export default {
   height: 100vh;
 }
 .map-wrapper {
-  flex: 0.5;
+  flex: 1;
   width: 100vw;
 }
 .scroll-wrapper {
-  flex: 0.5;
+  height:500rpx;
+  flex: 0 0 500rpx;
   width: 100vw;
 }
 .controls {
