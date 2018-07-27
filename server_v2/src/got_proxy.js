@@ -13,10 +13,7 @@ const gotConfig = {
       host: 'localhost',
       port: 8888
     }
-  }) : false,
-  headers: {
-    'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 11_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15G77 MicroMessenger/6.7.1 NetType/WIFI Language/en'
-  }
+  }) : false
 }
 
 exports.getFromServer = async function (apiUrl, query) {
@@ -33,7 +30,11 @@ exports.postFromServer = async function (apiUrl, querystring) {
   const response = await got.post(url, {
     ...gotConfig,
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'user-agent': `BusXing/1.3.0 (iPhone; iOS 11.4.1; Scale/3.00)`,
+      'Content-Length': `44`,
+      'Accept-Language': 'zh-Hans-CN;q=1, en-CN;q=0.9',
+      'Connection': 'keep-alive'
     },
     body: querystring,
   })
