@@ -60,11 +60,9 @@ export default {
     })
   },
   onInput(e) {
-    console.log('input: ', e.detail.value)
     const filterLine = this.data.allLine.filter(m => {
       return m.line_name.indexOf(e.detail.value) >= 0;
     })
-    console.log(filterLine)
     this.setData({
       filterLine
     })

@@ -31,7 +31,7 @@
             data-location="{{item.location}}"
             bindtap="handleSetLocationCenter"
             src="https://api.limonplayer.cn/route_32px.png">
-            <view wx:if="{{item.isStation == '0'}}" class="desc-highlight">{{'进站中-'+line.stations[item.lastStation-1].stationName + '|下站-'+line.stations[item.lastStation].stationName}}</view>
+            <view wx:if="{{item.isStation == '0'}}" class="desc-highlight">{{'进站中-'+line.stations[item.lastStation-1].stationName}}</view>
           </wxc-list>
           <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
           <view hidden="{{hideview}}">
@@ -182,6 +182,9 @@ export default {
         endStation: line.stations[stationsLength - 1].stationName,
       }
       const notice = `${lineName}:${isUpDownName}.起始站:${lineDetail.startStation},终点站:${lineDetail.endStation}.${line.lineInfo}`
+      wx.setNavigationBarTitle({
+        title: `${lineDetail.startStation} → ${lineDetail.endStation}`
+      })
       this.setData({
         isUpDownName,
         lineDetail,
@@ -198,7 +201,7 @@ export default {
   handleZoom () {
     if (this.data.viewHeight === 0.5) {
       this.setData({
-        mapStyle: `height: 100vh;`,
+        mapStyle: `height: 90vh;`,
         viewHeight: 1
       }) 
     } else {
@@ -252,13 +255,13 @@ export default {
 </script>
 
 <style>
-.header {
+/* .header {
   position: absolute;
   z-index: 100;
-}
+  width: 100vw;
+} */
 .line-wrapper {
   position: fixed;
-  bottom: 0;
   display: flex;
   flex-direction: column;
   width: 100vw;
@@ -269,8 +272,8 @@ export default {
   width: 100vw;
 }
 .scroll-wrapper {
-  height:500rpx;
-  flex: 0 0 500rpx;
+  height: 600rpx;
+  flex: 0 0 600rpx;
   width: 100vw;
 }
 .controls {
@@ -282,7 +285,7 @@ export default {
   opacity: 80%;
 }
 .icon-controls {
-  width: 50rpx;
+  width: 100rpx;
   height: 50rpx;
   position: absolute;
   bottom: 10rpx;
@@ -292,15 +295,17 @@ export default {
   left: 10rpx;
 }
 .conversion-controls {
-  left: 70rpx;
+  left: 10rpx;
+  bottom: 70rpx;
 }
 .refresh-controls {
-  left: 130rpx;
+  left: 10rpx;
+  bottom: 130rpx;
 }
 .list-wrap {
   width: 100%;
   background: #efefef;
-  padding-bottom: 30rpx;
+  padding-bottom: 20rpx;
   padding-top: 20rpx;
 }
 .list-item {

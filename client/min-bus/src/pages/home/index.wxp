@@ -73,7 +73,7 @@ export default {
   },
   data: {
     $loading: {
-      isShow: false
+      isShow: true
     },
     isShow: Global.getHeadNoticeStatus(),
     style: "background: #fff;border-radius: 66rpx;color: #000;",
