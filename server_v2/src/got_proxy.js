@@ -31,7 +31,7 @@ exports.postFromServer = async function (apiUrl, querystring) {
     ...gotConfig,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'user-agent': `BusXing/1.3.0 (iPhone; iOS 11.4.1; Scale/3.00)`
+      'User-Agent': `BusXing/1.3.0 (iPhone; iOS 11.4.1; Scale/3.00)`
     },
     body: querystring,
   })
