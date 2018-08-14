@@ -35,6 +35,7 @@
             <index-card data="{{item}}"></index-card>
           </view>
         </wxc-tab-panel>
+        <ad unit-id="adunit-a6f5ef70c27ac884"></ad>
         <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
         <view class="bottom"></view>
       </scroll-view>
@@ -78,7 +79,7 @@ export default {
     isShow: Global.getHeadNoticeStatus(),
     style: "background: #fff;border-radius: 66rpx;color: #000;",
     locationInfo: {},
-    nearLineInfo: [],
+    nearLineInfo: Global.getVal('NEARLINEINFO'),
     tabs: [
       { title: "推荐", content: "" },
       { title: "收藏", content: "" },
@@ -113,6 +114,7 @@ export default {
       Bus.getNearLine(location).then(res => {
         const { tabs } = this.data;
         const nearLineInfo = JSON.parse(res.data.data);
+        Global.setVal('NEARLINEINFO', nearLineInfo)
         tabs[0].content = nearLineInfo.slice(0, 10);
         this.setData({
           locationInfo: res,
@@ -186,6 +188,9 @@ export default {
   position: fixed;
   overflow: scroll;
 } */
+.tab-panel {
+  margin-bottom: 20rpx;
+}
 .container {
   width: 100%;
   padding-top: 10rpx;

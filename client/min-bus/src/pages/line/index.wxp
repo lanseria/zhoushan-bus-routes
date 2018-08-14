@@ -1,8 +1,8 @@
 <template>
 <view>
   <layout-head class="header" notice="{{notice}}"></layout-head>
-  <view id="max-wrapper" class="line-wrapper">
-    <map class="map-wrapper" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="{{mapStyle}}">
+  <view class="wrap">
+    <map class="wrap-item wrap-main" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="{{mapStyle}}">
       <cover-view class="controls">
         <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png" />
       </cover-view>
@@ -15,9 +15,12 @@
       <cover-view class="refresh-controls icon-controls">
         <cover-image class="img" bindtap="handleRefresh" src="https://api.limonplayer.cn/refresh_24px.png" />
       </cover-view>
+      <cover-view class="location-controls icon-controls">
+        <cover-image class="img" bindtap="handleLocation" src="https://api.limonplayer.cn/location_24px.png" />
+      </cover-view>
     </map>
     
-    <scroll-view class="scroll-wrapper" scroll-y>
+    <scroll-view class="wrap-item wrap-side" scroll-y>
       <view class="list-wrap">
         <view class="list-item">
           <wxc-list
@@ -68,7 +71,7 @@ export default {
     tip: '空空如也',
     location: {},
     hideview: true,
-    scale: 17,
+    scale: 14,
     notice: '',
     lineName: "",
     isUpDown: 0,
@@ -236,6 +239,11 @@ export default {
     const { lineName, isUpDown } = this.data;
     this.updateBusWaiting(lineName, isUpDown);
   },
+  handleLocation () {
+    this.setData({
+      location: Global.getVal("location-data")
+    })
+  },
   handleSetLocationCenter (e) {
     const {currentTarget} = e;
     const {dataset} = currentTarget;
@@ -260,21 +268,21 @@ export default {
   z-index: 100;
   width: 100vw;
 } */
-.line-wrapper {
-  position: fixed;
+.wrap {
   display: flex;
   flex-direction: column;
-  width: 100vw;
   height: 100vh;
 }
-.map-wrapper {
-  flex: 1;
+.wrap-item {
   width: 100vw;
 }
-.scroll-wrapper {
-  height: 600rpx;
-  flex: 0 0 600rpx;
-  width: 100vw;
+.wrap-side {
+  height: 500rpx;
+  flex-grow: 0;
+  padding-bottom:70rpx;
+}
+.wrap-main {
+  flex-grow: 1;
 }
 .controls {
   width: 200rpx;
@@ -288,22 +296,22 @@ export default {
   width: 100rpx;
   height: 50rpx;
   position: absolute;
-  bottom: 10rpx;
+  right: 10rpx;
   opacity: 80%;
 }
 .zoom-controls {
-  left: 10rpx;
+  bottom: 120rpx;
 }
 .conversion-controls {
-  left: 10rpx;
-  bottom: 70rpx;
+  bottom: 180rpx;
 }
 .refresh-controls {
-  left: 10rpx;
-  bottom: 130rpx;
+  bottom: 240rpx;
+}
+.location-controls {
+  bottom: 300rpx;
 }
 .list-wrap {
-  width: 100%;
   background: #efefef;
   padding-bottom: 20rpx;
   padding-top: 20rpx;

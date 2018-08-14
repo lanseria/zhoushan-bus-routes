@@ -24,6 +24,7 @@
                         <index-card data="{{item}}" _pid="{{_pid}}"></index-card>
                     </view>
                 </wxc-tab-panel>
+                <ad unit-id="adunit-a6f5ef70c27ac884"></ad>
                 <wxc-loadmore is-end="{{true}}" _pid="{{_pid}}"></wxc-loadmore>
                 <view class="bottom"></view>
             </scroll-view>

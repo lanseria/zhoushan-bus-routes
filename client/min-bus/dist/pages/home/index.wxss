@@ -29,6 +29,9 @@
   position: fixed;
   overflow: scroll;
 } */
+.tab-panel {
+  margin-bottom: 20rpx;
+}
 .container {
   width: 100%;
   padding-top: 10rpx;
