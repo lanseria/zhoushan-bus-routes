@@ -6,6 +6,23 @@ class Global extends Base {
   wgs84togcj02 (lng, lat) {
     return location.wgs84togcj02(lng, lat);
   }
+  setLocationAsync () {
+    return wx.getLocation({
+      type: "gcj02",
+      success: res => {
+        this.setVal('location-data', {
+          latitude: res.latitude,
+          longitude: res.longitude,
+          length: 800
+        })
+        return {
+          lat: res.latitude,
+          lng: res.longitude,
+          length: 800
+        }
+      }
+    })
+  }
   setLocation () {
     return new Promise((resolve, reject) => {
       wx.getLocation({

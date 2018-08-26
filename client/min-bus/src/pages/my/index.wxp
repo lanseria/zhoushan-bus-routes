@@ -1,0 +1,16 @@
+<template>
+  <view>开发中</view>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: '我的',
+    usingComponents: {}
+  },
+  data: {}
+}
+</script>
+
+<style>
+</style>

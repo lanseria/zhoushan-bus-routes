@@ -1,0 +1,20 @@
+<template>
+  <view>
+    <ad unit-id="adunit-826df0553d777f12"></ad>
+    <ad unit-id="adunit-54b1a6100f73721c"></ad>
+    <ad unit-id="adunit-e0917bb557e372a0"></ad>
+  </view>
+</template>
+
+<script>
+export default {
+  config: {
+    navigationBarTitleText: '广告',
+    usingComponents: {}
+  },
+  data: {}
+}
+</script>
+
+<style>
+</style>

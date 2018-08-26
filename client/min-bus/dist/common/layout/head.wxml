@@ -1,0 +1,1 @@
+<wxc-notice isShow="{{isShow}}" scroll="{{true}}" bg-color="#ff9300" bg-rgba="rgba(255, 147, 0, 0)" close="{{true}}" show-icon="{{true}}" notice="{{notice}}" bind:close="onClose" _pid="{{_pid}}"></wxc-notice>

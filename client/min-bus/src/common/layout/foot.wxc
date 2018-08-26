@@ -1,16 +1,16 @@
 <template>
   <view class="foot">
     <view class="item">
-      <wxc-icon size="50" type="home"></wxc-icon>
+      <wxc-icon size="50" type="home" bindtap="handleJumpHome"></wxc-icon>
       <text class="icon_type">首页</text>
     </view>
     <view class="item">
-      <wxc-icon size="50" type="location"></wxc-icon>
-      <text class="icon_type">位置</text>
+      <wxc-icon size="50" type="location" bindtap="handleJumpHotrouter"></wxc-icon>
+      <text class="icon_type">热门线路</text>
     </view>
     <view class="item">
       <wxc-icon size="50" type="share"></wxc-icon>
-      <text class="icon_type">分享</text>
+      <text class="icon_type">广告</text>
     </view>
     <view class="item">
       <wxc-icon size="50" type="group"></wxc-icon>
@@ -28,7 +28,18 @@ export default {
     }
   },
   data: {},
-  methods: {}
+  methods: {
+    handleJumpHome () {
+      wx.redirectTo({
+        url: '/pages/home/index'
+      })
+    },
+    handleJumpHotrouter () {
+      wx.redirectTo({
+        url: '/pages/hotrouter/index'
+      })
+    }
+  }
 }
 </script>
 

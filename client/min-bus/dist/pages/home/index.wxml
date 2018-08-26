@@ -17,19 +17,15 @@
                 <wxc-search class="search" radius="30" mode="static" placeholder="搜索公交线路、车站、地点" bind:tap="handleShowSearchPage" _pid="{{_pid}}"></wxc-search>
             </view>
         </view>
-        <wxc-tab class="tab-box" bind:tabchange="onClick" default-index="{{0}}" active-text-color="#108ee9" active-line-color="#108ee9" animate="{{true}}" _pid="{{_pid}}">
-            <scroll-view scroll-y style="height: 990rpx;">
-                <wxc-tab-panel class="tab-panel" wx:for="{{tabs}}" wx:for-item="tab" wx:key="{{tab.title}}" label="{{tab.title}}" _pid="{{_pid}}">
-                    <view wx:for="{{tab.content}}" wx:key="item.lineName">
-                        <index-card data="{{item}}" _pid="{{_pid}}"></index-card>
-                    </view>
-                </wxc-tab-panel>
-                <ad unit-id="adunit-a6f5ef70c27ac884"></ad>
-                <wxc-loadmore is-end="{{true}}" _pid="{{_pid}}"></wxc-loadmore>
-                <view class="bottom"></view>
-            </scroll-view>
-        </wxc-tab>
-        <wxc-loading is-show="{{$loading.isShow}}" image="https://api.limonplayer.cn/loading-image.png" slip="https://api.limonplayer.cn/loading-slip.png" _pid="{{_pid}}"></wxc-loading>
-        <layout-foot _pid="{{_pid}}"></layout-foot>
+        <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}" bindscrolltoupper="getNearLine">
+            <view wx:for="{{nearLineInfo}}" wx:key="item.lineName">
+                <index-card wx:if="{{!isLoading}}" data="{{item}}" _pid="{{_pid}}"></index-card>
+            </view>
+            <ad wx:if="{{!isLoading}}" unit-id="adunit-a6f5ef70c27ac884"></ad>
+            <wxc-loadmore is-end="{{true}}" text="到底啦" icon="https://s10.mogucdn.com/mlcdn/c45406/171016_47j96cl3hdhhdf7ajg8hg2kd13gdc_400x400.png" _pid="{{_pid}}">
+            </wxc-loadmore>
+            <view class="bottom"></view>
+        </scroll-view>
+        <wxc-loading is-show="{{isLoading}}" image="https://api.limonplayer.cn/loading-image.png" slip="https://api.limonplayer.cn/loading-slip.png" _pid="{{_pid}}"></wxc-loading>
     </view>
 </view>
