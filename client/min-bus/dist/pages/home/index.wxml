@@ -5,8 +5,7 @@
         <view class="index-hd">
             <view class="container">
                 <view class="button-small-wrap">
-                    <wxc-button btnStyle="{{style}}" _pid="{{_pid}}">舟山
-                        <wxc-icon color="#000" type="arrow-down" _pid="{{_pid}}"></wxc-icon>
+                    <wxc-button btnStyle="{{style}}" _pid="{{_pid}}">舟山<wxc-icon color="#000" type="arrow-down" _pid="{{_pid}}"></wxc-icon>
                     </wxc-button>
                 </view>
             </view>
