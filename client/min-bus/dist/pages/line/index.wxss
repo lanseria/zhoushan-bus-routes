@@ -14,7 +14,7 @@
 .wrap-side {
   height: 500rpx;
   flex-grow: 0;
-  padding-bottom:70rpx;
+  padding-bottom: 70rpx;
 }
 .wrap-main {
   flex-grow: 1;
@@ -35,16 +35,18 @@
   opacity: 80%;
 }
 .zoom-controls {
-  bottom: 120rpx;
+  top: 10rpx;
 }
 .conversion-controls {
-  bottom: 180rpx;
+  top: 10rpx;
+  left: 10rpx;
 }
 .refresh-controls {
-  bottom: 240rpx;
+  bottom: 120rpx;
 }
 .location-controls {
-  bottom: 300rpx;
+  bottom: 10rpx;
+  left: 10rpx;
 }
 .list-wrap {
   background: #efefef;

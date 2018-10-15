@@ -1,39 +1,33 @@
 <template>
-<view>
-  <layout-head isShow="{{isShow}}"></layout-head>
-  <view class="content-wrapper">
-    <view class="index-hd">
-      <view class="container">
-        <view class="button-small-wrap">
-          <wxc-button btnStyle="{{style}}">舟山<wxc-icon color="#000" type="arrow-down"></wxc-icon></wxc-button>
+  <view>
+    <layout-head isShow="{{isShow}}"></layout-head>
+    <view class="content-wrapper">
+      <view class="index-hd">
+        <view class="container">
+          <view class="button-small-wrap">
+            <wxc-button btnStyle="{{style}}">舟山<wxc-icon color="#000" type="arrow-down"></wxc-icon>
+            </wxc-button>
+          </view>
         </view>
       </view>
-    </view>
 
-    <view class="index-bd">
-      <view class="search-wrap">
-        <wxc-search class="search" radius="30" mode="static" placeholder="搜索公交线路、车站、地点" bind:tap="handleShowSearchPage"></wxc-search>
+      <view class="index-bd">
+        <view class="search-wrap">
+          <wxc-search class="search" radius="30" mode="static" placeholder="搜索公交线路、车站、地点" bind:tap="handleShowSearchPage"></wxc-search>
+        </view>
       </view>
+      <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}" bindscrolltoupper="getNearLine">
+        <ad wx:if="{{!isLoading}}" unit-id="adunit-a6f5ef70c27ac884"></ad>
+        <view wx:for="{{nearLineInfo}}" wx:key="item.lineName">
+          <index-card wx:if="{{!isLoading}}" data="{{item}}"></index-card>
+        </view>
+        <wxc-loadmore is-end="{{true}}" text="到底啦" icon="https://s10.mogucdn.com/mlcdn/c45406/171016_47j96cl3hdhhdf7ajg8hg2kd13gdc_400x400.png">
+        </wxc-loadmore>
+        <view class="bottom"></view>
+      </scroll-view>
+      <wxc-loading is-show="{{isLoading}}" image="https://api.limonplayer.cn/loading-image.png" slip="https://api.limonplayer.cn/loading-slip.png"></wxc-loading>
     </view>
-    <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}" bindscrolltoupper="getNearLine">
-      <view wx:for="{{nearLineInfo}}" wx:key="item.lineName">
-        <index-card wx:if="{{!isLoading}}" data="{{item}}"></index-card>
-      </view>
-      <ad wx:if="{{!isLoading}}" unit-id="adunit-a6f5ef70c27ac884"></ad>
-      <wxc-loadmore
-        is-end="{{true}}"
-        text="到底啦"
-        icon="https://s10.mogucdn.com/mlcdn/c45406/171016_47j96cl3hdhhdf7ajg8hg2kd13gdc_400x400.png">
-      </wxc-loadmore>
-      <view class="bottom"></view>
-    </scroll-view>
-    <wxc-loading
-      is-show="{{isLoading}}"
-      image="https://api.limonplayer.cn/loading-image.png"
-    slip="https://api.limonplayer.cn/loading-slip.png"
-    ></wxc-loading>
   </view>
-</view>
 </template>
 
 <script>
@@ -80,17 +74,17 @@ export default {
       path: 'pages/home/index'
     }
   },
-  onClick: function(e) {
+  onClick: function (e) {
     console.log(
       `ComponentId:${e.detail.componentId},you selected:${e.detail.key}`
     );
   },
-  handleShowSearchPage() {
+  handleShowSearchPage () {
     wx.navigateTo({
       url: `/pages/search/index`
     })
   },
-  getNearLine() {
+  getNearLine () {
     // this.setData({
     //   isLoading: true
     // });
@@ -110,7 +104,7 @@ export default {
   saveData () {
     wx.downloadFile({
       url: 'https://api.limonplayer.cn/location_72px.png',
-      success: function(res) {
+      success: function (res) {
         if (res.statusCode === 200) {
           Global.setVal('location-png', res.tempFilePath)
         }
@@ -118,7 +112,7 @@ export default {
     })
     wx.downloadFile({
       url: 'https://api.limonplayer.cn/location_control_72px.png',
-      success: function(res) {
+      success: function (res) {
         if (res.statusCode === 200) {
           Global.setVal('location-control-png', res.tempFilePath)
         }
@@ -126,7 +120,7 @@ export default {
     })
     wx.downloadFile({
       url: 'https://api.limonplayer.cn/bus_icon.png',
-      success: function(res) {
+      success: function (res) {
         if (res.statusCode === 200) {
           Global.setVal('bus-icon-png', res.tempFilePath)
         }

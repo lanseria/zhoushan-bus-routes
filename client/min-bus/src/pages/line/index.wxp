@@ -1,54 +1,40 @@
 <template>
-<view>
-  <layout-head class="header" notice="{{notice}}"></layout-head>
-  <view class="wrap">
-    <map class="wrap-item wrap-main" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="{{mapStyle}}">
-      <cover-view class="controls">
-        <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png" />
-      </cover-view>
-      <cover-view class="zoom-controls icon-controls">
-        <cover-image class="img" bindtap="handleZoom" src="https://api.limonplayer.cn/search_24px.png" />
-      </cover-view>
-      <cover-view class="conversion-controls icon-controls">
-        <cover-image class="img" bindtap="handleConversion" src="https://api.limonplayer.cn/drag_24px.png" />
-      </cover-view>
-      <cover-view class="refresh-controls icon-controls">
-        <cover-image class="img" bindtap="handleRefresh" src="https://api.limonplayer.cn/refresh_24px.png" />
-      </cover-view>
-      <cover-view class="location-controls icon-controls">
-        <cover-image class="img" bindtap="handleLocation" src="https://api.limonplayer.cn/location_24px.png" />
-      </cover-view>
-    </map>
-    
-    <scroll-view class="wrap-item wrap-side" scroll-y>
-      <view class="list-wrap">
-        <view class="list-item">
-          <wxc-list
-            wx:for="{{busWaiting.bus}}"
-            wx:key="index"
-            class="item"
-            title="{{item.busNo}}"
-            desc="{{item.isStation == '0'? '' : '下站-'+line.stations[item.lastStation].stationName}}"
-            mode="{{index == data.length-1 ? 'none': ''}}"
-            data-line-name="{{item.busNo}}"
-            data-location="{{item.location}}"
-            bindtap="handleSetLocationCenter"
-            src="https://api.limonplayer.cn/route_32px.png">
-            <view wx:if="{{item.isStation == '0'}}" class="desc-highlight">{{'进站中-'+line.stations[item.lastStation-1].stationName}}</view>
-          </wxc-list>
-          <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
-          <view hidden="{{hideview}}">
-            <wxc-abnor
-              type="DATA"
-              title="{{title}}"
-              tip="{{tip}}"
-            ></wxc-abnor>
+  <view>
+    <layout-head class="header" notice="{{notice}}"></layout-head>
+    <view class="wrap">
+      <map class="wrap-item wrap-main" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="{{mapStyle}}">
+        <cover-view class="controls">
+          <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png" />
+        </cover-view>
+        <cover-view class="zoom-controls icon-controls">
+          <cover-image class="img" bindtap="handleZoom" src="https://api.limonplayer.cn/search_24px.png" />
+        </cover-view>
+        <cover-view class="conversion-controls icon-controls">
+          <cover-image class="img" bindtap="handleConversion" src="https://api.limonplayer.cn/drag_24px.png" />
+        </cover-view>
+        <cover-view class="refresh-controls icon-controls">
+          <cover-image class="img" bindtap="handleRefresh" src="https://api.limonplayer.cn/refresh_24px.png" />
+        </cover-view>
+        <cover-view class="location-controls icon-controls">
+          <cover-image class="img" bindtap="handleLocation" src="https://api.limonplayer.cn/location_24px.png" />
+        </cover-view>
+      </map>
+
+      <scroll-view class="wrap-item wrap-side" scroll-y>
+        <view class="list-wrap">
+          <view class="list-item">
+            <wxc-list wx:for="{{busWaiting.bus}}" wx:key="index" class="item" title="{{item.busNo}}" desc="{{item.isStation == '0'? '' : '下站-'+line.stations[item.lastStation].stationName}}" mode="{{index == data.length-1 ? 'none': ''}}" data-line-name="{{item.busNo}}" data-location="{{item.location}}" bindtap="handleSetLocationCenter" src="https://api.limonplayer.cn/route_32px.png">
+              <view wx:if="{{item.isStation == '0'}}" class="desc-highlight">{{'进站中-'+line.stations[item.lastStation-1].stationName}}</view>
+            </wxc-list>
+            <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
+            <view hidden="{{hideview}}">
+              <wxc-abnor type="DATA" title="{{title}}" tip="{{tip}}"></wxc-abnor>
+            </view>
           </view>
         </view>
-      </view>
-    </scroll-view>
+      </scroll-view>
+    </view>
   </view>
-</view>
 </template>
 
 <script>
@@ -96,7 +82,7 @@ export default {
       }
     ]
   },
-  onLoad(options) {
+  onLoad (options) {
     const lineName = decodeURIComponent(options.lineName);
     const isUpDown = decodeURIComponent(options.isUpDown);
     this.setData({ lineName, isUpDown });
@@ -106,7 +92,7 @@ export default {
     this.updateLine(lineName, isUpDown)
     this.updateBusWaiting(lineName, isUpDown)
   },
-  onShow() {
+  onShow () {
     const { lineDetail, lineName, isUpDownName, isUpDown } = this.data;
     this.updateBusWaiting(lineName, isUpDown)
   },
@@ -147,7 +133,7 @@ export default {
         }
       }).reverse()
       busWaiting.bus = filterBus
-      this.setData({busWaiting, markers, hideview});
+      this.setData({ busWaiting, markers, hideview });
       wx.hideLoading()
     });
   },
@@ -206,12 +192,12 @@ export default {
       this.setData({
         mapStyle: `height: 90vh;`,
         viewHeight: 1
-      }) 
+      })
     } else {
       this.setData({
         mapStyle: ``,
         viewHeight: 0.5
-      })  
+      })
     }
   },
   handleConversion () {
@@ -231,7 +217,7 @@ export default {
     const { markers } = this.data;
     // console.log(markers)
     const m = markers.filter(f => f.alpha < 1)
-    this.setData({markers: m})
+    this.setData({ markers: m })
     // console.log(m)
     wx.showLoading({
       title: '刷新中',
@@ -245,18 +231,18 @@ export default {
     })
   },
   handleSetLocationCenter (e) {
-    const {currentTarget} = e;
-    const {dataset} = currentTarget;
-    const {location} = dataset;
-    this.setData({location})
+    const { currentTarget } = e;
+    const { dataset } = currentTarget;
+    const { location } = dataset;
+    this.setData({ location })
   },
-  regionchange(e) {
+  regionchange (e) {
     console.log(e.type);
   },
-  markertap(e) {
+  markertap (e) {
     console.log(e.markerId);
   },
-  controltap(e) {
+  controltap (e) {
     console.log(e.controlId);
   }
 };
@@ -279,7 +265,7 @@ export default {
 .wrap-side {
   height: 500rpx;
   flex-grow: 0;
-  padding-bottom:70rpx;
+  padding-bottom: 70rpx;
 }
 .wrap-main {
   flex-grow: 1;
@@ -300,16 +286,18 @@ export default {
   opacity: 80%;
 }
 .zoom-controls {
-  bottom: 120rpx;
+  top: 10rpx;
 }
 .conversion-controls {
-  bottom: 180rpx;
+  top: 10rpx;
+  left: 10rpx;
 }
 .refresh-controls {
-  bottom: 240rpx;
+  bottom: 120rpx;
 }
 .location-controls {
-  bottom: 300rpx;
+  bottom: 10rpx;
+  left: 10rpx;
 }
 .list-wrap {
   background: #efefef;
