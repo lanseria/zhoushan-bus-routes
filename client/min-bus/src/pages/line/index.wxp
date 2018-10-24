@@ -2,7 +2,7 @@
   <view>
     <layout-head class="header" notice="{{notice}}"></layout-head>
     <view class="wrap">
-      <map class="wrap-item wrap-main" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="{{mapStyle}}">
+      <map class="wrap-item wrap-main {{mapStyle==1?'full':''}}" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location>
         <cover-view class="controls">
           <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png" />
         </cover-view>
@@ -188,14 +188,15 @@ export default {
     });
   },
   handleZoom () {
+    console.log('zoom')
     if (this.data.viewHeight === 0.5) {
       this.setData({
-        mapStyle: `height: 90vh;`,
+        mapStyle: 1,
         viewHeight: 1
       })
     } else {
       this.setData({
-        mapStyle: ``,
+        mapStyle: 0,
         viewHeight: 0.5
       })
     }
@@ -270,6 +271,9 @@ export default {
 .wrap-main {
   flex-grow: 1;
 }
+.full {
+  height: 90vh;
+}
 .controls {
   width: 200rpx;
   height: 100rpx;
@@ -286,14 +290,17 @@ export default {
   opacity: 80%;
 }
 .zoom-controls {
-  top: 10rpx;
+  bottom: 120rpx;
 }
 .conversion-controls {
   top: 10rpx;
   left: 10rpx;
 }
 .refresh-controls {
-  bottom: 120rpx;
+  width: 90rpx;
+  height: 90rpx;
+  bottom: 5rpx;
+  right: 205rpx;
 }
 .location-controls {
   bottom: 10rpx;

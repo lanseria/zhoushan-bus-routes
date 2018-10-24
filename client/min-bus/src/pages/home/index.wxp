@@ -1,6 +1,6 @@
 <template>
   <view>
-    <layout-head isShow="{{isShow}}"></layout-head>
+    <!-- <layout-head isShow="{{isShow}}"></layout-head> -->
     <view class="content-wrapper">
       <view class="index-hd">
         <view class="container">
@@ -16,7 +16,7 @@
           <wxc-search class="search" radius="30" mode="static" placeholder="搜索公交线路、车站、地点" bind:tap="handleShowSearchPage"></wxc-search>
         </view>
       </view>
-      <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}" bindscrolltoupper="getNearLine">
+      <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}">
         <ad wx:if="{{!isLoading}}" unit-id="adunit-a6f5ef70c27ac884"></ad>
         <view wx:for="{{nearLineInfo}}" wx:key="item.lineName">
           <index-card wx:if="{{!isLoading}}" data="{{item}}"></index-card>

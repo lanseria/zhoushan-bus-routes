@@ -2,7 +2,7 @@
 <view>
     <layout-head class="header" notice="{{notice}}" _pid="{{_pid}}"></layout-head>
     <view class="wrap">
-        <map class="wrap-item wrap-main" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="{{mapStyle}}">
+        <map class="wrap-item wrap-main {{mapStyle==1?'full':''}}" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location>
             <cover-view class="controls">
                 <cover-image class="img" src="https://api.limonplayer.cn/location_control_72px.png">
                 </cover-image>

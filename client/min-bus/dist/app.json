@@ -13,18 +13,6 @@
         "selectedIconPath": "img/rest-s.png",
         "pagePath": "pages/hotrouter/index",
         "text": "热门线路"
-      },
-      {
-        "iconPath": "img/emoji.png",
-        "selectedIconPath": "img/emoji-s.png",
-        "pagePath": "pages/ad/index",
-        "text": "广告"
-      },
-      {
-        "iconPath": "img/my.png",
-        "selectedIconPath": "img/my-s.png",
-        "pagePath": "pages/my/index",
-        "text": "我的"
       }
     ]
   },

@@ -19,6 +19,9 @@
 .wrap-main {
   flex-grow: 1;
 }
+.full {
+  height: 90vh;
+}
 .controls {
   width: 200rpx;
   height: 100rpx;
@@ -35,14 +38,17 @@
   opacity: 80%;
 }
 .zoom-controls {
-  top: 10rpx;
+  bottom: 120rpx;
 }
 .conversion-controls {
   top: 10rpx;
   left: 10rpx;
 }
 .refresh-controls {
-  bottom: 120rpx;
+  width: 90rpx;
+  height: 90rpx;
+  bottom: 5rpx;
+  right: 205rpx;
 }
 .location-controls {
   bottom: 10rpx;

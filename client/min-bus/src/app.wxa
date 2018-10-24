@@ -20,23 +20,15 @@ export default {
         "selectedIconPath": "img/rest-s.png",
         "pagePath": "pages/hotrouter/index",
         "text": "热门线路"
-      }, {
-        "iconPath": "img/emoji.png",
-        "selectedIconPath": "img/emoji-s.png",
-        "pagePath": "pages/ad/index",
-        "text": "广告"
-      }, {
-        "iconPath": "img/my.png",
-        "selectedIconPath": "img/my-s.png",
-        "pagePath": "pages/my/index",
-        "text": "我的"
       }]
     },
     pages: [
       "pages/home/index",
       "pages/hotrouter/index",
       "pages/line/index",
-      "pages/search/index"
+      "pages/search/index",
+      "pages/ad/index",
+      "pages/my/index"
     ],
     window: {
       backgroundTextStyle: "dark",
@@ -51,11 +43,11 @@ export default {
   },
   globalData: {
   },
-  onLaunch() {
+  onLaunch () {
   },
-  onShow() {
+  onShow () {
   },
-  onHide() {}
+  onHide () { }
 };
 </script>
 
