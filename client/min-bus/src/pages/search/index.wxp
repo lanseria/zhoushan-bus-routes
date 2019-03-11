@@ -1,21 +1,11 @@
 <template>
-<view class="content-wrap">
-  <view class="search-wrap">
-    <wxc-search 
-      class="search"
-      bg-color="#fff"
-      radius="30"
-      showClear="{{false}}"
-      bind:input="onInput"
-    ></wxc-search>
+  <view class="content-wrap">
+    <view class="search-wrap">
+      <wxc-search class="search" bg-color="#fff" radius="30" showClear="{{false}}" bind:input="onInput"></wxc-search>
+    </view>
+    <road-list class="list-wrap" data="{{filterLine}}"></road-list>
+    <wxc-loading is-show="{{$loading.isShow}}" image="https://api.limonplayer.cn/loading-image.png" slip="https://api.limonplayer.cn/loading-slip.png"></wxc-loading>
   </view>
-  <road-list class="list-wrap" data="{{filterLine}}"></road-list>
-  <wxc-loading
-    is-show="{{$loading.isShow}}"
-    image="https://api.limonplayer.cn/loading-image.png"
-    slip="https://api.limonplayer.cn/loading-slip.png"
-  ></wxc-loading>
-</view>
 </template>
 
 <script>
@@ -49,7 +39,13 @@ export default {
       }
     });
     Bus.getAllLine().then(res => {
-      const allLine = JSON.parse(res.data.data)
+      let allLine = JSON.parse(res.data.data)
+      allLine = allLine.map(m => {
+        return {
+          lineName: m.line_name,
+          lineNo: m.line_no
+        }
+      })
       this.setData({
         allLine,
         filterLine: allLine,
@@ -59,9 +55,9 @@ export default {
       })
     })
   },
-  onInput(e) {
+  onInput (e) {
     const filterLine = this.data.allLine.filter(m => {
-      return m.line_name.indexOf(e.detail.value) >= 0;
+      return m.lineName.indexOf(e.detail.value) >= 0;
     })
     this.setData({
       filterLine

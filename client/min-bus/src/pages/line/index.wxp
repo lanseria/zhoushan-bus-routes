@@ -20,7 +20,7 @@
         </cover-view>
       </map>
 
-      <scroll-view class="wrap-item wrap-side" scroll-y>
+      <scroll-view class="wrap-item wrap-side {{mapStyle?'none':''}}" scroll-y>
         <view class="list-wrap">
           <view class="list-item">
             <wxc-list wx:for="{{busWaiting.bus}}" wx:key="index" class="item" title="{{item.busNo}}" desc="{{item.isStation == '0'? '' : '下站-'+line.stations[item.lastStation].stationName}}" mode="{{index == data.length-1 ? 'none': ''}}" data-line-name="{{item.busNo}}" data-location="{{item.location}}" bindtap="handleSetLocationCenter" src="https://api.limonplayer.cn/route_32px.png">
@@ -93,8 +93,8 @@ export default {
     this.updateBusWaiting(lineName, isUpDown)
   },
   onShow () {
-    const { lineDetail, lineName, isUpDownName, isUpDown } = this.data;
-    this.updateBusWaiting(lineName, isUpDown)
+    // const { lineDetail, lineName, isUpDownName, isUpDown } = this.data;
+    // this.updateBusWaiting(lineName, isUpDown)
   },
   updateBusWaiting (lineName, isUpDown) {
     const params = { lineName, isUpDown, stationNum: 1 };
@@ -121,7 +121,7 @@ export default {
         return {
           longitude: locationArray[0],
           latitude: locationArray[1],
-          busNo: b.busNo,
+          busNo: `浙L·${b.busNo}`,
           away: b.away,
           factor: b.factor,
           isStation: b.isStation,
@@ -272,7 +272,10 @@ export default {
   flex-grow: 1;
 }
 .full {
-  height: 90vh;
+  margin-bottom: 6vh;
+}
+.none {
+  display: none;
 }
 .controls {
   width: 200rpx;

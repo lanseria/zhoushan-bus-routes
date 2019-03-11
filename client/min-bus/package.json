@@ -19,6 +19,7 @@
     "@minui/wxc-loadmore": "^1.0.5",
     "@minui/wxc-notice": "^1.0.1",
     "@minui/wxc-panel": "^1.0.1",
+    "@minui/wxc-popup": "^1.0.9",
     "@minui/wxc-search": "^1.0.1",
     "@minui/wxc-tab": "^1.0.8",
     "es6-promise": "^4.2.4",

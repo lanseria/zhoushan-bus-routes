@@ -20,7 +20,10 @@
   flex-grow: 1;
 }
 .full {
-  height: 90vh;
+  margin-bottom: 6vh;
+}
+.none {
+  display: none;
 }
 .controls {
   width: 200rpx;

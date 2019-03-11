@@ -1,32 +1,25 @@
 <template>
-  <view class="card" bindtap="showPopup" data-line-name="{{data.lineName}}">
+  <view class="card" bindtap='gotoLine' data-line-name="{{data.lineName}}">
     <view class="box">
       <view>
         <text class="label">最近车站：</text>
         <text class="data-label">{{data.stationName}}</text>
       </view>
       <view>
-        <text class="label">公交量次：</text>
-        <text class="data-label">{{data.busList.length}}次</text>
+        <text class="label">发车时间：</text>
+        <text class="data-label">{{data.timeInfo}}</text>
       </view>
     </view>
     <view class="box">
-      <text class="data-label blue-text">{{data.busList[0].lineName}}</text>
+      <text class="data-label blue-text">{{data.lineName}}</text>
     </view>
-    <wxc-popup class="J_Popup" animation-mode="bottom" align="bottom">
-      <view class="popup__content">
-        <road-list class="list-wrap" data="{{data.busList}}"></road-list>
-      </view>
-    </wxc-popup>
   </view>
 </template>
 
 <script>
 export default {
   config: {
-    usingComponents: {
-      'wxc-popup': '@minui/wxc-popup',
-      'road-list': '../components/road-list'
+    usingComponets: {
     }
   },
   properties: {
@@ -39,14 +32,6 @@ export default {
 
   },
   methods: {
-    showPopup () {
-      let popupComponent = this.selectComponent('.J_Popup');
-      popupComponent && popupComponent.show();
-    },
-    hidePopup () {
-      let popupComponent = this.selectComponent('.J_Popup');
-      popupComponent && popupComponent.hide();
-    },
     gotoLine (e) {
       const lineName = e.currentTarget.dataset.lineName
       // this.saveHistory(lineName)
@@ -96,12 +81,5 @@ export default {
 }
 .blue-text {
   color: #00abee;
-}
-.popup__content {
-  width: 100%;
-  height: 40vh;
-  line-height: 200rpx;
-  text-align: left;
-  background: #ffffff;
 }
 </style>

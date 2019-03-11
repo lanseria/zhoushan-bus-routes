@@ -4,10 +4,7 @@
       <view wx:for="{{nearLineInfo}}" wx:key="item.lineName">
         <index-card data="{{item}}"></index-card>
       </view>
-      <wxc-loadmore
-        is-end="{{true}}"
-        text="到底啦"
-        icon="https://s10.mogucdn.com/mlcdn/c45406/171016_47j96cl3hdhhdf7ajg8hg2kd13gdc_400x400.png">
+      <wxc-loadmore is-end="{{true}}" text="到底啦" icon="https://s10.mogucdn.com/mlcdn/c45406/171016_47j96cl3hdhhdf7ajg8hg2kd13gdc_400x400.png">
       </wxc-loadmore>
       <view class="bottom"></view>
     </scroll-view>
@@ -29,7 +26,7 @@ export default {
       "wxc-button": "@minui/wxc-button",
       "wxc-icon": "@minui/wxc-icon",
       "wxc-search": "@minui/wxc-search",
-      "index-card": "../components/index-card",
+      "index-card": "../components/hot-card",
       "wxc-tab": "@minui/wxc-tab",
       "wxc-tab-panel": "@minui/wxc-tab/panel",
       "wxc-loadmore": "@minui/wxc-loadmore",
@@ -45,7 +42,7 @@ export default {
   },
   /** note: 在 wxp 文件或者页面文件中请去掉 methods 包装 */
   onLoad () {
-    
+
   },
   getNearLine () {
     Global.setLocation().then(location => {

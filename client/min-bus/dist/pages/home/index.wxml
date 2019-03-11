@@ -5,7 +5,7 @@
         <view class="index-hd">
             <view class="container">
                 <view class="button-small-wrap">
-                    <wxc-button btnStyle="{{style}}" _pid="{{_pid}}">舟山<wxc-icon color="#000" type="arrow-down" _pid="{{_pid}}"></wxc-icon>
+                    <wxc-button btnStyle="{{style}}" bind:tap="getNearLine" _pid="{{_pid}}">舟山<wxc-icon color="#000" type="footprint" _pid="{{_pid}}"></wxc-icon>
                     </wxc-button>
                 </view>
             </view>
@@ -18,7 +18,7 @@
         </view>
         <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}">
             <ad wx:if="{{!isLoading}}" unit-id="adunit-a6f5ef70c27ac884"></ad>
-            <view wx:for="{{nearLineInfo}}" wx:key="item.lineName">
+            <view wx:for="{{nearLineList}}" wx:key="item.stationName">
                 <index-card wx:if="{{!isLoading}}" data="{{item}}" _pid="{{_pid}}"></index-card>
             </view>
             <wxc-loadmore is-end="{{true}}" text="到底啦" icon="https://s10.mogucdn.com/mlcdn/c45406/171016_47j96cl3hdhhdf7ajg8hg2kd13gdc_400x400.png" _pid="{{_pid}}">

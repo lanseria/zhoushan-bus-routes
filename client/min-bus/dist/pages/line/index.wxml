@@ -25,7 +25,7 @@
             </cover-view>
         </map>
 
-        <scroll-view class="wrap-item wrap-side" scroll-y>
+        <scroll-view class="wrap-item wrap-side {{mapStyle?'none':''}}" scroll-y>
             <view class="list-wrap">
                 <view class="list-item">
                     <wxc-list wx:for="{{busWaiting.bus}}" wx:key="index" class="item" title="{{item.busNo}}" desc="{{item.isStation == '0'? '' : '下站-'+line.stations[item.lastStation].stationName}}" mode="{{index == data.length-1 ? 'none': ''}}" data-line-name="{{item.busNo}}" data-location="{{item.location}}" bindtap="handleSetLocationCenter" src="https://api.limonplayer.cn/route_32px.png" _pid="{{_pid}}">

@@ -5,7 +5,7 @@
     "wxc-button": "../../packages/@minui/wxc-button/dist/index",
     "wxc-icon": "../../packages/@minui/wxc-icon/dist/index",
     "wxc-search": "../../packages/@minui/wxc-search/dist/index",
-    "index-card": "../components/index-card",
+    "index-card": "../components/hot-card",
     "wxc-tab": "../../packages/@minui/wxc-tab/dist/index",
     "wxc-tab-panel": "../../packages/@minui/wxc-tab/dist/panel",
     "wxc-loadmore": "../../packages/@minui/wxc-loadmore/dist/index",

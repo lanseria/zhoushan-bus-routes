@@ -3,6 +3,28 @@ import { Promise } from 'es6-promise'
 import location from '../common/lib/location'
 
 class Global extends Base {
+  // forEach 获取 [ {city: , location}] 结构
+  mapCityLoction_new (arr) {
+    let newArr = [];
+    arr.forEach((address, i) => {
+      let index = -1;
+      let alreadyExists = newArr.some((newAddress, j) => {
+        if (address.stationName === newAddress.stationName) {
+          index = j;
+          return true;
+        }
+      });
+      if (!alreadyExists) {
+        newArr.push({
+          stationName: address.stationName,
+          busList: [address]
+        });
+      } else {
+        newArr[index].busList.push(address);
+      }
+    });
+    return newArr;
+  }
   wgs84togcj02 (lng, lat) {
     return location.wgs84togcj02(lng, lat);
   }
