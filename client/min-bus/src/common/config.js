@@ -1,1 +1,1 @@
-export const HOST = 'https://api.limonplayer.cn/jsonp/zhoushanbus'
+export const HOST = 'https://limonplayer.cn/jsonp/zhoushanbus'

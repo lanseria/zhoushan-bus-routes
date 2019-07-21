@@ -1,7 +1,7 @@
 <scroll-view scroll-y style="height: 100%;">
     <view class="list-wrap">
         <view class="list-item">
-            <wxc-list wx:for="{{data}}" wx:key="index" class="item" title="{{item.lineName}}" desc="{{item.slot? '' : item.desc}}" mode="{{index == data.length-1 ? 'none': ''}}" bindtap="gotoLine" data-line-name="{{item.lineName}}" src="https://api.limonplayer.cn/route_32px.png" _pid="{{_pid}}">
+            <wxc-list wx:for="{{data}}" wx:key="index" class="item" title="{{item.lineName}}" desc="{{item.slot? '' : item.desc}}" mode="{{index == data.length-1 ? 'none': ''}}" bindtap="gotoLine" data-line-name="{{item.lineName}}" src="https://limonplayer.cn/route_32px.png" _pid="{{_pid}}">
                 <view wx:if="{{item.slot && item.desc}}" class="desc-highlight">{{item.desc}}</view>
             </wxc-list>
             <wxc-loadmore is-end="{{true}}" _pid="{{_pid}}"></wxc-loadmore>

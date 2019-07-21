@@ -25,6 +25,6 @@
             </wxc-loadmore>
             <view class="bottom"></view>
         </scroll-view>
-        <wxc-loading is-show="{{isLoading}}" image="https://api.limonplayer.cn/loading-image.png" slip="https://api.limonplayer.cn/loading-slip.png" _pid="{{_pid}}"></wxc-loading>
+        <wxc-loading is-show="{{isLoading}}" image="https://limonplayer.cn/loading-image.png" slip="https://limonplayer.cn/loading-slip.png" _pid="{{_pid}}"></wxc-loading>
     </view>
 </view>

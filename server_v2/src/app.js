@@ -1,14 +1,21 @@
 const Koa = require('koa');
+const path = require('path');
+const static = require('koa-static');
 const jsonp = require('koa-jsonp');
 const mongoose = require('mongoose');
 const router = require('./router');
 const config = require('./config');
 const {
-  port
+  port,
+  root,
 } = config;
 
 const app = new Koa();
 const db = mongoose.connection;
+
+app.use(static(
+  path.join( __dirname,  root)
+));
 
 app.proxy = true;
 

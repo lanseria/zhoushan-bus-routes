@@ -4,7 +4,7 @@
       <wxc-search class="search" bg-color="#fff" radius="30" showClear="{{false}}" bind:input="onInput"></wxc-search>
     </view>
     <road-list class="list-wrap" data="{{filterLine}}"></road-list>
-    <wxc-loading is-show="{{$loading.isShow}}" image="https://api.limonplayer.cn/loading-image.png" slip="https://api.limonplayer.cn/loading-slip.png"></wxc-loading>
+    <wxc-loading is-show="{{$loading.isShow}}" image="https://limonplayer.cn/loading-image.png" slip="https://limonplayer.cn/loading-slip.png"></wxc-loading>
   </view>
 </template>
 
