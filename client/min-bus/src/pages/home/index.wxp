@@ -17,6 +17,9 @@
         </view>
       </view>
       <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}">
+        <wxc-list wx:for="{{historyLines}}" wx:key="index" class="item" title="{{item.lineName}}" desc="{{item.slot? '' : item.desc}}" mode="{{index == data.length-1 ? 'none': ''}}" bindtap='gotoLine' data-line-name="{{item.lineName}}" src="https://limonplayer.cn/route_32px.png">
+          <view wx:if="{{item.slot && item.desc}}" class="desc-highlight">{{item.desc}}</view>
+        </wxc-list>
         <ad wx:if="{{!isLoading}}" unit-id="adunit-a6f5ef70c27ac884"></ad>
         <view wx:for="{{nearLineList}}" wx:key="item.stationName">
           <index-card wx:if="{{!isLoading}}" data="{{item}}"></index-card>
@@ -25,7 +28,7 @@
         </wxc-loadmore>
         <view class="bottom"></view>
       </scroll-view>
-      <wxc-loading is-show="{{isLoading}}" image="https://limonplayer.cn/loading-image.png" slip="https://limonplayer.cn/loading-slip.png"></wxc-loading>
+      <!-- <wxc-loading is-show="{{isLoading}}" image="https://limonplayer.cn/loading-image.png" slip="https://limonplayer.cn/loading-slip.png"></wxc-loading> -->
     </view>
   </view>
 </template>
@@ -40,6 +43,7 @@ export default {
   config: {
     disableScroll: true,
     usingComponents: {
+      'wxc-list': '@minui/wxc-list',
       "layout-head": "layout/head",
       "layout-foot": "layout/foot",
       "wxc-button": "@minui/wxc-button",
@@ -56,12 +60,30 @@ export default {
     style: "background: #fff;border-radius: 66rpx;color: #000;",
     locationInfo: {},
     nearLineList: [],
+    historyLines: [],
     nearLineInfo: Global.getVal('NEARLINEINFO')
   },
   /** note: 在 wxp 文件或者页面文件中请去掉 methods 包装 */
   onLoad () {
     this.saveData();
     this.getNearLine();
+  },
+  onShow () {
+    const hl = Global.getVal('HistoryLines').slice(0, 5)
+    this.setData({
+      historyLines: hl.map(m => {
+        return {
+          lineName: m,
+          lineNo: m
+        }
+      })
+    })
+  },
+  gotoLine (e) {
+    const lineName = e.currentTarget.dataset.lineName
+    wx.navigateTo({
+      url: `/pages/line/index?isUpDown=0&lineName=${encodeURIComponent(lineName)}`
+    })
   },
   onShareAppMessage (res) {
     if (res.from === 'button') {
@@ -91,7 +113,6 @@ export default {
       Bus.getNearLine(location).then(res => {
         const { tabs } = this.data;
         const nearLineInfo = JSON.parse(res.data.data)
-        console.log(Global.mapCityLoction_new(nearLineInfo))
         Global.setVal('NEARLINEINFO', nearLineInfo)
         this.setData({
           nearLineList: Global.mapCityLoction_new(nearLineInfo),

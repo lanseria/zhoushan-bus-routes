@@ -17,7 +17,6 @@ export default {
     usingComponents: {
       'wxc-icon': '@minui/wxc-icon',
       'wxc-search': '@minui/wxc-search',
-      'road-list': '../components/road-list',
       "wxc-loading": "@minui/wxc-loading",
       "wxc-loadmore": "@minui/wxc-loadmore",
     }

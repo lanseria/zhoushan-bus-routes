@@ -1,4 +1,7 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "wxc-button": "../../packages/@minui/wxc-button/dist/index",
+    "wxc-icon": "../../packages/@minui/wxc-icon/dist/index"
+  },
   "navigationBarTitleText": "我的"
 }

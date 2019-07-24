@@ -2,7 +2,6 @@
   "usingComponents": {
     "wxc-icon": "../../packages/@minui/wxc-icon/dist/index",
     "wxc-search": "../../packages/@minui/wxc-search/dist/index",
-    "road-list": "../components/road-list",
     "wxc-loading": "../../packages/@minui/wxc-loading/dist/index",
     "wxc-loadmore": "../../packages/@minui/wxc-loadmore/dist/index"
   },

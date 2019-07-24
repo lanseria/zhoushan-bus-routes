@@ -1,34 +1,90 @@
 <template>
   <view>
-    <layout-head class="header" notice="{{notice}}"></layout-head>
+    <layout-head
+      class="header"
+      notice="{{notice}}"
+    ></layout-head>
     <view class="wrap">
-      <map class="wrap-item wrap-main {{mapStyle==1?'full':''}}" id="map" longitude="{{location.longitude}}" latitude="{{location.latitude}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location>
+      <map
+        class="wrap-item wrap-main {{mapStyle==1?'full':''}}"
+        id="map"
+        longitude="{{location.longitude}}"
+        latitude="{{location.latitude}}"
+        scale="{{scale}}"
+        controls="{{controls}}"
+        bindcontroltap="controltap"
+        markers="{{markers}}"
+        bindmarkertap="markertap"
+        polyline="{{polyline}}"
+        bindregionchange="regionchange"
+        show-location
+      >
         <cover-view class="controls">
-          <cover-image class="img" src="https://limonplayer.cn/location_control_72px.png" />
+          <cover-image
+            class="img"
+            src="https://limonplayer.cn/location_control_72px.png"
+          />
         </cover-view>
         <cover-view class="zoom-controls icon-controls">
-          <cover-image class="img" bindtap="handleZoom" src="https://limonplayer.cn/search_24px.png" />
+          <cover-image
+            class="img"
+            bindtap="handleZoom"
+            src="https://limonplayer.cn/search_24px.png"
+          />
         </cover-view>
         <cover-view class="conversion-controls icon-controls">
-          <cover-image class="img" bindtap="handleConversion" src="https://limonplayer.cn/drag_24px.png" />
+          <cover-image
+            class="img"
+            bindtap="handleConversion"
+            src="https://limonplayer.cn/drag_24px.png"
+          />
         </cover-view>
         <cover-view class="refresh-controls icon-controls">
-          <cover-image class="img" bindtap="handleRefresh" src="https://limonplayer.cn/refresh_24px.png" />
+          <cover-image
+            class="img"
+            bindtap="handleRefresh"
+            src="https://limonplayer.cn/refresh_24px.png"
+          />
         </cover-view>
         <cover-view class="location-controls icon-controls">
-          <cover-image class="img" bindtap="handleLocation" src="https://limonplayer.cn/location_24px.png" />
+          <cover-image
+            class="img"
+            bindtap="handleLocation"
+            src="https://limonplayer.cn/location_24px.png"
+          />
         </cover-view>
       </map>
 
-      <scroll-view class="wrap-item wrap-side {{mapStyle?'none':''}}" scroll-y>
+      <scroll-view
+        class="wrap-item wrap-side {{mapStyle?'none':''}}"
+        scroll-y
+      >
         <view class="list-wrap">
           <view class="list-item">
-            <wxc-list wx:for="{{busWaiting.bus}}" wx:key="index" class="item" title="{{item.busNo}}" desc="{{item.isStation == '0'? '' : '下站-'+line.stations[item.lastStation].stationName}}" mode="{{index == data.length-1 ? 'none': ''}}" data-line-name="{{item.busNo}}" data-location="{{item.location}}" bindtap="handleSetLocationCenter" src="https://limonplayer.cn/route_32px.png">
-              <view wx:if="{{item.isStation == '0'}}" class="desc-highlight">{{'进站中-'+line.stations[item.lastStation-1].stationName}}</view>
+            <wxc-list
+              wx:for="{{busWaiting.bus}}"
+              wx:key="index"
+              class="item"
+              title="{{item.busNo}}"
+              desc="{{item.isStation == '0'? '' : '下站-'+line.stations[item.lastStation].stationName}}"
+              mode="{{index == data.length-1 ? 'none': ''}}"
+              data-line-name="{{item.busNo}}"
+              data-location="{{item.location}}"
+              bindtap="handleSetLocationCenter"
+              src="https://limonplayer.cn/route_32px.png"
+            >
+              <view
+                wx:if="{{item.isStation == '0'}}"
+                class="desc-highlight"
+              >{{'进站中-'+line.stations[item.lastStation-1].stationName}}</view>
             </wxc-list>
             <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
             <view hidden="{{hideview}}">
-              <wxc-abnor type="DATA" title="{{title}}" tip="{{tip}}"></wxc-abnor>
+              <wxc-abnor
+                type="DATA"
+                title="{{title}}"
+                tip="{{tip}}"
+              ></wxc-abnor>
             </view>
           </view>
         </view>
@@ -67,6 +123,7 @@ export default {
     isUpDownName: '',
     busWaiting: {},
     markers: [],
+    HistoryLines: [],
     mapStyle: '',
     viewHeight: 0.5,
     reHeight: {
@@ -89,6 +146,11 @@ export default {
     wx.showLoading({
       title: '加载中',
     })
+    let hl = Global.getVal('HistoryLines')
+    hl = [...new Set(hl)]
+    this.HistoryLines = hl || []
+    this.HistoryLines.push(lineName)
+    Global.setVal('HistoryLines', this.HistoryLines)
     this.updateLine(lineName, isUpDown)
     this.updateBusWaiting(lineName, isUpDown)
   },

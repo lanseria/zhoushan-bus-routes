@@ -13,6 +13,12 @@
         "selectedIconPath": "img/rest-s.png",
         "pagePath": "pages/hotrouter/index",
         "text": "热门线路"
+      },
+      {
+        "iconPath": "img/my.png",
+        "selectedIconPath": "img/my-s.png",
+        "pagePath": "pages/my/index",
+        "text": "我的"
       }
     ]
   },
@@ -33,6 +39,5 @@
   },
   "networkTimeout": {
     "request": 10000
-  },
-  "sitemapLocation": "sitemap.json"
+  }
 }
