@@ -3,6 +3,6 @@
     <view class="search-wrap">
         <wxc-search class="search" bg-color="#fff" radius="30" showClear="{{false}}" bind:input="onInput" _pid="{{_pid}}"></wxc-search>
     </view>
-    <road-list class="list-wrap" data="{{filterLine}}"></road-list>
+    <road-list class="list-wrap" data="{{filterLine}}" _pid="{{_pid}}"></road-list>
     <wxc-loading is-show="{{$loading.isShow}}" image="https://limonplayer.cn/loading-image.png" slip="https://limonplayer.cn/loading-slip.png" _pid="{{_pid}}"></wxc-loading>
 </view>
