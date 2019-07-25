@@ -1,4 +1,0 @@
-<!-- wxp template -->
-<view class="container">
-    <wxc-button size="large" type="beauty" bindtap="clearHistoryLines" value="清空缓存" _pid="{{_pid}}"></wxc-button>
-</view>

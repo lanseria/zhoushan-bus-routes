@@ -69,7 +69,8 @@ export default {
     this.getNearLine();
   },
   onShow () {
-    const hl = Global.getVal('HistoryLines').slice(0, 5)
+    let hl = Global.getVal('HistoryLines') || []
+    hl = hl.slice(0, 5)
     this.setData({
       historyLines: hl.map(m => {
         return {

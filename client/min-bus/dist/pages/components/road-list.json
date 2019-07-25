@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "wxc-list": "../../packages/@minui/wxc-list/dist/index",
-    "wxc-icon": "../../packages/@minui/wxc-icon/dist/index",
-    "wxc-abnor": "../../packages/@minui/wxc-abnor/dist/index",
-    "wxc-loadmore": "../../packages/@minui/wxc-loadmore/dist/index"
-  },
-  "component": true
-}
