@@ -20,7 +20,7 @@
         <wxc-list wx:for="{{historyLines}}" wx:key="index" class="item" title="{{item.lineName}}" desc="{{item.slot? '' : item.desc}}" mode="{{index == data.length-1 ? 'none': ''}}" bindtap='gotoLine' data-line-name="{{item.lineName}}" src="https://limonplayer.cn/route_32px.png">
           <view wx:if="{{item.slot && item.desc}}" class="desc-highlight">{{item.desc}}</view>
         </wxc-list>
-        <ad wx:if="{{!isLoading}}" unit-id="adunit-a6f5ef70c27ac884"></ad>
+        <ad unit-id="adunit-a6f5ef70c27ac884"></ad>
         <view wx:for="{{nearLineList}}" wx:key="item.stationName">
           <index-card wx:if="{{!isLoading}}" data="{{item}}"></index-card>
         </view>
