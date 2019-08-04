@@ -12,12 +12,12 @@
     </view>
     <view class="box">
       <text class="data-label blue-text">{{data.busList[0].lineName}}</text>
+      <wxc-popup class="J_Popup" animation-mode="bottom" align="bottom">
+        <view class="popup__content">
+          <road-list class="list-wrap" data="{{data.busList}}"></road-list>
+        </view>
+      </wxc-popup>
     </view>
-    <wxc-popup class="J_Popup" animation-mode="bottom" align="bottom">
-      <view class="popup__content">
-        <road-list class="list-wrap" data="{{data.busList}}"></road-list>
-      </view>
-    </wxc-popup>
   </view>
 </template>
 

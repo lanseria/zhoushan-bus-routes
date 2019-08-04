@@ -38,6 +38,7 @@ import { HOST } from "../../common/config";
 import { getData } from "../../common/api/common"; //老接口
 import Bus from "../../models/api";
 import Global from "../../models/global";
+import CacheRouteData from './nearLineList.json'
 
 export default {
   config: {
@@ -59,7 +60,7 @@ export default {
     isShow: Global.getHeadNoticeStatus(),
     style: "background: #fff;border-radius: 66rpx;color: #000;",
     locationInfo: {},
-    nearLineList: [],
+    nearLineList: CacheRouteData,
     historyLines: [],
     nearLineInfo: Global.getVal('NEARLINEINFO')
   },

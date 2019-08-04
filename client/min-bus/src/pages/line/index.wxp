@@ -234,7 +234,7 @@ export default {
       }
       const notice = `${lineName}:${isUpDownName}.起始站:${lineDetail.startStation},终点站:${lineDetail.endStation}.${line.lineInfo}`
       wx.setNavigationBarTitle({
-        title: `${lineDetail.startStation} → ${lineDetail.endStation}`
+        title: `(起)${lineDetail.startStation} → (终)${lineDetail.endStation}`
       })
       this.setData({
         isUpDownName,
@@ -358,8 +358,10 @@ export default {
   bottom: 120rpx;
 }
 .conversion-controls {
-  top: 10rpx;
-  left: 10rpx;
+  width: 90rpx;
+  height: 90rpx;
+  bottom: 5rpx;
+  right: 300rpx;
 }
 .refresh-controls {
   width: 90rpx;

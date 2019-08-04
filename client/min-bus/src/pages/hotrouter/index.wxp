@@ -1,5 +1,6 @@
 <template>
   <view>
+    <ad unit-id="adunit-a6f5ef70c27ac884"></ad>
     <scroll-view scroll-y style="height: 100vh;" enable-back-to-top="{{true}}" bindscrolltoupper="getNearLine">
       <view wx:for="{{nearLineInfo}}" wx:key="item.lineName">
         <index-card data="{{item}}"></index-card>
