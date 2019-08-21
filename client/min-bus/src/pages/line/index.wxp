@@ -22,7 +22,7 @@
         <cover-view class="controls">
           <cover-image
             class="img"
-            src="https://limonplayer.cn/location_control_72px.png"
+            src="cloud://bus-bec618.6275-bus-bec618/location_control_72px.png"
           />
         </cover-view>
         <cover-view class="zoom-controls icon-controls">
@@ -36,21 +36,21 @@
           <cover-image
             class="img"
             bindtap="handleConversion"
-            src="https://limonplayer.cn/drag_24px.png"
+            src="cloud://bus-bec618.6275-bus-bec618/drag_24px.png"
           />
         </cover-view>
         <cover-view class="refresh-controls icon-controls">
           <cover-image
             class="img"
             bindtap="handleRefresh"
-            src="https://limonplayer.cn/refresh_24px.png"
+            src="cloud://bus-bec618.6275-bus-bec618/refresh_24px.png"
           />
         </cover-view>
         <cover-view class="location-controls icon-controls">
           <cover-image
             class="img"
             bindtap="handleLocation"
-            src="https://limonplayer.cn/location_24px.png"
+            src="cloud://bus-bec618.6275-bus-bec618/location_24px.png"
           />
         </cover-view>
       </map>
@@ -66,7 +66,7 @@
               wx:key="index"
               class="item"
               title="{{item.busNo}}"
-              desc="{{item.isStation == '0'? '' : '下站-'+line.stations[item.lastStation].stationName}}"
+              desc="{{item.isStation == '0'? '' : '下一站-'+line.stations[item.lastStation].stationName}}"
               mode="{{index == data.length-1 ? 'none': ''}}"
               data-line-name="{{item.busNo}}"
               data-location="{{item.location}}"
@@ -152,7 +152,9 @@ export default {
     this.HistoryLines.push(lineName)
     Global.setVal('HistoryLines', this.HistoryLines)
     this.updateLine(lineName, isUpDown)
-    this.updateBusWaiting(lineName, isUpDown)
+    setTimeout(() => {
+      this.updateBusWaiting(lineName, isUpDown)
+    }, 2000);
   },
   onShow () {
     // const { lineDetail, lineName, isUpDownName, isUpDown } = this.data;
