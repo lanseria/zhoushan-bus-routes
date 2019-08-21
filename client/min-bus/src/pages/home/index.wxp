@@ -127,7 +127,7 @@ export default {
   },
   saveData () {
     wx.downloadFile({
-      url: 'https://limonplayer.cn/location_72px.png',
+      url: 'https://limonplayer.cn/location_16px.png',
       success: function (res) {
         if (res.statusCode === 200) {
           Global.setVal('location-png', res.tempFilePath)
