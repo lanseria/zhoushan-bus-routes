@@ -127,7 +127,7 @@ export default {
   },
   saveData () {
     wx.downloadFile({
-      url: 'cloud://bus-bec618.6275-bus-bec618/location_72px.png',
+      url: 'https://limonplayer.cn/location_72px.png',
       success: function (res) {
         if (res.statusCode === 200) {
           Global.setVal('location-png', res.tempFilePath)
@@ -135,7 +135,7 @@ export default {
       }
     })
     wx.downloadFile({
-      url: 'cloud://bus-bec618.6275-bus-bec618/bus_icon.png',
+      url: 'https://limonplayer.cn/bus_icon.png',
       success: function (res) {
         if (res.statusCode === 200) {
           Global.setVal('bus-icon-png', res.tempFilePath)

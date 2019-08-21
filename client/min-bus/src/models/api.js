@@ -1,7 +1,7 @@
 import Base from './base'
 
 class Bus extends Base {
-  getNearLine (params, data = {}, allowCache = true) {
+  getNearLine (params, data = {}, allowCache = false) {
     const PARAMS = {
       length: params.length,
       lat: fomatFloat(params.lat, 13),
@@ -11,17 +11,17 @@ class Bus extends Base {
     return this.get(URL, data, allowCache)
   }
 
-  getAllLine (params = '', data = {}, allowCache = true) {
+  getAllLine (params = '', data = {}, allowCache = false) {
     const URL = `/all_line`
     return this.get(URL, data, allowCache)
   }
 
-  getLine (params = '', data = {}, allowCache = true) {
+  getLine (params = '', data = {}, allowCache = false) {
     const URL = `/line?${objectToParams(params)}`
     return this.get(URL, data, allowCache)
   }
 
-  getBusWaiting (params = '', data = {}, allowCache = true) {
+  getBusWaiting (params = '', data = {}, allowCache = false) {
     const URL = `/bus_waiting?${objectToParams(params)}`
     return this.get(URL, data, allowCache)
   }
