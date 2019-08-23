@@ -96,7 +96,7 @@
 <script>
 import Bus from "../../models/api";
 import Global from "../../models/global";
-
+import { Promise } from 'es6-promise'
 export default {
   config: {
     disableScroll: true,
@@ -151,10 +151,9 @@ export default {
     this.HistoryLines = hl || []
     this.HistoryLines.push(lineName)
     Global.setVal('HistoryLines', this.HistoryLines)
-    this.updateLine(lineName, isUpDown)
-    setTimeout(() => {
+    this.updateLine(lineName, isUpDown).then(() => {
       this.updateBusWaiting(lineName, isUpDown)
-    }, 2000);
+    })
   },
   onShow () {
     // const { lineDetail, lineName, isUpDownName, isUpDown } = this.data;
@@ -202,57 +201,60 @@ export default {
     });
   },
   updateLine (lineName, isUpDown) {
-    const params = { lineName, isUpDown };
-    Bus.getLine(params, {}, false).then(res => {
-      const line = JSON.parse(res.data.data);
-      const markers = [];
-      const points = line.stations.map((p, i) => {
-        const locationArray = Global.wgs84togcj02(p.lng, p.lat);
-        markers.push({
-          iconPath: Global.getVal("location-png"),
-          id: p.stationId,
-          title: p.stationName,
-          latitude: locationArray[1],
-          longitude: locationArray[0],
-          width: 25,
-          height: 25,
-          alpha: 0.8,
-          label: {
-            content: p.stationName
-          }
+    return new Promise((resolve, reject) => {
+      const params = { lineName, isUpDown };
+      Bus.getLine(params, {}, false).then(res => {
+        const line = JSON.parse(res.data.data);
+        const markers = [];
+        const points = line.stations.map((p, i) => {
+          const locationArray = Global.wgs84togcj02(p.lng, p.lat);
+          markers.push({
+            iconPath: Global.getVal("location-png"),
+            id: p.stationId,
+            title: p.stationName,
+            latitude: locationArray[1],
+            longitude: locationArray[0],
+            width: 25,
+            height: 25,
+            alpha: 0.8,
+            label: {
+              content: p.stationName
+            }
+          });
+          return {
+            longitude: locationArray[0],
+            latitude: locationArray[1]
+          };
         });
-        return {
-          longitude: locationArray[0],
-          latitude: locationArray[1]
-        };
-      });
-      const polyline = this.data.polyline;
-      polyline[0].points = points;
-      const isUpDownName = isUpDown == 0 ? '上行' : '下行';
-      const stationsLength = line.stations.length;
-      const lineDetail = {
-        startStation: line.stations[0].stationName,
-        endStation: line.stations[stationsLength - 1].stationName,
-      }
-      const notice = `${lineName}:${isUpDownName}.起始站:${lineDetail.startStation},终点站:${lineDetail.endStation}.${line.lineInfo}`
-      wx.setNavigationBarTitle({
-        title: `(起)${lineDetail.startStation} → (终)${lineDetail.endStation}`
-      })
-      this.setData({
-        isUpDownName,
-        lineDetail,
-        stationsLength,
-        line,
-        notice,
-        polyline,
-        markers,
-        location: Global.getVal("location-data")
-      });
-      wx.hideLoading()
-    });
+        const polyline = this.data.polyline;
+        polyline[0].points = points;
+        const isUpDownName = isUpDown == 0 ? '上行' : '下行';
+        const stationsLength = line.stations.length;
+        const lineDetail = {
+          startStation: line.stations[0].stationName,
+          endStation: line.stations[stationsLength - 1].stationName,
+        }
+        const notice = `${lineName}:${isUpDownName}.起始站:${lineDetail.startStation},终点站:${lineDetail.endStation}.${line.lineInfo}`
+        wx.setNavigationBarTitle({
+          title: `(起)${lineDetail.startStation} → (终)${lineDetail.endStation}`
+        })
+        this.setData({
+          isUpDownName,
+          lineDetail,
+          stationsLength,
+          line,
+          notice,
+          polyline,
+          markers,
+          location: Global.getVal("location-data")
+        });
+        wx.hideLoading()
+        resolve(true)
+      }).catch(() => {reject(false)});
+    })
+
   },
   handleZoom () {
-    console.log('zoom')
     if (this.data.viewHeight === 0.5) {
       this.setData({
         mapStyle: 1,
@@ -272,18 +274,17 @@ export default {
     wx.showLoading({
       title: `换为${isUpDownName}`,
     })
-    this.updateLine(lineName, isUpDown);
-    this.updateBusWaiting(lineName, isUpDown);
+    this.updateLine(lineName, isUpDown).then(() => {
+      this.updateBusWaiting(lineName, isUpDown)
+    })
     this.setData({
       isUpDown, isUpDownName
     })
   },
   handleRefresh () {
     const { markers } = this.data;
-    // console.log(markers)
     const m = markers.filter(f => f.alpha < 1)
     this.setData({ markers: m })
-    // console.log(m)
     wx.showLoading({
       title: '刷新中',
     })

@@ -13,29 +13,6 @@ export default {
         "desc": "你的位置信息将用于小程序查询附近公交信息" // 高速公路行驶持续后台定位
       }
     },
-    tabBar: {
-      "selectedColor": "#00b7ee",
-      "list": [
-        {
-          "iconPath": "img/home.png",
-          "selectedIconPath": "img/home-s.png",
-          "pagePath": "pages/home/index",
-          "text": "首页"
-        }, 
-        {
-          "iconPath": "img/rest.png",
-          "selectedIconPath": "img/rest-s.png",
-          "pagePath": "pages/hotrouter/index",
-          "text": "热门线路"
-        },
-        {
-          "iconPath": "img/my.png",
-          "selectedIconPath": "img/my-s.png",
-          "pagePath": "pages/my/index",
-          "text": "我的"
-        },
-      ]
-    },
     pages: [
       "pages/home/index",
       "pages/hotrouter/index",
