@@ -12,7 +12,7 @@ import MHeader from '@/components/m-header/m-header'
 export default {
   name: 'App',
   mounted () {
-    document.addEventListener('touchmove', e => e.preventDefault(), {passive: false})
+    document.addEventListener('touchmove', e => e.preventDefault(), { passive: false })
   },
   components: {
     MHeader

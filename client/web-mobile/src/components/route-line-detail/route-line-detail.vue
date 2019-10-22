@@ -41,7 +41,6 @@
 
 <script>
 import Scroll from '@/base/scroll/scroll'
-import Loading from '@/base/loading/loading'
 import { getRouteLineDetail, getThisStationDetail } from '@/api/search'
 import { ERR_OK } from '@/api/config'
 
@@ -154,8 +153,7 @@ export default {
     }
   },
   components: {
-    Scroll,
-    Loading
+    Scroll
   }
 }
 </script>
