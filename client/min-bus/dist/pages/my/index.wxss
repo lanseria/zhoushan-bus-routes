@@ -1,0 +1,7 @@
+.container {
+    padding: 5rpx;
+    text-indent: 2em;
+    width: 100%;
+    padding-top: 20rpx;
+    background: #fff;
+  }

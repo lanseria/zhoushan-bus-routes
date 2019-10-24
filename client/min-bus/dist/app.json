@@ -1,0 +1,26 @@
+{
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序查询附近公交信息"
+    }
+  },
+  "pages": [
+    "pages/home/index",
+    "pages/hotrouter/index",
+    "pages/line/index",
+    "pages/search/index",
+    "pages/ad/index",
+    "pages/my/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#efefef",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTitleText": "公交状态查询",
+    "navigationBarTextStyle": "black"
+  },
+  "networkTimeout": {
+    "request": 10000
+  },
+  "sitemapLocation": "sitemap.json"
+}

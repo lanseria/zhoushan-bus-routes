@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "wxc-popup": "../../packages/@minui/wxc-popup/dist/index",
+    "road-list": "./road-list"
+  },
+  "component": true
+}
