@@ -1,0 +1,94 @@
+<template>
+  <view class="content-wrap">
+    <view class="search-wrap">
+      <wxc-search class="search" bg-color="#fff" radius="30" showClear="{{false}}" bind:input="onInput"></wxc-search>
+    </view>
+    <road-list class="list-wrap" data="{{filterLine}}"></road-list>
+    <wxc-loading is-show="{{$loading.isShow}}" image="https://limonplayer.cn/loading-image.png" slip="https://limonplayer.cn/loading-slip.png"></wxc-loading>
+  </view>
+</template>
+
+<script>
+import Bus from "../../models/api";
+export default {
+  config: {
+    disableScroll: true,
+    navigationBarTitleText: '搜索',
+    usingComponents: {
+      'wxc-icon': '@minui/wxc-icon',
+      'wxc-search': '@minui/wxc-search',
+      'road-list': '../components/road-list',
+      "wxc-loading": "@minui/wxc-loading",
+      "wxc-loadmore": "@minui/wxc-loadmore",
+    }
+  },
+  data: {
+    $loading: {
+      isShow: false
+    },
+    allLine: [],
+    filterLine: []
+  },
+  onLoad () {
+    this.getAllLine();
+  },
+  getAllLine () {
+    this.setData({
+      $loading: {
+        isShow: true
+      }
+    });
+    Bus.getAllLine().then(res => {
+      let allLine = JSON.parse(res.data.data)
+      allLine = allLine.map(m => {
+        return {
+          lineName: m.line_name,
+          lineNo: m.line_no
+        }
+      })
+      this.setData({
+        allLine,
+        filterLine: allLine,
+        $loading: {
+          isShow: false
+        }
+      })
+    })
+  },
+  onInput (e) {
+    const filterLine = this.data.allLine.filter(m => {
+      return m.lineName.indexOf(e.detail.value) >= 0;
+    })
+    this.setData({
+      filterLine
+    })
+  }
+}
+</script>
+
+<style>
+.content-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.search-wrap {
+  flex: 0 0 90rpx;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 90rpx;
+  color: #fff;
+  background: #f6f6f6;
+}
+.list-wrap {
+  position: fixed;
+  bottom: 0;
+  top: 100rpx;
+  width: 100vw;
+}
+.search {
+  flex: 1;
+  margin-left: 24rpx;
+  margin-right: 24rpx;
+}
+</style>

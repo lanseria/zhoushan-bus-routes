@@ -40,8 +40,22 @@ var Bus = function (_Base) {
         lat: fomatFloat(params.lat, 13),
         lng: fomatFloat(params.lng, 13)
       };
-      var URL = '/near_line?' + objectToParams(PARAMS);
-      return this.get(URL, data, allowCache);
+      // var URL = '/near_line?' + objectToParams(PARAMS);
+      return new Promise((resolve, reject) => {
+        wx.cloud.init()
+        wx.cloud.callFunction({
+          name: 'near_line',
+          data: {
+            querystring: objectToParams(PARAMS),
+          },
+          success: res => {
+            resolve(res.result)
+          },
+          fail: err => {
+            reject(err)
+          },
+        })
+      })
     }
   }, {
     key: 'getAllLine',
@@ -50,8 +64,23 @@ var Bus = function (_Base) {
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var allowCache = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-      var URL = '/all_line';
-      return this.get(URL, data, allowCache);
+      return new Promise((resolve, reject) => {
+        wx.cloud.init()
+        wx.cloud.callFunction({
+          name: 'all_line',
+          data: {
+            // querystring: objectToParams(PARAMS),
+          },
+          success: res => {
+            resolve(res.result)
+          },
+          fail: err => {
+            reject(err)
+          },
+        })
+      })
+      // var URL = '/all_line';
+      // return this.get(URL, data, allowCache);
     }
   }, {
     key: 'getLine',
@@ -60,8 +89,23 @@ var Bus = function (_Base) {
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var allowCache = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-      var URL = '/line?' + objectToParams(params);
-      return this.get(URL, data, allowCache);
+      // var URL = '/line?' + objectToParams(params);
+      // return this.get(URL, data, allowCache);
+      return new Promise((resolve, reject) => {
+        wx.cloud.init()
+        wx.cloud.callFunction({
+          name: 'line',
+          data: {
+            querystring: objectToParams(params),
+          },
+          success: res => {
+            resolve(res.result)
+          },
+          fail: err => {
+            reject(err)
+          },
+        })
+      })
     }
   }, {
     key: 'getBusWaiting',
@@ -70,8 +114,23 @@ var Bus = function (_Base) {
       var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
       var allowCache = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
 
-      var URL = '/bus_waiting?' + objectToParams(params);
-      return this.get(URL, data, allowCache);
+      // var URL = '/bus_waiting?' + objectToParams(params);
+      // return this.get(URL, data, allowCache);
+      return new Promise((resolve, reject) => {
+        wx.cloud.init()
+        wx.cloud.callFunction({
+          name: 'bus_waiting',
+          data: {
+            querystring: objectToParams(params),
+          },
+          success: res => {
+            resolve(res.result)
+          },
+          fail: err => {
+            reject(err)
+          },
+        })
+      })
     }
   }]);
 

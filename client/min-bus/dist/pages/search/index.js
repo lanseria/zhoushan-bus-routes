@@ -34,7 +34,7 @@ exports.default = Page({
       }
     });
     _api2.default.getAllLine().then(function (res) {
-      var allLine = JSON.parse(res.data.data);
+      var allLine = res;
       allLine = allLine.map(function (m) {
         return {
           lineName: m.line_name,

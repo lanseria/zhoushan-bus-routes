@@ -1,0 +1,107 @@
+<template>
+  <view class="card" bindtap="showPopup" data-line-name="{{data.lineName}}">
+    <view class="box">
+      <view>
+        <text class="label">最近车站：</text>
+        <text class="data-label">{{data.stationName}}</text>
+      </view>
+      <view>
+        <text class="label">公交量次：</text>
+        <text class="data-label">{{data.busList.length}}次</text>
+      </view>
+    </view>
+    <view class="box">
+      <text class="data-label blue-text">{{data.busList[0].lineName}}</text>
+      <wxc-popup class="J_Popup" animation-mode="bottom" align="bottom">
+        <view class="popup__content">
+          <road-list class="list-wrap" data="{{data.busList}}"></road-list>
+        </view>
+      </wxc-popup>
+    </view>
+  </view>
+</template>
+
+<script>
+export default {
+  config: {
+    usingComponents: {
+      'wxc-popup': '@minui/wxc-popup',
+      'road-list': '../components/road-list'
+    }
+  },
+  properties: {
+    data: {
+      type: Object,
+      value: []
+    }
+  },
+  data: {
+
+  },
+  methods: {
+    showPopup () {
+      let popupComponent = this.selectComponent('.J_Popup');
+      popupComponent && popupComponent.show();
+    },
+    hidePopup () {
+      let popupComponent = this.selectComponent('.J_Popup');
+      popupComponent && popupComponent.hide();
+    },
+    gotoLine (e) {
+      const lineName = e.currentTarget.dataset.lineName
+      // this.saveHistory(lineName)
+      wx.navigateTo({
+        url: `/pages/line/index?isUpDown=0&lineName=${encodeURIComponent(lineName)}`
+      })
+    }
+  }
+}
+</script>
+
+
+<style lang="less">
+@card-height: 140rpx;
+@body-height: 200rpx;
+@footer-height: 80rpx;
+@margin: 20rpx;
+
+.card {
+  margin-bottom: 25rpx;
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  background-color: #fff;
+  //   color: #fff;
+  margin: 0 20rpx;
+  margin-top: 20rpx;
+  padding: 10rpx 20rpx;
+  //   padding: 20rpx 50rpx;
+  border: 1rpx solid #e5e5e5;
+  border-radius: 10rpx;
+  box-shadow: 2rpx 5rpx 2rpx #e5e5e5;
+}
+.box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: -apple-system-font, Helvetica Neue, Helvetica, sans-serif;
+  margin-left: @margin;
+}
+.label {
+  font-size: 20rpx;
+}
+.data-label {
+  font-size: 40rpx;
+}
+.blue-text {
+  color: #00abee;
+}
+.popup__content {
+  width: 100%;
+  height: 40vh;
+  line-height: 200rpx;
+  text-align: left;
+  background: #ffffff;
+}
+</style>

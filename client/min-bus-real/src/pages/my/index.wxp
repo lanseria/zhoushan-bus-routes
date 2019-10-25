@@ -1,0 +1,46 @@
+<template>
+  <view class="container">
+    <wxc-panel title="关于公交小程序">
+      <view class="content">
+        此小程序由个人制作，所以部分功能可能会有点粗糙，如：热门线路页面会空白，首页附近线路可以显示空白，不能保证服务持续可用。
+      </view>
+      
+      <view class="content">
+        需要申明的是：此程序API由舟山公交提供，此小程序换了一种方式呈现。此小程序以微信广告盈利，希望大佬们多点点广告，谢谢😘。
+      </view>
+      
+      <view class="content">
+        如果由提议可以浏览器在Github https://github.com/Lanseria/zhoushan-bus-routes 提出问题Issue，或者在微信右上角提出问题。
+      </view>
+    </wxc-panel>
+    <wxc-button size="large" type="beauty" bindtap="clearHistoryLines" value="清空线路历史缓存"></wxc-button>
+  </view>
+</template>
+
+<script>
+import Global from "../../models/global";
+export default {
+  config: {
+    navigationBarTitleText: '我的',
+    usingComponents: {
+      'wxc-button': '@minui/wxc-button',
+      'wxc-icon': '@minui/wxc-icon',
+      'wxc-panel': '@minui/wxc-panel',
+    }
+  },
+  data: {},
+  clearHistoryLines () {
+    Global.setVal('HistoryLines' , [])
+  }
+}
+</script>
+
+<style>
+  .container {
+    padding: 5rpx;
+    text-indent: 2em;
+    width: 100%;
+    padding-top: 20rpx;
+    background: #fff;
+  }
+</style>

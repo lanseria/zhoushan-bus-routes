@@ -79,7 +79,7 @@ exports.default = Page({
 
     var params = { lineName: lineName, isUpDown: isUpDown, stationNum: 1 };
     _api2.default.getBusWaiting(params, {}, false).then(function (res) {
-      var busWaiting = JSON.parse(res.data.data);
+      var busWaiting = res;
       var bus = busWaiting.bus;
 
       var hideview = bus.length === 0 ? false : true;
@@ -124,7 +124,7 @@ exports.default = Page({
     return new _es6Promise.Promise(function (resolve, reject) {
       var params = { lineName: lineName, isUpDown: isUpDown };
       _api2.default.getLine(params, {}, false).then(function (res) {
-        var line = JSON.parse(res.data.data);
+        var line = res;
         var markers = [];
         var points = line.stations.map(function (p, i) {
           var locationArray = _global2.default.wgs84togcj02(p.lng, p.lat);

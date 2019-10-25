@@ -1,0 +1,403 @@
+<template>
+  <view>
+    <layout-head
+      class="header"
+      notice="{{notice}}"
+    ></layout-head>
+    <view class="wrap">
+      <map
+        class="wrap-item wrap-main {{mapStyle==1?'full':''}}"
+        id="map"
+        longitude="{{location.longitude}}"
+        latitude="{{location.latitude}}"
+        scale="{{scale}}"
+        controls="{{controls}}"
+        bindcontroltap="controltap"
+        markers="{{markers}}"
+        bindmarkertap="markertap"
+        polyline="{{polyline}}"
+        bindregionchange="regionchange"
+        show-location
+      >
+        <cover-view class="controls">
+          <cover-image
+            class="img"
+            src="cloud://bus-bec618.6275-bus-bec618/location_control_72px.png"
+          />
+        </cover-view>
+        <cover-view class="zoom-controls icon-controls">
+          <cover-image
+            class="img"
+            bindtap="handleZoom"
+            src="https://limonplayer.cn/search_24px.png"
+          />
+        </cover-view>
+        <cover-view class="conversion-controls icon-controls">
+          <cover-image
+            class="img"
+            bindtap="handleConversion"
+            src="cloud://bus-bec618.6275-bus-bec618/drag_24px.png"
+          />
+        </cover-view>
+        <cover-view class="refresh-controls icon-controls">
+          <cover-image
+            class="img"
+            bindtap="handleRefresh"
+            src="cloud://bus-bec618.6275-bus-bec618/refresh_24px.png"
+          />
+        </cover-view>
+        <cover-view class="location-controls icon-controls">
+          <cover-image
+            class="img"
+            bindtap="handleLocation"
+            src="cloud://bus-bec618.6275-bus-bec618/location_24px.png"
+          />
+        </cover-view>
+      </map>
+
+      <scroll-view
+        class="wrap-item wrap-side {{mapStyle?'none':''}}"
+        scroll-y
+      >
+        <view class="list-wrap">
+          <view class="list-item">
+            <wxc-list
+              wx:for="{{busWaiting.bus}}"
+              wx:key="index"
+              class="item"
+              title="{{item.busNo}}"
+              desc="{{item.isStation == '0'? '' : '下一站-'+line.stations[item.lastStation].stationName}}"
+              mode="{{index == data.length-1 ? 'none': ''}}"
+              data-line-name="{{item.busNo}}"
+              data-location="{{item.location}}"
+              bindtap="handleSetLocationCenter"
+              src="https://limonplayer.cn/route_32px.png"
+            >
+              <view
+                wx:if="{{item.isStation == '0'}}"
+                class="desc-highlight"
+              >{{'进站中-'+line.stations[item.lastStation-1].stationName}}</view>
+            </wxc-list>
+            <wxc-loadmore is-end="{{true}}"></wxc-loadmore>
+            <view hidden="{{hideview}}">
+              <wxc-abnor
+                type="DATA"
+                title="{{title}}"
+                tip="{{tip}}"
+              ></wxc-abnor>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</template>
+
+<script>
+import Bus from "../../models/api";
+import Global from "../../models/global";
+import { Promise } from 'es6-promise'
+export default {
+  config: {
+    disableScroll: true,
+    navigationBarTitleText: "路线",
+    usingComponents: {
+      "layout-head": "layout/head",
+      "wxc-list": "@minui/wxc-list",
+      "wxc-icon": "@minui/wxc-icon",
+      'wxc-abnor': '@minui/wxc-abnor',
+    }
+  },
+  data: {
+    title: '空空线路',
+    tip: '空空如也',
+    location: {},
+    hideview: true,
+    scale: 14,
+    notice: '',
+    lineName: "",
+    isUpDown: 0,
+    line: {},
+    stationsLength: 0,
+    lineDetail: {},
+    isUpDownName: '',
+    busWaiting: {},
+    markers: [],
+    HistoryLines: [],
+    mapStyle: '',
+    viewHeight: 0.5,
+    reHeight: {
+      min: 0.5,
+      max: 0
+    },
+    polyline: [
+      {
+        points: [],
+        color: "#FF0000DD",
+        width: 2,
+        dottedLine: true
+      }
+    ]
+  },
+  onLoad (options) {
+    const lineName = decodeURIComponent(options.lineName);
+    const isUpDown = decodeURIComponent(options.isUpDown);
+    this.setData({ lineName, isUpDown });
+    wx.showLoading({
+      title: '加载中',
+    })
+    let hl = Global.getVal('HistoryLines')
+    hl = [...new Set(hl)]
+    this.HistoryLines = hl || []
+    this.HistoryLines.push(lineName)
+    Global.setVal('HistoryLines', this.HistoryLines)
+    this.updateLine(lineName, isUpDown).then(() => {
+      this.updateBusWaiting(lineName, isUpDown)
+    })
+  },
+  onShow () {
+    // const { lineDetail, lineName, isUpDownName, isUpDown } = this.data;
+    // this.updateBusWaiting(lineName, isUpDown)
+  },
+  updateBusWaiting (lineName, isUpDown) {
+    const params = { lineName, isUpDown, stationNum: 1 };
+    Bus.getBusWaiting(params, {}, false).then(res => {
+      const busWaiting = JSON.parse(res.data.data);
+      const { bus } = busWaiting;
+      const hideview = bus.length === 0 ? false : true;
+      const markers = this.data.markers;
+      const filterBus = bus.map(b => {
+        const locationArray = Global.wgs84togcj02(b.lng, b.lat);
+        markers.push({
+          iconPath: Global.getVal("bus-icon-png"),
+          id: b.busNo,
+          title: b.busNo,
+          latitude: locationArray[1],
+          longitude: locationArray[0],
+          width: 25,
+          height: 25,
+          alpha: 1,
+          label: {
+            content: b.busNo
+          }
+        })
+        return {
+          longitude: locationArray[0],
+          latitude: locationArray[1],
+          busNo: `浙L·${b.busNo}`,
+          away: b.away,
+          factor: b.factor,
+          isStation: b.isStation,
+          lastStation: b.lastStation,
+          location: {
+            longitude: locationArray[0],
+            latitude: locationArray[1]
+          }
+        }
+      }).reverse()
+      busWaiting.bus = filterBus
+      this.setData({ busWaiting, markers, hideview });
+      wx.hideLoading()
+    });
+  },
+  updateLine (lineName, isUpDown) {
+    return new Promise((resolve, reject) => {
+      const params = { lineName, isUpDown };
+      Bus.getLine(params, {}, false).then(res => {
+        const line = JSON.parse(res.data.data);
+        const markers = [];
+        const points = line.stations.map((p, i) => {
+          const locationArray = Global.wgs84togcj02(p.lng, p.lat);
+          markers.push({
+            iconPath: Global.getVal("location-png"),
+            id: p.stationId,
+            title: p.stationName,
+            latitude: locationArray[1],
+            longitude: locationArray[0],
+            width: 25,
+            height: 25,
+            alpha: 0.8,
+            label: {
+              content: p.stationName
+            }
+          });
+          return {
+            longitude: locationArray[0],
+            latitude: locationArray[1]
+          };
+        });
+        const polyline = this.data.polyline;
+        polyline[0].points = points;
+        const isUpDownName = isUpDown == 0 ? '上行' : '下行';
+        const stationsLength = line.stations.length;
+        const lineDetail = {
+          startStation: line.stations[0].stationName,
+          endStation: line.stations[stationsLength - 1].stationName,
+        }
+        const notice = `${lineName}:${isUpDownName}.起始站:${lineDetail.startStation},终点站:${lineDetail.endStation}.${line.lineInfo}`
+        wx.setNavigationBarTitle({
+          title: `(起)${lineDetail.startStation} → (终)${lineDetail.endStation}`
+        })
+        this.setData({
+          isUpDownName,
+          lineDetail,
+          stationsLength,
+          line,
+          notice,
+          polyline,
+          markers,
+          location: Global.getVal("location-data")
+        });
+        wx.hideLoading()
+        resolve(true)
+      }).catch(() => {reject(false)});
+    })
+
+  },
+  handleZoom () {
+    if (this.data.viewHeight === 0.5) {
+      this.setData({
+        mapStyle: 1,
+        viewHeight: 1
+      })
+    } else {
+      this.setData({
+        mapStyle: 0,
+        viewHeight: 0.5
+      })
+    }
+  },
+  handleConversion () {
+    const isUpDown = 1 - this.data.isUpDown;
+    const { lineName } = this.data;
+    const isUpDownName = isUpDown == 0 ? '上行' : '下行';
+    wx.showLoading({
+      title: `换为${isUpDownName}`,
+    })
+    this.updateLine(lineName, isUpDown).then(() => {
+      this.updateBusWaiting(lineName, isUpDown)
+    })
+    this.setData({
+      isUpDown, isUpDownName
+    })
+  },
+  handleRefresh () {
+    const { markers } = this.data;
+    const m = markers.filter(f => f.alpha < 1)
+    this.setData({ markers: m })
+    wx.showLoading({
+      title: '刷新中',
+    })
+    const { lineName, isUpDown } = this.data;
+    this.updateBusWaiting(lineName, isUpDown);
+  },
+  handleLocation () {
+    this.setData({
+      location: Global.getVal("location-data")
+    })
+  },
+  handleSetLocationCenter (e) {
+    const { currentTarget } = e;
+    const { dataset } = currentTarget;
+    const { location } = dataset;
+    this.setData({ location })
+  },
+  regionchange (e) {
+    console.log(e.type);
+  },
+  markertap (e) {
+    console.log(e.markerId);
+  },
+  controltap (e) {
+    console.log(e.controlId);
+  }
+};
+</script>
+
+<style>
+/* .header {
+  position: absolute;
+  z-index: 100;
+  width: 100vw;
+} */
+.wrap {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+.wrap-item {
+  width: 100vw;
+}
+.wrap-side {
+  height: 500rpx;
+  flex-grow: 0;
+  padding-bottom: 70rpx;
+}
+.wrap-main {
+  flex-grow: 1;
+}
+.full {
+  margin-bottom: 6vh;
+}
+.none {
+  display: none;
+}
+.controls {
+  width: 200rpx;
+  height: 100rpx;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  opacity: 80%;
+}
+.icon-controls {
+  width: 100rpx;
+  height: 50rpx;
+  position: absolute;
+  right: 10rpx;
+  opacity: 80%;
+}
+.zoom-controls {
+  bottom: 120rpx;
+}
+.conversion-controls {
+  width: 90rpx;
+  height: 90rpx;
+  bottom: 5rpx;
+  right: 300rpx;
+}
+.refresh-controls {
+  width: 90rpx;
+  height: 90rpx;
+  bottom: 5rpx;
+  right: 205rpx;
+}
+.location-controls {
+  bottom: 10rpx;
+  left: 10rpx;
+}
+.list-wrap {
+  background: #efefef;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+}
+.list-item {
+  background: #fff;
+  margin-bottom: 30rpx;
+}
+.list-item:last-child {
+  margin: 0;
+}
+.item {
+  flex: 1;
+}
+.desc-highlight {
+  font-size: 24rpx;
+  height: 38rpx;
+  padding: 0 22rpx;
+  border: 1px solid #f5342f;
+  border-radius: 20rpx;
+  color: #f5342f;
+  line-height: 38rpx;
+}
+</style>

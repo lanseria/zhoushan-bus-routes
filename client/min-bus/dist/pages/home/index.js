@@ -40,17 +40,6 @@ exports.default = Page({
   onLoad: function onLoad() {
     this.saveData();
     this.getNearLine();
-    wx.cloud.init()
-    wx.cloud.callFunction({
-      name:'add',
-      data: {
-        a: 1,
-        b: 2,
-      },
-      complete: res => {
-        console.log('callFunction test result: ', res)
-      },
-    })
   },
   onShow: function onShow() {
     var hl = _global2.default.getVal('HistoryLines') || [];
@@ -98,8 +87,7 @@ exports.default = Page({
     _global2.default.setLocation().then(function (location) {
       _api2.default.getNearLine(location).then(function (res) {
         var tabs = _this.data.tabs;
-
-        var nearLineInfo = JSON.parse(res.data.data);
+        var nearLineInfo = res;
         _global2.default.setVal('NEARLINEINFO', nearLineInfo);
         _this.setData({
           nearLineList: _global2.default.mapCityLoction_new(nearLineInfo),

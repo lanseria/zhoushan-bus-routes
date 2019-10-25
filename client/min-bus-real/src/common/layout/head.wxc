@@ -1,0 +1,43 @@
+<template>
+  <wxc-notice isShow="{{isShow}}" scroll="{{true}}" bg-color="#ff9300" bg-rgba="rgba(255, 147, 0, 0)" close="{{true}}" notice="{{notice}}" bind:close="onClose"></wxc-notice>
+</template>
+
+<script>
+import Global from "../../models/global";
+export default {
+  config: {
+    usingComponents: {
+      'wxc-notice': '@minui/wxc-notice'
+    }
+  },
+  properties: {
+    notice: {
+      type: String,
+      value: '公交平台将在每日0点－6点进行系统升级，升级期间将暂停服务，敬请谅解。'
+    },
+    isShow: {
+      type: Boolean,
+      value: true
+    }
+  },
+  data: {
+    isShow: Global.getHeadNoticeStatus()
+  },
+  methods: {
+    onClose() {
+      Global.setHeadNoticeStatus(false)
+      wx.showToast({title: 'closed'});
+    }
+  }
+}
+</script>
+
+<style>
+/* .head {
+  height: 70rpx;
+  background-color:#b8e1f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+</style>
