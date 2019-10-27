@@ -8,7 +8,7 @@
                 </cover-image>
             </cover-view>
             <cover-view class="zoom-controls icon-controls">
-                <cover-image class="img" bindtap="handleZoom" src="https://limonplayer.cn/search_24px.png">
+                <cover-image class="img" bindtap="handleZoom" src="cloud://bus-bec618.6275-bus-bec618-1251742961/search_24px.png">
                 </cover-image>
             </cover-view>
             <cover-view class="conversion-controls icon-controls">
@@ -28,7 +28,7 @@
         <scroll-view class="wrap-item wrap-side {{mapStyle?'none':''}}" scroll-y>
             <view class="list-wrap">
                 <view class="list-item">
-                    <wxc-list wx:for="{{busWaiting.bus}}" wx:key="index" class="item" title="{{item.busNo}}" desc="{{item.isStation == '0'? '' : '下一站-'+line.stations[item.lastStation].stationName}}" mode="{{index == data.length-1 ? 'none': ''}}" data-line-name="{{item.busNo}}" data-location="{{item.location}}" bindtap="handleSetLocationCenter" src="https://limonplayer.cn/route_32px.png" _pid="{{_pid}}">
+                    <wxc-list wx:for="{{busWaiting.bus}}" wx:key="index" class="item" title="{{item.busNo}}" desc="{{item.isStation == '0'? '' : '下一站-'+line.stations[item.lastStation].stationName}}" mode="{{index == data.length-1 ? 'none': ''}}" data-line-name="{{item.busNo}}" data-location="{{item.location}}" bindtap="handleSetLocationCenter" src="cloud://bus-bec618.6275-bus-bec618-1251742961/route_32px.png" _pid="{{_pid}}">
                         <view wx:if="{{item.isStation == '0'}}" class="desc-highlight">{{'进站中-'+line.stations[item.lastStation-1].stationName}}</view>
                     </wxc-list>
                     <wxc-loadmore is-end="{{true}}"></wxc-loadmore>

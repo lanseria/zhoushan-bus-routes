@@ -99,16 +99,17 @@ exports.default = Page({
     });
   },
   saveData: function saveData() {
-    wx.downloadFile({
-      url: 'https://limonplayer.cn/location_16px.png',
+    wx.cloud.init()
+    wx.cloud.downloadFile({
+      fileID: 'cloud://bus-bec618.6275-bus-bec618-1251742961/location_32px.png',
       success: function success(res) {
         if (res.statusCode === 200) {
           _global2.default.setVal('location-png', res.tempFilePath);
         }
       }
     });
-    wx.downloadFile({
-      url: 'https://limonplayer.cn/bus_icon.png',
+    wx.cloud.downloadFile({
+      fileID: 'cloud://bus-bec618.6275-bus-bec618-1251742961/bus_icon.png',
       success: function success(res) {
         if (res.statusCode === 200) {
           _global2.default.setVal('bus-icon-png', res.tempFilePath);

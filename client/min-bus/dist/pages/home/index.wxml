@@ -17,7 +17,7 @@
             </view>
         </view>
         <scroll-view scroll-y style="height: 990rpx;" enable-back-to-top="{{true}}">
-            <wxc-list wx:for="{{historyLines}}" wx:key="index" class="item" title="{{item.lineName}}" desc="{{item.slot? '' : item.desc}}" mode="{{index == data.length-1 ? 'none': ''}}" bindtap="gotoLine" data-line-name="{{item.lineName}}" src="https://limonplayer.cn/route_32px.png" _pid="{{_pid}}">
+            <wxc-list wx:for="{{historyLines}}" wx:key="index" class="item" title="{{item.lineName}}" desc="{{item.slot? '' : item.desc}}" mode="{{index == data.length-1 ? 'none': ''}}" bindtap="gotoLine" data-line-name="{{item.lineName}}" src="cloud://bus-bec618.6275-bus-bec618-1251742961/route_32px.png" _pid="{{_pid}}">
                 <view wx:if="{{item.slot && item.desc}}" class="desc-highlight">{{item.desc}}</view>
             </wxc-list>
             <ad unit-id="adunit-a6f5ef70c27ac884"></ad>
@@ -28,6 +28,5 @@
             </wxc-loadmore>
             <view class="bottom"></view>
         </scroll-view>
-        <!-- <wxc-loading is-show="{{isLoading}}" image="https://limonplayer.cn/loading-image.png" slip="https://limonplayer.cn/loading-slip.png"></wxc-loading> -->
     </view>
 </view>

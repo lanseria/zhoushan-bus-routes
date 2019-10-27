@@ -88,6 +88,8 @@ exports.default = Page({
         var locationArray = _global2.default.wgs84togcj02(b.lng, b.lat);
         markers.push({
           iconPath: _global2.default.getVal("bus-icon-png"),
+          // iconPath: 'https://limonplayer.cn/bus_icon.png',
+          // iconPath: 'cloud://bus-bec618.6275-bus-bec618-1251742961/bus_icon.png',
           id: b.busNo,
           title: b.busNo,
           latitude: locationArray[1],
@@ -130,6 +132,8 @@ exports.default = Page({
           var locationArray = _global2.default.wgs84togcj02(p.lng, p.lat);
           markers.push({
             iconPath: _global2.default.getVal("location-png"),
+            // iconPath: 'cloud://bus-bec618.6275-bus-bec618-1251742961/location_16px.png',
+            // iconPath: 'https://limonplayer.cn/location_32px.png',
             id: p.stationId,
             title: p.stationName,
             latitude: locationArray[1],
