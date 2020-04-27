@@ -1,0 +1,196 @@
+{
+    "viewBounds": {
+        "top": 2.0037508342789095E7,
+        "left": -2.0037508342789248E7,
+        "bottom": -2.00375083427894E7,
+        "leftBottom": {
+            "x": -2.0037508342789248E7,
+            "y": -2.00375083427894E7
+        },
+        "right": 2.0037508342789248E7,
+        "rightTop": {
+            "x": 2.0037508342789248E7,
+            "y": 2.0037508342789095E7
+        }
+    },
+    "viewer": {
+        "leftTop": {
+            "x": 0,
+            "y": 0
+        },
+        "top": 0,
+        "left": 0,
+        "bottom": 256,
+        "rightBottom": {
+            "x": 256,
+            "y": 256
+        },
+        "width": 256,
+        "right": 256,
+        "height": 256
+    },
+    "distanceUnit": null,
+    "minVisibleTextSize": 0,
+    "coordUnit": "METER",
+    "scale": 1.6901635716026546E-9,
+    "description": null,
+    "paintBackground": false,
+    "maxVisibleTextSize": 0,
+    "maxVisibleVertex": 0,
+    "clipRegionEnabled": false,
+    "antialias": true,
+    "textOrientationFixed": false,
+    "angle": 0,
+    "prjCoordSys": {
+        "distanceUnit": "METER",
+        "projectionParam": {
+            "centralParallel": 0,
+            "firstPointLongitude": 0,
+            "rectifiedAngle": 0,
+            "scaleFactor": 1,
+            "falseNorthing": 0,
+            "centralMeridian": 0,
+            "secondStandardParallel": 0,
+            "secondPointLongitude": 0,
+            "azimuth": 0,
+            "falseEasting": 0,
+            "firstStandardParallel": 0
+        },
+        "epsgCode": 3857,
+        "coordUnit": "METER",
+        "name": "User Define",
+        "projection": {
+            "name": "SPHERE_MERCATOR",
+            "type": "PRJ_SPHERE_MERCATOR"
+        },
+        "type": "PCS_USER_DEFINED",
+        "coordSystem": {
+            "datum": {
+                "name": "D_WGS_1984",
+                "type": "DATUM_WGS_1984",
+                "spheroid": {
+                    "flatten": 0.00335281066474748,
+                    "name": "WGS_1984",
+                    "axis": 6378137,
+                    "type": "SPHEROID_WGS_1984"
+                }
+            },
+            "unit": "DEGREE",
+            "spatialRefType": "SPATIALREF_EARTH_LONGITUDE_LATITUDE",
+            "name": "GCS_WGS_1984",
+            "type": "GCS_WGS_1984",
+            "primeMeridian": {
+                "longitudeValue": 0,
+                "name": "Greenwich",
+                "type": "PRIMEMERIDIAN_GREENWICH"
+            }
+        }
+    },
+    "minScale": 0,
+    "markerAngleFixed": false,
+    "overlapDisplayedOptions": null,
+    "visibleScales": [
+        1.6901635716026555E-9,
+        3.3803271432053056E-9,
+        6.760654286410611E-9,
+        1.3521308572821242E-8,
+        2.7042617145642484E-8,
+        5.408523429128511E-8,
+        1.0817046858256998E-7,
+        2.1634093716513974E-7,
+        4.3268187433028044E-7,
+        8.653637486605571E-7,
+        1.7307274973211203E-6,
+        3.4614549946422405E-6,
+        6.9229099892844565E-6,
+        1.3845819978568952E-5,
+        2.7691639957137904E-5,
+        5.538327991427581E-5,
+        1.1076655982855162E-4,
+        2.2153311965710323E-4,
+        4.430662393142055E-4,
+        8.86132478628411E-4
+    ],
+    "visibleScalesEnabled": true,
+    "customEntireBoundsEnabled": false,
+    "clipRegion": null,
+    "maxScale": 0,
+    "customParams": "",
+    "center": {
+        "x": 0,
+        "y": -1.5273690223693848E-7
+    },
+    "dynamicPrjCoordSyses": [
+        {
+            "distanceUnit": "METER",
+            "projectionParam": {
+                "centralParallel": 0,
+                "firstPointLongitude": 0,
+                "rectifiedAngle": 0,
+                "scaleFactor": 1,
+                "falseNorthing": 0,
+                "centralMeridian": 0,
+                "secondStandardParallel": 0,
+                "secondPointLongitude": 0,
+                "azimuth": 0,
+                "falseEasting": 0,
+                "firstStandardParallel": 0
+            },
+            "epsgCode": 3857,
+            "coordUnit": "METER",
+            "name": "User Define",
+            "projection": {
+                "name": "SPHERE_MERCATOR",
+                "type": "PRJ_SPHERE_MERCATOR"
+            },
+            "type": "PCS_USER_DEFINED",
+            "coordSystem": {
+                "datum": {
+                    "name": "D_WGS_1984",
+                    "type": "DATUM_WGS_1984",
+                    "spheroid": {
+                        "flatten": 0.00335281066474748,
+                        "name": "WGS_1984",
+                        "axis": 6378137,
+                        "type": "SPHEROID_WGS_1984"
+                    }
+                },
+                "unit": "DEGREE",
+                "spatialRefType": "SPATIALREF_EARTH_LONGITUDE_LATITUDE",
+                "name": "GCS_WGS_1984",
+                "type": "GCS_WGS_1984",
+                "primeMeridian": {
+                    "longitudeValue": 0,
+                    "name": "Greenwich",
+                    "type": "PRIMEMERIDIAN_GREENWICH"
+                }
+            }
+        }
+    ],
+    "colorMode": null,
+    "textAngleFixed": false,
+    "overlapDisplayed": false,
+    "userToken": {
+        "userID": ""
+    },
+    "cacheEnabled": false,
+    "dynamicProjection": false,
+    "autoAvoidEffectEnabled": true,
+    "customEntireBounds": null,
+    "name": "China",
+    "bounds": {
+        "top": 2.0037508342789095E7,
+        "left": -2.0037508342789248E7,
+        "bottom": -2.003750834278914E7,
+        "leftBottom": {
+            "x": -2.0037508342789248E7,
+            "y": -2.003750834278914E7
+        },
+        "right": 2.0037508342789244E7,
+        "rightTop": {
+            "x": 2.0037508342789244E7,
+            "y": 2.0037508342789095E7
+        }
+    },
+    "backgroundStyle": null
+}
