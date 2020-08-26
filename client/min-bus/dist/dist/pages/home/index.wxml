@@ -21,9 +21,6 @@
                 <view wx:if="{{item.slot && item.desc}}" class="desc-highlight">{{item.desc}}</view>
             </wxc-list>
             <ad unit-id="adunit-a6f5ef70c27ac884"></ad>
-            <view wx:for="{{nearLineList}}" wx:key="item.stationName">
-                <index-card wx:if="{{!isLoading}}" data="{{item}}" _pid="{{_pid}}"></index-card>
-            </view>
             <wxc-loadmore is-end="{{true}}" text="到底啦" icon="https://s10.mogucdn.com/mlcdn/c45406/171016_47j96cl3hdhhdf7ajg8hg2kd13gdc_400x400.png" _pid="{{_pid}}">
             </wxc-loadmore>
             <view class="bottom"></view>

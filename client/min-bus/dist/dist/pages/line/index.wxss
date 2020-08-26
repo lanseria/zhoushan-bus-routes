@@ -10,6 +10,7 @@
 }
 .wrap-item {
   width: 100vw;
+  position: relative;
 }
 .wrap-side {
   height: 500rpx;
