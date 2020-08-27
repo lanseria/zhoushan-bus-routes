@@ -39,7 +39,7 @@ exports.default = Page({
   /** note: 在 wxp 文件或者页面文件中请去掉 methods 包装 */
   onLoad: function onLoad() {
     this.saveData();
-    // this.getNearLine();
+    this.getNearLine();
   },
   onShow: function onShow() {
     var hl = _global2.default.getVal('HistoryLines') || [];
@@ -85,17 +85,17 @@ exports.default = Page({
       isLoading: true
     });
     _global2.default.setLocation().then(function (location) {
-      _api2.default.getNearLine(location).then(function (res) {
-        var tabs = _this.data.tabs;
-        var nearLineInfo = res;
-        _global2.default.setVal('NEARLINEINFO', nearLineInfo);
-        _this.setData({
-          nearLineList: _global2.default.mapCityLoction_new(nearLineInfo),
-          locationInfo: location,
-          nearLineInfo: nearLineInfo,
-          isLoading: false
-        });
-      });
+      // _api2.default.getNearLine(location).then(function (res) {
+      //   var tabs = _this.data.tabs;
+      //   var nearLineInfo = res;
+      //   _global2.default.setVal('NEARLINEINFO', nearLineInfo);
+      //   _this.setData({
+      //     nearLineList: _global2.default.mapCityLoction_new(nearLineInfo),
+      //     locationInfo: location,
+      //     nearLineInfo: nearLineInfo,
+      //     isLoading: false
+      //   });
+      // });
     });
   },
   saveData: function saveData() {
