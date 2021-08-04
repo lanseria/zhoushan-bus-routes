@@ -1,7 +1,0 @@
-<!-- wxp template -->
-<view class="content-wrap">
-    <view class="search-wrap">
-        <wxc-search class="search" bg-color="#fff" radius="30" showClear="{{false}}" bind:input="onInput" _pid="{{_pid}}"></wxc-search>
-    </view>
-    <road-list class="list-wrap" data="{{filterLine}}" _pid="{{_pid}}"></road-list>
-</view>
